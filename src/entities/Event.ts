@@ -1,4 +1,3 @@
-import { Poll } from '.Poll.js';
 import {
   BeforeInsert,
   Column,
@@ -10,6 +9,7 @@ import {
   Relation,
 } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Poll } from './Poll.js';
 import { User } from './User.js';
 
 @Entity()
@@ -45,9 +45,4 @@ export class Event {
   @OneToOne(() => Poll, (poll) => poll.events, { nullable: true })
   @JoinColumn()
   poll: Relation<Poll> | null;
-
-  /* ADD TO Poll.ts
-  // (Event.ts)
-  @OneToOne(() => Event, (event) => event.poll)
-  event: Relation<Event>;*/
 }
