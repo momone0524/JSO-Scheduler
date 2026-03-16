@@ -1,0 +1,22 @@
+info:
+  name: Log in - Valid
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:3000/login
+  body:
+    type: json
+    data: |-
+      {
+        "email": "momone.takahash@smail.astat.edu",
+        "password": "momone0524"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

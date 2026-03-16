@@ -1,5 +1,12 @@
 import express, { Express } from 'express';
 import './config.js'; // do not remove this line
+import {
+  getUserProfile,
+  getUsers,
+  logIn,
+  logOut,
+  registerUser,
+} from './controllers/UserController.js';
 import { sessionMiddleware } from './sessionConfig.js';
 
 const app: Express = express();
@@ -15,6 +22,11 @@ app.use(express.static('public', { extensions: ['html'] }));
 
 // -- Routes --------------------------------------------------
 // Register your routes below this line
+app.post('/users', registerUser);
+app.post('/login', logIn);
+app.delete('/sessions', logOut);
+app.get('/users/:userId', getUserProfile);
+app.get('/users', getUsers);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

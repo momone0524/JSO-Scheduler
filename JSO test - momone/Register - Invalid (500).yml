@@ -1,0 +1,28 @@
+info:
+  name: Register - Invalid (500)
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: http://localhost:3000/users
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Momone Takahashi",
+        "gradeYear": 4,
+        "major": "Computer Science",
+        "birthday": "2003-05-24",
+        "language": "ja",
+        "role": "Member",
+        "email": "momone.takahash@smail.astat.edu",
+        "password": "momone0524"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
