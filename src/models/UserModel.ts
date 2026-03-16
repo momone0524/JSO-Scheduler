@@ -1,5 +1,6 @@
 import { AppDataSource } from '../dataSource.js';
 import { User } from '../entities/User.js';
+import { CreateUserInput } from '../validators/UserValidator.js';
 
 const UserRepository = AppDataSource.getRepository(User);
 
@@ -38,24 +39,15 @@ async function getUserByEmail(email: string): Promise<User | null> {
   return UserRepository.findOne({ where: { email } });
 }
 
-async function addUser(
-  name: string,
-  gradeYear: number,
-  major: string,
-  birthday: string,
-  language: 'ja' | 'en',
-  role: 'Board Member' | 'Member',
-  email: string,
-  passwordHash: string,
-): Promise<User> {
+async function addUser(data: CreateUserInput, passwordHash: string): Promise<User> {
   const newUser = new User();
-  newUser.name = name;
-  newUser.gradeYear = gradeYear;
-  newUser.major = major;
-  newUser.birthday = new Date(birthday);
-  newUser.language = language;
-  newUser.role = role;
-  newUser.email = email;
+  newUser.name = data.name;
+  newUser.gradeYear = data.gradeYear;
+  newUser.major = data.major;
+  newUser.birthday = new Date(data.birthday);
+  newUser.language = data.language;
+  newUser.role = data.role;
+  newUser.email = data.email;
   newUser.passwordHash = passwordHash;
   return UserRepository.save(newUser);
 }

@@ -16,4 +16,6 @@ const LoginUserSchema = z.object({
   password: z.string().min(8).max(100),
 });
 
+export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+
 export { CreateUserSchema, LoginUserSchema };

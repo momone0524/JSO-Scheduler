@@ -1,5 +1,6 @@
 import express, { Express } from 'express';
 import './config.js'; // do not remove this line
+import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
 import {
   getUserProfile,
   getUsers,
@@ -22,11 +23,17 @@ app.use(express.static('public', { extensions: ['html'] }));
 
 // -- Routes --------------------------------------------------
 // Register your routes below this line
+// User
 app.post('/users', registerUser);
 app.post('/login', logIn);
 app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
+
+// Event
+app.post('/events/:userId', CreateNewEventManual);
+app.get('/events', getEvents);
+app.get('/events/:eventId', getEventInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

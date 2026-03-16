@@ -2,7 +2,7 @@ import argon2 from 'argon2';
 import { Request, Response } from 'express';
 import { addUser, getAllUsers, getUserByEmail, getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
-import { CreateUserSchema, LoginUserSchema } from '../validators/UserValidator.js';
+import { CreateUserInput, CreateUserSchema, LoginUserSchema } from '../validators/UserValidator.js';
 
 async function registerUser(req: Request, res: Response): Promise<void> {
   const result = CreateUserSchema.safeParse(req.body);
@@ -11,20 +11,11 @@ async function registerUser(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { name, gradeYear, major, birthday, language, role, email, password } = result.data;
+  const data: CreateUserInput = result.data;
 
   try {
-    const passwordHash = await argon2.hash(password);
-    const newUser = await addUser(
-      name,
-      gradeYear,
-      major,
-      birthday,
-      language,
-      role,
-      email,
-      passwordHash,
-    );
+    const passwordHash = await argon2.hash(data.password);
+    const newUser = await addUser(data, passwordHash);
     console.log(newUser);
     res.sendStatus(201);
   } catch (err) {
