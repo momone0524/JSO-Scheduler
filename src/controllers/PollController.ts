@@ -20,6 +20,12 @@ async function CreateNewPoll(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
   // ボードメンバーでなければエラー
   if (user.role !== 'Board Member') {
     res.status(403).json({ error: 'You do not have permission to create a Poll' });

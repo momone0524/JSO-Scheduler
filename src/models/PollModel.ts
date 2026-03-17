@@ -14,6 +14,7 @@ async function getAllPolls(): Promise<Poll[]> {
       description: true,
       closeAt: true,
       isClosed: true,
+      pollType: true,
       user: {
         userId: true,
         name: true,
@@ -34,6 +35,7 @@ async function getPollById(pollId: string): Promise<Poll | null> {
       description: true,
       closeAt: true,
       isClosed: true,
+      pollType: true,
       user: {
         userId: true,
         name: true,
@@ -49,6 +51,7 @@ async function addPoll(data: CreatePollInput, user: User): Promise<Poll> {
   newPoll.title = data.title;
   newPoll.description = data.description;
   newPoll.closeAt = new Date(data.closedAt);
+  newPoll.pollType = data.pollType;
   newPoll.user = user;
   return PollRepository.save(newPoll);
 }

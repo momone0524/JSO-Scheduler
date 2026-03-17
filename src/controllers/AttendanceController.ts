@@ -31,6 +31,12 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
   // 書き込み内容が違ったらエラー
   const result = CreateAttendanceSchema.safeParse(req.body);
   if (!result.success) {

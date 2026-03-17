@@ -3,12 +3,14 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
   Relation,
 } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
 import { Event } from './Event.js';
+import { PollOption } from './PollOption.js';
 import { User } from './User.js';
 
 @Entity()
@@ -24,7 +26,7 @@ export class Poll {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @Column()
@@ -33,6 +35,10 @@ export class Poll {
   @Column({ default: false })
   isClosed: boolean;
 
+  //　Pollが削除できるようになったらnullalbeを消す！！
+  @Column({ nullable: true })
+  pollType: string;
+
   // (Event.ts)
   @OneToOne(() => Event, (event) => event.poll)
   event: Relation<Event>;
@@ -40,4 +46,8 @@ export class Poll {
   // (User.ts) many side: Poll
   @ManyToOne(() => User, (user) => user.polls)
   user: Relation<User>;
+
+  // (PollOption.ts) one side: Poll
+  @OneToMany(() => PollOption, (pollOption) => pollOption.poll)
+  pollOptions: Relation<PollOption>;
 }

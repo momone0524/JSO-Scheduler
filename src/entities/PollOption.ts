@@ -1,5 +1,7 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Poll } from './Poll.js';
+
 @Entity()
 export class PollOption {
   @PrimaryColumn()
@@ -11,17 +13,12 @@ export class PollOption {
   }
 
   @Column()
-  pollId: string;
-
-  @Column()
-  OptionDat: string;
-
-  @Column()
-  isWinner: string;
-
-  @Column()
-  title: Date;
+  option: string;
 
   @Column({ default: false })
-  description: boolean;
+  isWinner: boolean;
+
+  // (Poll.ts) many side: PollOption
+  @ManyToOne(() => Poll, (poll) => poll.pollOptions)
+  poll: Relation<Poll>;
 }

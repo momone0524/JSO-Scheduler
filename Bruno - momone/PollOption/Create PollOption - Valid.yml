@@ -1,0 +1,21 @@
+info:
+  name: Create PollOption - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/polls/019cfd82-343c-7254-b80e-24025ddcdd43/pollOptions/019cfd64-0af1-70b7-8cd2-9dc4c873c9dc
+  body:
+    type: json
+    data: |-
+      {
+        "option": "Food"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
