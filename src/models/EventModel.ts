@@ -8,6 +8,7 @@ const EventRepository = AppDataSource.getRepository(Event);
 
 async function getAllEvents(): Promise<Event[]> {
   return EventRepository.find({
+    relations: ['user', 'poll'],
     select: {
       eventId: true,
       eventName: true,
@@ -15,13 +16,27 @@ async function getAllEvents(): Promise<Event[]> {
       date: true,
       startTime: true,
       endTime: true,
+      user: {
+        userId: true,
+        name: true,
+        gradeYear: true,
+        major: true,
+        birthday: true,
+        language: true,
+        role: true,
+        email: true,
+      },
+      poll: {
+        pollId: true,
+      },
     },
-    relations: { user: true, poll: true },
   });
 }
 
 async function getEventById(eventId: string): Promise<Event | null> {
   return EventRepository.findOne({
+    where: { eventId },
+    relations: ['user', 'poll'],
     select: {
       eventId: true,
       eventName: true,
@@ -29,9 +44,20 @@ async function getEventById(eventId: string): Promise<Event | null> {
       date: true,
       startTime: true,
       endTime: true,
+      user: {
+        userId: true,
+        name: true,
+        gradeYear: true,
+        major: true,
+        birthday: true,
+        language: true,
+        role: true,
+        email: true,
+      },
+      poll: {
+        pollId: true,
+      },
     },
-    where: { eventId },
-    relations: { user: true, poll: true },
   });
 }
 

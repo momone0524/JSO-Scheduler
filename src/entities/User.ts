@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Relation } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Attendance } from './Attendance.js';
 import { Event } from './Event.js';
 
 @Entity()
@@ -39,4 +40,8 @@ export class User {
   // (Event.ts) one side: User
   @OneToMany(() => Event, (event) => event.user)
   events: Relation<Event>[];
+
+  // (Attendance.ts) one side: User
+  @OneToMany(() => Attendance, (attendance) => attendance.user)
+  attendances: Relation<Event>[];
 }

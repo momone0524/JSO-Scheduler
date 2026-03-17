@@ -1,5 +1,10 @@
 import express, { Express } from 'express';
 import './config.js'; // do not remove this line
+import {
+  CreateNewAttendance,
+  getAttendanceInfo,
+  getAttendances,
+} from './controllers/AttendanceController.js';
 import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
 import {
   getUserProfile,
@@ -34,6 +39,11 @@ app.get('/users', getUsers);
 app.post('/events/:userId', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
+
+// Attendance
+app.post('/events/:eventId/attendance', CreateNewAttendance);
+app.get('/events/:eventId/attendance/', getAttendances);
+app.get('/events/:eventId/attendance/:attendanceId', getAttendanceInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

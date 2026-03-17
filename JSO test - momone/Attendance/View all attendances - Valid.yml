@@ -1,0 +1,18 @@
+info:
+  name: View all attendances - Valid
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:3000/events/019cf8d5-9d39-71a7-883c-4516346aae7b/attendance
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
