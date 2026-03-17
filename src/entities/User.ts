@@ -2,6 +2,7 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Relation } from
 import { v7 as uuidv7 } from 'uuid';
 import { Attendance } from './Attendance.js';
 import { Event } from './Event.js';
+import { Poll } from './Poll.js';
 
 @Entity()
 export class User {
@@ -43,5 +44,9 @@ export class User {
 
   // (Attendance.ts) one side: User
   @OneToMany(() => Attendance, (attendance) => attendance.user)
-  attendances: Relation<Event>[];
+  attendances: Relation<Attendance>[];
+
+  // (Poll.ts) one side: User
+  @OneToMany(() => Poll, (poll) => poll.user)
+  polls: Relation<Poll>[];
 }

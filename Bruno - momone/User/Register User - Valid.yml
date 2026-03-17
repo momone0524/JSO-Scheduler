@@ -15,8 +15,8 @@ http:
         "major": "Computer Science",
         "birthday": "2003-05-24",
         "language": "ja",
-        "role": "Member",
-        "email": "momone.takahash@smail.astat.edu",
+        "role": "Board Member",
+        "email": "momone.takahash@smail.astate.edu",
         "password": "momone0524"
       }
   auth: inherit

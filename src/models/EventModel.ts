@@ -1,6 +1,5 @@
 import { AppDataSource } from '../dataSource.js';
 import { Event } from '../entities/Event.js';
-//import { Poll } from '../entities/Poll.js';
 import { User } from '../entities/User.js';
 import { CreateEventInput } from '../validators/EventValidator.js';
 
@@ -19,10 +18,6 @@ async function getAllEvents(): Promise<Event[]> {
       user: {
         userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
         role: true,
         email: true,
       },
@@ -47,10 +42,6 @@ async function getEventById(eventId: string): Promise<Event | null> {
       user: {
         userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
         role: true,
         email: true,
       },

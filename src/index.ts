@@ -6,6 +6,7 @@ import {
   getAttendances,
 } from './controllers/AttendanceController.js';
 import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
+import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
 import {
   getUserProfile,
   getUsers,
@@ -42,8 +43,13 @@ app.get('/events/:eventId', getEventInfo);
 
 // Attendance
 app.post('/events/:eventId/attendance', CreateNewAttendance);
-app.get('/events/:eventId/attendance/', getAttendances);
+app.get('/events/:eventId/attendance', getAttendances);
 app.get('/events/:eventId/attendance/:attendanceId', getAttendanceInfo);
+
+// Poll
+app.post('/polls/:userId', CreateNewPoll);
+app.get('/polls', getPolls);
+app.get('/polls/:pollId', getPollInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);
