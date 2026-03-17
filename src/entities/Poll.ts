@@ -29,5 +29,5 @@ export class Poll {
 
   // (Event.ts)
   @OneToOne(() => Event, (event) => event.poll)
-  events: Relation<Event>;
+  event: Relation<Event>;
 }
