@@ -1,0 +1,28 @@
+info:
+  name: Create Poll - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:1000/polls/:userId
+  params:
+    - name: userId
+      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Meeting for April Event",
+        "description": "We will talk about next Event",
+        "closedAt": "2026-03-28",
+        "pollType": "schedule"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

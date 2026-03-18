@@ -1,0 +1,28 @@
+info:
+  name: Register User - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:1000/users
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Momone Takahashi",
+        "gradeYear": 4,
+        "major": "Computer Science",
+        "birthday": "2003-05-24",
+        "language": "ja",
+        "role": "Board Member",
+        "email": "momone.takahash@smail.astate.edu",
+        "password": "momone0524"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

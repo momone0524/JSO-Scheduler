@@ -1,0 +1,28 @@
+info:
+  name: Create PollOption - Valid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:1000/polls/:pollId/pollOptions/:userId
+  params:
+    - name: userId
+      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      type: path
+    - name: pollId
+      value: 019d02de-66e9-707f-aa47-24824c8c28ab
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "option": "Food"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
