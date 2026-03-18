@@ -12,6 +12,7 @@ import {
   getPollOptionInfo,
   getPollOptions,
 } from './controllers/PollOptionController.js';
+import { CreateNewPollVote, getPollVotes } from './controllers/PollVoteController.js';
 import {
   getUserProfile,
   getUsers,
@@ -60,6 +61,10 @@ app.get('/polls/:pollId', getPollInfo);
 app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
+
+// PollVote
+app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
+app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVotes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

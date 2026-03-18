@@ -1,0 +1,28 @@
+info:
+  name: Register User - Valid Runa
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: http://localhost:1000/users
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Runa Hasegawa",
+        "gradeYear": 3,
+        "major": "Computer Science",
+        "birthday": "2004-10-10",
+        "language": "ja",
+        "role": "Board Member",
+        "email": "runa.h@example.com",
+        "password": "Runa1010"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
