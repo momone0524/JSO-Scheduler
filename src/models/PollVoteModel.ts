@@ -9,7 +9,7 @@ const PollVoteRepository = AppDataSource.getRepository(PollVote);
 
 async function getAllPollVote(): Promise<PollVote[]> {
   return PollVoteRepository.find({
-    relations: ['poll', 'user', 'option'],
+    relations: ['poll', 'user', 'polloption'],
     select: {
       voteId: true,
       poll: {
@@ -30,7 +30,7 @@ async function getAllPollVote(): Promise<PollVote[]> {
         role: true,
         email: true,
       },
-      pulloption: {
+      polloption: {
         optionId: true,
         option: true,
         isWinner: true,
@@ -42,7 +42,7 @@ async function getAllPollVote(): Promise<PollVote[]> {
 async function getPollVoteById(voteId: string): Promise<PollVote | null> {
   return PollVoteRepository.findOne({
     where: { voteId },
-    relations: ['poll', 'user', 'option'],
+    relations: ['poll', 'user', 'polloption'],
     select: {
       voteId: true,
       poll: {
@@ -76,11 +76,11 @@ async function addPollVote(
   data: CreatePollVoteInput,
   poll: Poll,
   user: User,
-  pollOption: PollOption,
+  polloption: PollOption,
 ): Promise<PollVote> {
   const newPollVote = new PollVote();
   newPollVote.user = user;
-  newPollVote.polloption = pollOption;
+  newPollVote.polloption = polloption;
   newPollVote.poll = poll;
   return PollVoteRepository.save(newPollVote);
 }
