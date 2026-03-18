@@ -65,11 +65,13 @@ async function logOut(req: Request, res: Response): Promise<void> {
 }
 
 async function getUserProfile(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
   }
 
+  // 自分のセッションからアクセスしていなければエラー
   if (req.session.authenticatedUser.userId !== req.params.userId) {
     res.sendStatus(403);
     return;
@@ -85,6 +87,11 @@ async function getUserProfile(req: Request, res: Response): Promise<void> {
 }
 
 async function getUsers(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
   const users = await getAllUsers();
   res.json({ users });
 }

@@ -58,6 +58,7 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
 }
 
 async function getAttendanceInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -73,7 +74,20 @@ async function getAttendanceInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getAttendances(req: Request, res: Response): Promise<void> {
-  const attendances = await getAllAttendances(req.params.eventId);
+  const { eventId } = req.params;
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // イベントがなければエラー
+  const event = await getEventById(eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+  const attendances = await getAllAttendances(eventId);
 
   if (!attendances) {
     res.status(404).json({ error: 'Attendance not found' });

@@ -53,6 +53,7 @@ async function CreateNewPoll(req: Request, res: Response): Promise<void> {
 }
 
 async function getPollInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -68,6 +69,11 @@ async function getPollInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getPolls(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
   const polls = await getAllPolls();
   res.json({ polls });
 }

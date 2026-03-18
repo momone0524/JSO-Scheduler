@@ -5,7 +5,14 @@ info:
 
 http:
   method: GET
-  url: http://localhost:1000/events/019cf8d5-9d39-71a7-883c-4516346aae7b/attendance/019cf967-d36f-7449-afeb-d0cf16f3bbc6
+  url: http://localhost:1000/events/:eventId/attendance/:attendanceId
+  params:
+    - name: eventId
+      value: 019d02ef-2fd2-7444-962f-4b2c44b348a1
+      type: path
+    - name: attendanceId
+      value: 019d02f3-4320-752c-a06c-5a0e5be5d8cd
+      type: path
   body:
     type: json
     data: ""

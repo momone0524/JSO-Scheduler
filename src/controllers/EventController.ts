@@ -53,6 +53,7 @@ async function CreateNewEventManual(req: Request, res: Response): Promise<void> 
 }
 
 async function getEventInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -68,6 +69,11 @@ async function getEventInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getEvents(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
   const events = await getAllEvents();
   res.json({ events });
 }

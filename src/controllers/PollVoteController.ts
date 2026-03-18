@@ -63,6 +63,7 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
 }
 
 async function getPollVoteInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -78,6 +79,11 @@ async function getPollVoteInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getPollVotes(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
   const pollVotes = await getAllPollVote();
   res.json({ pollVotes });
 }
