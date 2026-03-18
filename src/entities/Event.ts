@@ -45,9 +45,9 @@ export class Event {
   user: Relation<User>;
 
   // (Poll.ts)
-  @OneToOne(() => Poll, (poll) => poll.event, { nullable: true })
+  @OneToOne(() => Poll, (poll) => poll.event)
   @JoinColumn()
-  poll: Relation<Poll> | null;
+  poll: Relation<Poll>;
 
   // (Attendance.ts) one side: Event
   @OneToMany(() => Attendance, (attendance) => attendance.event)
