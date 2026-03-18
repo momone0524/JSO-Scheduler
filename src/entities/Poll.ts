@@ -10,7 +10,9 @@ import {
 } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
 import { Event } from './Event.js';
+import { Job } from './Job.js';
 import { PollOption } from './PollOption.js';
+import { PollVote } from './PollVote.js';
 import { User } from './User.js';
 
 @Entity()
@@ -49,5 +51,13 @@ export class Poll {
 
   // (PollOption.ts) one side: Poll
   @OneToMany(() => PollOption, (pollOption) => pollOption.poll)
-  pollOptions: Relation<PollOption>;
+  pollOptions: Relation<PollOption>[];
+
+  // (PollVote.ts) one side: Poll
+  @OneToMany(() => PollVote, (pollvote) => pollvote.poll)
+  pollvotes: Relation<PollVote>[];
+
+  // (Job.ts) one side: Poll
+  @OneToMany(() => Job, (job) => job.poll)
+  jobs: Relation<Job>[];
 }

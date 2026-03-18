@@ -1,5 +1,9 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Poll } from './Poll.js';
+import { PollOption } from './PollOption.js';
+import { User } from './User.js';
+
 @Entity()
 export class PollVote {
   @PrimaryColumn()
@@ -10,9 +14,15 @@ export class PollVote {
     this.voteId = uuidv7();
   }
 
-  @Column()
-  optionId: string;
+  // (User.ts) many side: PollVote
+  @ManyToOne(() => User, (user) => user.pollvotes)
+  user: Relation<User>;
 
-  @Column()
-  userId: string;
+  // (PollOption.ts) many side: PollVote
+  @ManyToOne(() => PollOption, (polloption) => polloption.pollvotes)
+  polloption: Relation<PollOption>;
+
+  // (Poll.ts) many side: PollVote
+  @ManyToOne(() => Poll, (poll) => poll.pollvotes)
+  poll: Relation<Poll>;
 }

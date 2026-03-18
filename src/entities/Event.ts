@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
 import { Attendance } from './Attendance.js';
+import { Job } from './Job.js';
 import { Poll } from './Poll.js';
 import { User } from './User.js';
 
@@ -50,5 +51,9 @@ export class Event {
 
   // (Attendance.ts) one side: Event
   @OneToMany(() => Attendance, (attendance) => attendance.event)
-  attendances: Relation<Attendance>;
+  attendances: Relation<Attendance>[];
+
+  // (Job.ts) one side: Event
+  @OneToMany(() => Job, (job) => job.event)
+  jobs: Relation<Job>[];
 }

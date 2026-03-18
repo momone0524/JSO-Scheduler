@@ -1,6 +1,16 @@
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  Relation,
+} from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Job } from './Job.js';
 import { Poll } from './Poll.js';
+import { PollVote } from './PollVote.js';
 
 @Entity()
 export class PollOption {
@@ -21,4 +31,12 @@ export class PollOption {
   // (Poll.ts) many side: PollOption
   @ManyToOne(() => Poll, (poll) => poll.pollOptions)
   poll: Relation<Poll>;
+
+  // (PollVote.ts) one side: PollOption
+  @OneToMany(() => PollVote, (pollvote) => pollvote.polloption)
+  pollvotes: Relation<PollVote>[];
+
+  // (Job.ts) one side: PollOption
+  @OneToMany(() => Job, (job) => job.polloption)
+  jobs: Relation<Job>[];
 }
