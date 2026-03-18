@@ -52,7 +52,7 @@ app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 
 // Attendance
-app.post('/events/:eventId/attendance', CreateNewAttendance);
+app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
 app.get('/events/:eventId/attendance', getAttendances);
 app.get('/events/:eventId/attendance/:attendanceId', getAttendanceInfo);
 

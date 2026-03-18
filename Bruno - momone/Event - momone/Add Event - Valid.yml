@@ -5,7 +5,21 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/events
+  url: http://localhost:1000/events/:userId
+  params:
+    - name: userId
+      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+            "eventName": "May Festival",
+            "place": "BCM",
+            "date": "2026-05-13",
+            "startTime": "17:00",
+            "endTime": "20:00"
+      }
   auth: inherit
 
 settings:
