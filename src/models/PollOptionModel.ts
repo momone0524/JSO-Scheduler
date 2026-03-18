@@ -5,8 +5,9 @@ import { CreatePollOptionInput } from '../validators/PollOptionValidator.js';
 
 const PollOptionRepository = AppDataSource.getRepository(PollOption);
 
-async function getAllPollOptions(): Promise<PollOption[]> {
+async function getAllPollOptions(pollId: string): Promise<PollOption[]> {
   return PollOptionRepository.find({
+    where: { poll: { pollId } },
     relations: ['poll'],
     select: {
       optionId: true,

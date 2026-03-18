@@ -64,6 +64,7 @@ async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
 }
 
 async function getPollOptionInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -79,7 +80,12 @@ async function getPollOptionInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getPollOptions(req: Request, res: Response): Promise<void> {
-  const pollOptions = await getAllPollOptions();
+  const pollOptions = await getAllPollOptions(req.params.pollId);
+
+  if (!pollOptions) {
+    res.status(404).json({ error: 'PollOption not found' });
+    return;
+  }
   res.json({ pollOptions });
 }
 
