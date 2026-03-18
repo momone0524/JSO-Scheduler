@@ -2,7 +2,7 @@ import { BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Relation } from
 import { v7 as uuidv7 } from 'uuid';
 import { Attendance } from './Attendance.js';
 import { Event } from './Event.js';
-import { Job } from './Job.js';
+import { JobAssignment } from './JobAssignment.js';
 import { Poll } from './Poll.js';
 import { PollVote } from './PollVote.js';
 
@@ -56,7 +56,7 @@ export class User {
   @OneToMany(() => PollVote, (pollvote) => pollvote.user)
   pollvotes: Relation<PollVote>[];
 
-  // (Job.ts) one side: User
-  @OneToMany(() => Job, (job) => job.user)
-  jobs: Relation<Job>[];
+  // (JobAssignment.ts) one side: User
+  @OneToMany(() => JobAssignment, (jobassignment) => jobassignment.user)
+  jobassignments: Relation<JobAssignment>[];
 }

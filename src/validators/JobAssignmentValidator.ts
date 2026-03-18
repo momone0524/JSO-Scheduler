@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
-const CreateAssignJobSchema = z.object({
+const CreateJobAssignmentSchema = z.object({
+  jobId: z.string(),
   userId: z.string(),
-  leaderId: z.string(),
 });
 
-export { CreateAssignJobSchema };
+export type CreateJobAssignmentInput = z.infer<typeof CreateJobAssignmentSchema>;
+
+export { CreateJobAssignmentSchema };

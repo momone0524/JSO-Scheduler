@@ -1,5 +1,8 @@
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { Job } from './Job.js';
+import { User } from './User.js';
+
 @Entity()
 export class JobAssignment {
   @PrimaryColumn()
@@ -10,9 +13,14 @@ export class JobAssignment {
     this.assignmentId = uuidv7();
   }
 
-  @Column()
-  jobId: string;
+  @Column({ default: false })
+  isLeader: boolean;
 
-  @Column()
-  userId: string;
+  // (User.ts) many side: JobAssignment
+  @ManyToOne(() => User, (user) => user.jobassignments)
+  user: Relation<User>;
+
+  // (Job.ts) many side: JobAssignment
+  @ManyToOne(() => Job, (job) => job.jobassignments)
+  job: Relation<Job>;
 }
