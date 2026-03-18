@@ -6,6 +6,7 @@ import {
   getAttendances,
 } from './controllers/AttendanceController.js';
 import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
+import { CreateNewJobManual, getJobInEvent, getJobInfo } from './controllers/JobController(仮).js';
 import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
 import {
   CreateNewPollOption,
@@ -70,6 +71,11 @@ app.get('/pollOptions/:optionId', getPollOptionInfo);
 app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
+
+// Job
+app.post('/event/:eventId/jobs/:userId', CreateNewJobManual);
+app.get('/event/:eventId/jobs', getJobInEvent);
+app.get('/event/:eventId/jobs/:jobId', getJobInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

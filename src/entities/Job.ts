@@ -23,6 +23,9 @@ export class Job {
     this.jobId = uuidv7();
   }
 
+  @Column()
+  jobName: string;
+
   @Column({ nullable: true })
   description: string;
 
