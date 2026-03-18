@@ -5,14 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote
-  params:
-    - name: pollId
-      value: 019d0216-cb4f-765b-a07c-a9d489581d9b
-      type: path
-    - name: optionId
-      value: 019d0218-65fe-77f1-a77d-124bd4cdb330
-      type: path
+  url: http://localhost:1000/polls/019cfd82-343c-7254-b80e-24025ddcdd43/pollOptions/019cfe28-9aec-7729-a186-06ad9423fd24/pollvote
   auth: inherit
 
 settings:
