@@ -73,7 +73,12 @@ async function getAttendanceInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function getAttendances(req: Request, res: Response): Promise<void> {
-  const attendances = await getAllAttendances();
+  const attendances = await getAllAttendances(req.params.eventId);
+
+  if (!attendances) {
+    res.status(404).json({ error: 'Attendance not found' });
+    return;
+  }
   res.json({ attendances });
 }
 

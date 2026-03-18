@@ -6,8 +6,9 @@ import { CreateAttendanceInput } from '../validators/AttendanceValidator.js';
 
 const AttendanceRepository = AppDataSource.getRepository(Attendance);
 
-async function getAllAttendances(): Promise<Attendance[]> {
+async function getAllAttendances(eventId: string): Promise<Attendance[]> {
   return AttendanceRepository.find({
+    where: { event: { eventId } },
     relations: ['user', 'event'],
     select: {
       attendanceId: true,
