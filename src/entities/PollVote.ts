@@ -1,5 +1,6 @@
-import { BeforeInsert, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import { BeforeInsert, Entity, ManyToOne, OneToMany, PrimaryColumn, Relation } from 'typeorm';
 import { v7 as uuidv7 } from 'uuid';
+import { JobAssignment } from './JobAssignment.js';
 import { Poll } from './Poll.js';
 import { PollOption } from './PollOption.js';
 import { User } from './User.js';
@@ -25,4 +26,8 @@ export class PollVote {
   // (Poll.ts) many side: PollVote
   @ManyToOne(() => Poll, (poll) => poll.pollvotes)
   poll: Relation<Poll>;
+
+  // (JobAssignment.ts) one side: PollVote
+  @OneToMany(() => JobAssignment, (jobassignment) => jobassignment.pollvote)
+  jobassignments: Relation<JobAssignment>[];
 }
