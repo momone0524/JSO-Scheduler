@@ -14,8 +14,8 @@ http:
     type: json
     data: |-
       {
-            "eventName": "May Festival",
-            "place": "BCM",
+            "eventName": "NEW YEAR",
+            "place": "Union",
             "date": "2026-05-13",
             "startTime": "17:00",
             "endTime": "20:00"

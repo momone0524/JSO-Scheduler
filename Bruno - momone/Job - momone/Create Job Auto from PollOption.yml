@@ -1,11 +1,11 @@
 info:
-  name: View all Job in a Event - Valid
+  name: Create Job Auto from PollOption
   type: http
-  seq: 2
+  seq: 4
 
 http:
-  method: GET
-  url: http://localhost:1000/event/:eventId/jobs
+  method: POST
+  url: http://localhost:1000/event/:eventId/jobs/auto
   params:
     - name: eventId
       value: 019d07f5-6d80-75cb-9d9e-65b79a3bf3c4

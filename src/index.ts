@@ -11,7 +11,12 @@ import {
   getJobAssignmentInfo,
   getJobAssignmentInJob,
 } from './controllers/JobAssignmentController.js';
-import { CreateNewJobManual, getJobInEvent, getJobInfo } from './controllers/JobController.js';
+import {
+  CreateNewJobAuto,
+  CreateNewJobManual,
+  getJobInEvent,
+  getJobInfo,
+} from './controllers/JobController.js';
 import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
 import {
   CreateNewPollOption,
@@ -80,6 +85,7 @@ app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo
 app.get('/polls/:pollId/pollOptions/:optionId/pollvoteInOption', getPollVoteInOption);
 
 // Job
+app.post('/event/:eventId/jobs/auto', CreateNewJobAuto);
 app.post('/event/:eventId/jobs/:userId', CreateNewJobManual);
 app.get('/event/:eventId/jobs', getJobInEvent);
 app.get('/event/:eventId/jobs/:jobId', getJobInfo);

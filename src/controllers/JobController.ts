@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { getEventById } from '../models/EventModel.js';
 import { addJobAuto, addJobManually, getAllJobByEvent, getJobById } from '../models/JobModel.js';
-import { getPollOptionById } from '../models/PollOptionModel.js';
+import { getPollById } from '../models/PollModel.js';
+import { getAllPollOptions } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreateJobInput, CreateJobSchema } from '../validators/JobValidator.js';
@@ -55,7 +56,7 @@ async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
   }
 }
 
-// 自動生成！！！！ ----- WORKING RIGHT NOW
+// 自動生成！！！！
 async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
   const { eventId } = req.params;
 
@@ -72,9 +73,23 @@ async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // Pollがなければエラー
+  const poll = await getPollById(event.poll.pollId);
+  if (!poll) {
+    res.status(404).json({ error: 'Job not found' });
+    return;
+  }
+
+  // Pollの種類が"job"でなければエラー
+  const polltype = await getPollById(event.poll.pollId);
+  if (polltype.pollType === 'schedule') {
+    res.status(40).json({ error: 'You cannot create Job from Schedule Poll' });
+    return;
+  }
+
   // PollOPtionがなければエラー
-  const polloption = await getPollOptionById(polloption.optionId);
-  if (!polloption) {
+  const polloption = await getAllPollOptions(event.poll.pollId);
+  if (polloption.length === 0) {
     res.status(404).json({ error: 'PollOption not found' });
     return;
   }
