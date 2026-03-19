@@ -14,12 +14,7 @@ async function getAllPollOptions(pollId: string): Promise<PollOption[]> {
       option: true,
       isWinner: true,
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
     },
   });
@@ -34,12 +29,7 @@ async function getPollOptionById(optionId: string): Promise<PollOption | null> {
       option: true,
       isWinner: true,
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
     },
   });

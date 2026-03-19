@@ -13,22 +13,15 @@ async function getAllJobAssignmentByJob(jobId: string): Promise<JobAssignment[]>
       assignmentId: true,
       isLeader: true,
       user: {
-        userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
-        role: true,
-        email: true,
       },
       job: {
-        jobId: true,
         jobName: true,
-        description: true,
       },
       pollvote: {
-        voteId: true,
+        polloption: {
+          option: true,
+        },
       },
     },
   });
@@ -42,22 +35,15 @@ async function getJobAssignmentById(assignmentId: string): Promise<JobAssignment
       assignmentId: true,
       isLeader: true,
       user: {
-        userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
-        role: true,
-        email: true,
       },
       job: {
-        jobId: true,
         jobName: true,
-        description: true,
       },
       pollvote: {
-        voteId: true,
+        polloption: {
+          option: true,
+        },
       },
     },
   });

@@ -16,13 +16,10 @@ async function getAllEvents(): Promise<Event[]> {
       startTime: true,
       endTime: true,
       user: {
-        userId: true,
         name: true,
-        role: true,
-        email: true,
       },
       poll: {
-        pollId: true,
+        title: true,
       },
     },
   });
@@ -40,13 +37,10 @@ async function getEventById(eventId: string): Promise<Event | null> {
       startTime: true,
       endTime: true,
       user: {
-        userId: true,
         name: true,
-        role: true,
-        email: true,
       },
       poll: {
-        pollId: true,
+        title: true,
       },
     },
   });

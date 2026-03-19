@@ -15,25 +15,13 @@ async function getAllJobByEvent(eventId: string): Promise<Job[]> {
       jobName: true,
       description: true,
       event: {
-        eventId: true,
         eventName: true,
-        place: true,
-        date: true,
-        startTime: true,
-        endTime: true,
       },
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
       polloption: {
-        optionId: true,
         option: true,
-        isWinner: true,
       },
     },
   });
@@ -48,25 +36,13 @@ async function getJobById(jobId: string): Promise<Job | null> {
       jobName: true,
       description: true,
       event: {
-        eventId: true,
         eventName: true,
-        place: true,
-        date: true,
-        startTime: true,
-        endTime: true,
       },
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
       polloption: {
-        optionId: true,
         option: true,
-        isWinner: true,
       },
     },
   });

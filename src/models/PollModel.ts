@@ -38,10 +38,7 @@ async function getPollById(pollId: string): Promise<Poll | null> {
       isClosed: true,
       pollType: true,
       user: {
-        userId: true,
         name: true,
-        role: true,
-        email: true,
       },
     },
   });

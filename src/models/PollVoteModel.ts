@@ -13,27 +13,13 @@ async function getAllPollVote(): Promise<PollVote[]> {
     select: {
       voteId: true,
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
       user: {
-        userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
-        role: true,
-        email: true,
       },
       polloption: {
-        optionId: true,
         option: true,
-        isWinner: true,
       },
     },
   });
@@ -46,27 +32,13 @@ async function getAllPollVoteByOption(optionId: string): Promise<PollVote[]> {
     select: {
       voteId: true,
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
       user: {
-        userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
-        role: true,
-        email: true,
       },
       polloption: {
-        optionId: true,
         option: true,
-        isWinner: true,
       },
     },
   });
@@ -79,27 +51,13 @@ async function getPollVoteById(voteId: string): Promise<PollVote | null> {
     select: {
       voteId: true,
       poll: {
-        pollId: true,
         title: true,
-        description: true,
-        closeAt: true,
-        isClosed: true,
-        pollType: true,
       },
       user: {
-        userId: true,
         name: true,
-        gradeYear: true,
-        major: true,
-        birthday: true,
-        language: true,
-        role: true,
-        email: true,
       },
       polloption: {
-        optionId: true,
         option: true,
-        isWinner: true,
       },
     },
   });
