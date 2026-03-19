@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getJobById } from '../models/JobModel(仮).js';
+import { getPollOptionById } from '../models/PollOptionModel.js';
 ///// （仮）を変更する！！！！！
 import {
   addJobAssignmentAuto,
@@ -26,7 +27,16 @@ async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<
     return;
   }
 
+  // PollOPtionがなければエラー
+  const polloption = await getPollOptionById(job.polloption.optionId);
+  if (!polloption) {
+    res.status(404).json({ error: 'PollOption not found' });
+    return;
+  }
+
   // pollVoteがなければエラー
+  // 特定のpolloptionに属するpollvoteを表示するにはoptionIdが必要
+  // 今 Job が手動作成で、polloption を持っていない
   const pollvote = await getAllPollVoteByOption(job.polloption.optionId);
   if (pollvote.length === 0) {
     res.status(404).json({ error: 'No Vote for this Job' });

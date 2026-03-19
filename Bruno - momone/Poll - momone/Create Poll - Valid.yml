@@ -14,10 +14,10 @@ http:
     type: json
     data: |-
       {
-        "title": "Meeting for April Event",
-        "description": "We will talk about next Event",
-        "closedAt": "2026-03-28",
-        "pollType": "schedule"
+        "title": "Job Poll for Spring festival",
+        "description": "Choose your job preference",
+        "closedAt": "2026-04-28",
+        "pollType": "job"
       }
   auth: inherit
 

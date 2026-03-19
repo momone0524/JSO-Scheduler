@@ -11,7 +11,7 @@ http:
       value: 019d02de-66e9-707f-aa47-24824c8c28ab
       type: path
     - name: optionId
-      value: 019d02e1-123f-7696-8b4c-ab508c6a6bf7
+      value: 019d06dd-b4a6-73ac-94ec-920081fa2b6d
       type: path
     - name: userId
       value: 019cf8ab-f373-776c-af59-978ee54845c5
@@ -20,7 +20,7 @@ http:
     type: json
     data: |-
       {
-        "optionId": "019d02e1-123f-7696-8b4c-ab508c6a6bf7"
+        "optionId": "019d06dd-b4a6-73ac-94ec-920081fa2b6d"
       }
   auth: inherit
 
