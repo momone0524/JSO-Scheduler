@@ -94,15 +94,9 @@ async function getJobAssignmentInJob(req: Request, res: Response): Promise<void>
     res.sendStatus(401);
     return;
   }
-  const job = await getAllJobAssignmentByJob(jobId);
+  const jobassignment = await getAllJobAssignmentByJob(jobId);
 
-  // Jobがなければエラー
-  if (!job) {
-    res.status(404).json({ error: 'Job not found' });
-    return;
-  }
-
-  const jobassignment = await getJobById(jobId);
+  // JobAssignmentがなければエラー
   if (!jobassignment) {
     res.status(404).json({ error: 'JobAssignment not found' });
     return;

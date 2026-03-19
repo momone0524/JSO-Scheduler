@@ -17,9 +17,11 @@ async function getAllPolls(): Promise<Poll[]> {
       isClosed: true,
       pollType: true,
       user: {
+        userId: true,
         name: true,
       },
       event: {
+        eventId: true,
         eventName: true,
       },
     },
@@ -38,6 +40,7 @@ async function getPollById(pollId: string): Promise<Poll | null> {
       isClosed: true,
       pollType: true,
       user: {
+        userId: true,
         name: true,
       },
     },

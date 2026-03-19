@@ -15,9 +15,11 @@ async function getAllAttendances(eventId: string): Promise<Attendance[]> {
       attend: true,
       attendTime: true,
       user: {
+        userId: true,
         name: true,
       },
       event: {
+        eventId: true,
         eventName: true,
       },
     },
@@ -33,9 +35,11 @@ async function getAttendanceById(attendanceId: string): Promise<Attendance | nul
       attend: true,
       attendTime: true,
       user: {
+        userId: true,
         name: true,
       },
       event: {
+        eventId: true,
         eventName: true,
       },
     },

@@ -16,10 +16,13 @@ async function getAllEvents(): Promise<Event[]> {
       startTime: true,
       endTime: true,
       user: {
+        userId: true,
         name: true,
       },
       poll: {
+        pollId: true,
         title: true,
+        pollType: true,
       },
     },
   });
@@ -37,10 +40,13 @@ async function getEventById(eventId: string): Promise<Event | null> {
       startTime: true,
       endTime: true,
       user: {
+        userId: true,
         name: true,
       },
       poll: {
+        pollId: true,
         title: true,
+        pollType: true,
       },
     },
   });
@@ -56,18 +62,5 @@ async function addEventManual(data: CreateEventInput, user: User): Promise<Event
   newEvent.user = user;
   return EventRepository.save(newEvent);
 }
-
-/* LATER
-async function addEventFromPoll(user: User, poll: Poll): Promise<Event> {
-  const newEvent = new Event();
-  newEvent.eventName = poll.title;
-  newEvent.place = 'TBD';
-  newEvent.date = poll.closeAt;
-  newEvent.startTime = '00:00';
-  newEvent.endTime = '00:00';
-  newEvent.user = user;
-  newEvent.poll = poll;
-  return EventRepository.save(newEvent);
-}*/
 
 export { addEventManual, getAllEvents, getEventById };
