@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote/:userId
   params:
     - name: pollId
-      value: 019d02de-66e9-707f-aa47-24824c8c28ab
+      value: 019d07f6-db9b-769f-9a35-30e15ec1f8e1
       type: path
     - name: optionId
-      value: 019d06dd-b4a6-73ac-94ec-920081fa2b6d
+      value: 019d07f8-7dcf-7231-88a5-76fd193da3e2
       type: path
     - name: userId
       value: 019cf8ab-f373-776c-af59-978ee54845c5
@@ -20,7 +20,7 @@ http:
     type: json
     data: |-
       {
-        "optionId": "019d06dd-b4a6-73ac-94ec-920081fa2b6d"
+        "optionId": "019d07f8-7dcf-7231-88a5-76fd193da3e2"
       }
   auth: inherit
 

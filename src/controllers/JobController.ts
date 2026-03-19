@@ -69,14 +69,14 @@ async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
   // Eventがなければエラー
   const event = await getEventById(eventId);
   if (!event) {
-    res.status(404).json({ error: 'Job not found' });
+    res.status(404).json({ error: 'Event not found' });
     return;
   }
 
   // Pollがなければエラー
   const poll = await getPollById(event.poll.pollId);
   if (!poll) {
-    res.status(404).json({ error: 'Job not found' });
+    res.status(404).json({ error: 'Poll not found' });
     return;
   }
 

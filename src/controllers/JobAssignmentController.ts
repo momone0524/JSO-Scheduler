@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
+import { getEventById } from '../models/EventModel.js';
 import {
   addJobAssignmentAuto,
   getAllJobAssignmentByJob,
   getJobAssignmentById,
 } from '../models/JobAssignmentModel.js';
 import { getJobById } from '../models/JobModel.js';
+import { getPollById } from '../models/PollModel.js';
 import { getPollOptionById } from '../models/PollOptionModel.js';
 import { getAllPollVoteByOption } from '../models/PollVoteModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
@@ -26,8 +28,21 @@ async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<
     return;
   }
 
+  // Eventがなければエラー
+  const event = await getEventById(job.event.eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+
+  // Pollの種類が"job"でなければエラー
+  const polltype = await getPollById(event.poll.pollId);
+  if (polltype.pollType === 'schedule') {
+    res.status(40).json({ error: 'You cannot create Job from Schedule Poll' });
+    return;
+  }
+
   // PollOPtionがなければエラー
-  // 今 Job が手動作成で、polloption を持っていない
   const polloption = await getPollOptionById(job.polloption.optionId);
   if (!polloption) {
     res.status(404).json({ error: 'PollOption not found' });
