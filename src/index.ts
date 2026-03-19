@@ -6,6 +6,11 @@ import {
   getAttendances,
 } from './controllers/AttendanceController.js';
 import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
+import {
+  CreateNewJobAssignmentAuto,
+  getJobAssignmentInfo,
+  getJobAssignmentInJob,
+} from './controllers/JobAssignmentController(仮).js';
 import { CreateNewJobManual, getJobInEvent, getJobInfo } from './controllers/JobController(仮).js';
 import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
 import {
@@ -16,6 +21,7 @@ import {
 import {
   CreateNewPollVote,
   getPollVoteInfo,
+  getPollVoteInOption,
   getPollVotes,
 } from './controllers/PollVoteController.js';
 import {
@@ -71,11 +77,17 @@ app.get('/pollOptions/:optionId', getPollOptionInfo);
 app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
+app.get('/polls/:pollId/pollOptions/:optionId/pollvoteInOption', getPollVoteInOption);
 
 // Job
 app.post('/event/:eventId/jobs/:userId', CreateNewJobManual);
 app.get('/event/:eventId/jobs', getJobInEvent);
 app.get('/event/:eventId/jobs/:jobId', getJobInfo);
+
+// JobAssignment
+app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
+app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
+app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

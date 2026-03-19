@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import { getPollById } from '../models/PollModel.js';
 import { getPollOptionById } from '../models/PollOptionModel.js';
-import { addPollVote, getAllPollVote, getPollVoteById } from '../models/PollVoteModel.js';
+import {
+  addPollVote,
+  getAllPollVote,
+  getAllPollVoteByOption,
+  getPollVoteById,
+} from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreatePollVoteInput, CreatePollVoteSchema } from '../validators/PollVoteValidator.js';
@@ -88,4 +93,27 @@ async function getPollVotes(req: Request, res: Response): Promise<void> {
   res.json({ pollVotes });
 }
 
-export { CreateNewPollVote, getPollVoteInfo, getPollVotes };
+async function getPollVoteInOption(req: Request, res: Response): Promise<void> {
+  const { optionId } = req.params;
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // Optionがなければエラー
+  const option = await getPollOptionById(optionId);
+  if (!option) {
+    res.status(404).json({ error: 'Option not found' });
+    return;
+  }
+  const votes = await getAllPollVoteByOption(optionId);
+
+  if (!votes) {
+    res.status(404).json({ error: 'Votes not found' });
+    return;
+  }
+  res.json({ votes });
+}
+
+export { CreateNewPollVote, getPollVoteInfo, getPollVoteInOption, getPollVotes };

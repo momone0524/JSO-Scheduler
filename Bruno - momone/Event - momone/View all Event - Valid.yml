@@ -1,7 +1,7 @@
 info:
   name: View all Event - Valid
   type: http
-  seq: 9
+  seq: 1
 
 http:
   method: GET

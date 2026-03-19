@@ -1,0 +1,25 @@
+info:
+  name: View a PollVote -  Valid
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote/:voteId
+  params:
+    - name: voteId
+      value: 019d02e8-f9d0-7339-bd1a-31cf02679916
+      type: path
+    - name: optionId
+      value: 019d02e1-123f-7696-8b4c-ab508c6a6bf7
+      type: path
+    - name: pollId
+      value: 019d02de-66e9-707f-aa47-24824c8c28ab
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

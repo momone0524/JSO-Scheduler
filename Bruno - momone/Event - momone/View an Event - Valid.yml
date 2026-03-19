@@ -1,7 +1,7 @@
 info:
   name: View an Event - Valid
   type: http
-  seq: 11
+  seq: 3
 
 http:
   method: GET

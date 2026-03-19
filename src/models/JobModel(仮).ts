@@ -11,6 +11,7 @@ async function getAllJobByEvent(eventId: string): Promise<Job[]> {
     relations: ['event', 'poll', 'polloption'],
     select: {
       jobId: true,
+      jobName: true,
       description: true,
       event: {
         eventId: true,
@@ -43,6 +44,7 @@ async function getJobById(jobId: string): Promise<Job | null> {
     relations: ['event', 'poll', 'polloption'],
     select: {
       jobId: true,
+      jobName: true,
       description: true,
       event: {
         eventId: true,

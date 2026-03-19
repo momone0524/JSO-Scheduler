@@ -39,6 +39,39 @@ async function getAllPollVote(): Promise<PollVote[]> {
   });
 }
 
+async function getAllPollVoteByOption(optionId: string): Promise<PollVote[]> {
+  return PollVoteRepository.find({
+    where: { polloption: { optionId } },
+    relations: ['poll', 'user', 'polloption'],
+    select: {
+      voteId: true,
+      poll: {
+        pollId: true,
+        title: true,
+        description: true,
+        closeAt: true,
+        isClosed: true,
+        pollType: true,
+      },
+      user: {
+        userId: true,
+        name: true,
+        gradeYear: true,
+        major: true,
+        birthday: true,
+        language: true,
+        role: true,
+        email: true,
+      },
+      polloption: {
+        optionId: true,
+        option: true,
+        isWinner: true,
+      },
+    },
+  });
+}
+
 async function getPollVoteById(voteId: string): Promise<PollVote | null> {
   return PollVoteRepository.findOne({
     where: { voteId },
@@ -85,4 +118,4 @@ async function addPollVote(
   return PollVoteRepository.save(newPollVote);
 }
 
-export { addPollVote, getAllPollVote, getPollVoteById };
+export { addPollVote, getAllPollVote, getAllPollVoteByOption, getPollVoteById };
