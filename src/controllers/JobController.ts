@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getEventById } from '../models/EventModel.js';
-///// （仮）を変更する！！！！！
-import { addJobManually, getAllJobByEvent, getJobById } from '../models/JobModel.js';
+import { addJobAuto, addJobManually, getAllJobByEvent, getJobById } from '../models/JobModel.js';
+import { getPollOptionById } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreateJobInput, CreateJobSchema } from '../validators/JobValidator.js';
@@ -55,6 +55,45 @@ async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
   }
 }
 
+// 自動生成！！！！
+async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
+  const { eventId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // Eventがなければエラー
+  const event = await getEventById(eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Job not found' });
+    return;
+  }
+
+  // PollOPtionがなければエラー
+  const polloption = await getPollOptionById(polloption.optionId);
+  if (!polloption) {
+    res.status(404).json({ error: 'PollOption not found' });
+    return;
+  }
+
+  try {
+    const job = [];
+    for (const option of polloption) {
+      const newJob = await addJobAuto(option, event);
+      job.push(newJob);
+      console.log(newJob);
+    }
+    res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
 async function getJobInfo(req: Request, res: Response): Promise<void> {
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -89,4 +128,4 @@ async function getJobInEvent(req: Request, res: Response): Promise<void> {
   res.json({ jobs });
 }
 
-export { CreateNewJobManual, getJobInEvent, getJobInfo };
+export { CreateNewJobAuto, CreateNewJobManual, getJobInEvent, getJobInfo };
