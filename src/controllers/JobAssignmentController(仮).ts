@@ -28,6 +28,7 @@ async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<
   }
 
   // PollOPtionがなければエラー
+  // 今 Job が手動作成で、polloption を持っていない
   const polloption = await getPollOptionById(job.polloption.optionId);
   if (!polloption) {
     res.status(404).json({ error: 'PollOption not found' });
@@ -35,8 +36,6 @@ async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<
   }
 
   // pollVoteがなければエラー
-  // 特定のpolloptionに属するpollvoteを表示するにはoptionIdが必要
-  // 今 Job が手動作成で、polloption を持っていない
   const pollvote = await getAllPollVoteByOption(job.polloption.optionId);
   if (pollvote.length === 0) {
     res.status(404).json({ error: 'No Vote for this Job' });

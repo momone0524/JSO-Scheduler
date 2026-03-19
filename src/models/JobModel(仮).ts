@@ -1,6 +1,7 @@
 import { AppDataSource } from '../dataSource.js';
 import { Event } from '../entities/Event.js';
 import { Job } from '../entities/Job.js';
+import { PollOption } from '../entities/PollOption.js';
 import { CreateJobInput } from '../validators/JobValidator.js';
 
 const JobRepository = AppDataSource.getRepository(Job);
@@ -79,4 +80,13 @@ async function addJobManually(data: CreateJobInput, event: Event): Promise<Job> 
   return JobRepository.save(newJob);
 }
 
-export { addJobManually, getAllJobByEvent, getJobById };
+async function addJobAuto(polloption: PollOption, event: Event): Promise<Job> {
+  const newJob = new Job();
+  newJob.jobName = polloption.option;
+  newJob.event = event;
+  newJob.poll = polloption.poll;
+  newJob.polloption = polloption;
+  return JobRepository.save(newJob);
+}
+
+export { addJobAuto, addJobManually, getAllJobByEvent, getJobById };
