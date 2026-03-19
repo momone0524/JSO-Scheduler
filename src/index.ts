@@ -64,7 +64,7 @@ app.get('/events/:eventId/attendance', getAttendances);
 app.get('/events/:eventId/attendance/:attendanceId', getAttendanceInfo);
 
 // Poll
-app.post('/polls/:userId', CreateNewPoll);
+app.post('/events/:eventId/polls/:userId', CreateNewPoll);
 app.get('/polls', getPolls);
 app.get('/polls/:pollId', getPollInfo);
 

@@ -5,8 +5,11 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/polls/:userId
+  url: http://localhost:1000//events/:eventId/polls/:userId
   params:
+    - name: eventId
+      value: 019cf8c8-1123-72c9-85fc-696743fe5803
+      type: path
     - name: userId
       value: 019cf8ab-f373-776c-af59-978ee54845c5
       type: path
@@ -14,7 +17,7 @@ http:
     type: json
     data: |-
       {
-        "title": "Job Poll for Spring festival",
+        "title": "Job Poll for Summer festival",
         "description": "Choose your job preference",
         "closedAt": "2026-04-28",
         "pollType": "job"

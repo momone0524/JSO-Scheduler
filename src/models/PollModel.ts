@@ -1,4 +1,5 @@
 import { AppDataSource } from '../dataSource.js';
+import { Event } from '../entities/Event.js';
 import { Poll } from '../entities/Poll.js';
 import { User } from '../entities/User.js';
 import { CreatePollInput } from '../validators/PollValidator.js';
@@ -7,7 +8,7 @@ const PollRepository = AppDataSource.getRepository(Poll);
 
 async function getAllPolls(): Promise<Poll[]> {
   return PollRepository.find({
-    relations: ['user'],
+    relations: ['user', 'event'],
     select: {
       pollId: true,
       title: true,
@@ -16,10 +17,10 @@ async function getAllPolls(): Promise<Poll[]> {
       isClosed: true,
       pollType: true,
       user: {
-        userId: true,
         name: true,
-        role: true,
-        email: true,
+      },
+      event: {
+        eventName: true,
       },
     },
   });
@@ -46,13 +47,14 @@ async function getPollById(pollId: string): Promise<Poll | null> {
   });
 }
 
-async function addPoll(data: CreatePollInput, user: User): Promise<Poll> {
+async function addPoll(data: CreatePollInput, user: User, event: Event): Promise<Poll> {
   const newPoll = new Poll();
   newPoll.title = data.title;
   newPoll.description = data.description;
   newPoll.closeAt = new Date(data.closedAt);
   newPoll.pollType = data.pollType;
   newPoll.user = user;
+  newPoll.event = event;
   return PollRepository.save(newPoll);
 }
 

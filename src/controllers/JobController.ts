@@ -55,7 +55,7 @@ async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
   }
 }
 
-// 自動生成！！！！
+// 自動生成！！！！ ----- WORKING RIGHT NOW
 async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
   const { eventId } = req.params;
 

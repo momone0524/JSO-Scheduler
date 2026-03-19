@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
+import { getEventById } from '../models/EventModel.js';
 import { addPoll, getAllPolls, getPollById } from '../models/PollModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreatePollInput, CreatePollSchema } from '../validators/PollValidator.js';
 
 async function CreateNewPoll(req: Request, res: Response): Promise<void> {
-  const { userId } = req.params;
+  const { userId, eventId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -32,6 +33,13 @@ async function CreateNewPoll(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // Eventがなければエラー
+  const event = await getEventById(eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+
   // 書き込み内容が違ったらエラー
   const result = CreatePollSchema.safeParse(req.body);
   if (!result.success) {
@@ -42,7 +50,7 @@ async function CreateNewPoll(req: Request, res: Response): Promise<void> {
   const data: CreatePollInput = result.data;
 
   try {
-    const newPoll = await addPoll(data, user);
+    const newPoll = await addPoll(data, user, event);
     console.log(newPoll);
     res.sendStatus(201);
   } catch (err) {
