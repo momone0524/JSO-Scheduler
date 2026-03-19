@@ -10,8 +10,8 @@ import {
   CreateNewJobAssignmentAuto,
   getJobAssignmentInfo,
   getJobAssignmentInJob,
-} from './controllers/JobAssignmentController(仮).js';
-import { CreateNewJobManual, getJobInEvent, getJobInfo } from './controllers/JobController(仮).js';
+} from './controllers/JobAssignmentController.js';
+import { CreateNewJobManual, getJobInEvent, getJobInfo } from './controllers/JobController.js';
 import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
 import {
   CreateNewPollOption,
