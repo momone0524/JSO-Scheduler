@@ -2,10 +2,8 @@ import {
   BeforeInsert,
   Column,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryColumn,
   Relation,
 } from 'typeorm';
@@ -44,10 +42,9 @@ export class Event {
   @ManyToOne(() => User, (user) => user.events, { nullable: true, onDelete: 'SET NULL' })
   user: Relation<User>;
 
-  // (Poll.ts)
-  @OneToOne(() => Poll, (poll) => poll.event)
-  @JoinColumn()
-  poll: Relation<Poll>;
+  // (Poll.ts) one side: Event
+  @OneToMany(() => Poll, (poll) => poll.event)
+  poll: Relation<Poll>[];
 
   // (Attendance.ts) one side: Event
   @OneToMany(() => Attendance, (attendance) => attendance.event)

@@ -56,7 +56,7 @@ async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
   }
 
   // PollOptionが既に存在する場合はエラー
-  const polloption = await getPollOptionInPollByName(pollId, result.data.option);
+  const polloption = await getPollOptionInPollByName(pollId, result.data.joboption);
   if (polloption) {
     res.status(404).json({ error: 'PollOption already exists' });
     return;

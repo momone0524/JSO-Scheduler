@@ -4,7 +4,6 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryColumn,
   Relation,
 } from 'typeorm';
@@ -41,8 +40,8 @@ export class Poll {
   @Column({ nullable: true })
   pollType: string;
 
-  // (Event.ts)
-  @OneToOne(() => Event, (event) => event.poll)
+  // (Event.ts) many side: Poll
+  @ManyToOne(() => Event, (event) => event.poll)
   event: Relation<Event>;
 
   // (User.ts) many side: Poll

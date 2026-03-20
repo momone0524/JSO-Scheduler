@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 const CreatePollOptionSchema = z.object({
-  option: z.string().min(1).max(100),
+  joboption: z.string().min(1).max(100).optional(),
+  scheduleoption: z.string().min(1).max(100).optional(),
 });
 
 export type CreatePollOptionInput = z.infer<typeof CreatePollOptionSchema>;

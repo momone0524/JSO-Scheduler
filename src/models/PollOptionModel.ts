@@ -11,7 +11,8 @@ async function getAllPollOptions(pollId: string): Promise<PollOption[]> {
     relations: ['poll'],
     select: {
       optionId: true,
-      option: true,
+      joboption: true,
+      scheduleoption: true,
       isWinner: true,
       poll: {
         pollId: true,
@@ -27,7 +28,8 @@ async function getPollOptionById(optionId: string): Promise<PollOption | null> {
     relations: ['poll'],
     select: {
       optionId: true,
-      option: true,
+      joboption: true,
+      scheduleoption: true,
       isWinner: true,
       poll: {
         pollId: true,
@@ -39,14 +41,15 @@ async function getPollOptionById(optionId: string): Promise<PollOption | null> {
 
 async function getPollOptionInPollByName(
   pollId: string,
-  option: string,
+  joboption: string,
 ): Promise<PollOption | null> {
   return PollOptionRepository.findOne({
-    where: { poll: { pollId }, option },
+    where: { poll: { pollId }, joboption },
     relations: ['poll'],
     select: {
       optionId: true,
-      option: true,
+      joboption: true,
+      scheduleoption: true,
       isWinner: true,
       poll: {
         pollId: true,
@@ -58,7 +61,8 @@ async function getPollOptionInPollByName(
 
 async function addPollOption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
   const newPollOption = new PollOption();
-  newPollOption.option = data.option;
+  newPollOption.joboption = data.joboption;
+  newPollOption.scheduleoption = new Date(data.scheduleoption);
   newPollOption.poll = poll;
   return PollOptionRepository.save(newPollOption);
 }

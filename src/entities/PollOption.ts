@@ -22,8 +22,11 @@ export class PollOption {
     this.optionId = uuidv7();
   }
 
-  @Column()
-  option: string;
+  @Column({ nullable: true })
+  joboption: string;
+
+  @Column({ nullable: true })
+  scheduleoption: Date;
 
   @Column({ default: false })
   isWinner: boolean;
