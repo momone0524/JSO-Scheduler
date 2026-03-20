@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getEventById } from '../models/EventModel.js';
-import { addPoll, getAllPolls, getPollById, getPollInEvent } from '../models/PollModel.js';
+import { addPoll, getAllPolls, getPollById } from '../models/PollModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreatePollInput, CreatePollSchema } from '../validators/PollValidator.js';
@@ -86,27 +86,4 @@ async function getPolls(req: Request, res: Response): Promise<void> {
   res.json({ polls });
 }
 
-async function getJobPollInEvent(req: Request, res: Response): Promise<void> {
-  const { eventId } = req.params;
-  // ログインしていなければエラー
-  if (!req.session.isLoggedIn) {
-    res.sendStatus(401);
-    return;
-  }
-
-  // Eventがなければエラー
-  const event = await getEventById(eventId);
-  if (!event) {
-    res.status(404).json({ error: 'Event not found' });
-    return;
-  }
-
-  const poll = await getPollInEvent(eventId);
-
-  if (poll) {
-    res.status(404).json({ error: 'PollOption not found' });
-    return;
-  }
-  res.json({ polls });
-}
 export { CreateNewPoll, getPollInfo, getPolls };

@@ -73,22 +73,24 @@ async function CreateNewJobAuto(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  const jobpoll = event.poll.find((p) => p.pollType == 'job');
+
   // Pollがなければエラー
-  const poll = await getPollById(event.poll.pollId);
+  const poll = await getPollById(jobpoll.pollId);
   if (!poll) {
     res.status(404).json({ error: 'Poll not found' });
     return;
   }
 
   // Pollの種類が"job"でなければエラー
-  const polltype = await getPollById(event.poll.pollId);
+  const polltype = await getPollById(jobpoll.pollId);
   if (polltype.pollType === 'schedule') {
     res.status(40).json({ error: 'You cannot create Job from Schedule Poll' });
     return;
   }
 
   // PollOPtionがなければエラー
-  const polloption = await getAllPollOptions(event.poll.pollId);
+  const polloption = await getAllPollOptions(jobpoll.pollId);
   if (polloption.length === 0) {
     res.status(404).json({ error: 'PollOption not found' });
     return;

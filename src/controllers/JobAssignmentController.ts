@@ -36,7 +36,8 @@ async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<
   }
 
   // Pollの種類が"job"でなければエラー
-  const polltype = await getPollById(event.poll.pollId);
+  const jobpoll = event.poll.find((p) => p.pollType == 'job');
+  const polltype = await getPollById(jobpoll.pollId);
   if (polltype.pollType === 'schedule') {
     res.status(40).json({ error: 'You cannot create Job from Schedule Poll' });
     return;
