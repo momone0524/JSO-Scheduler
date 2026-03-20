@@ -98,4 +98,13 @@ async function updateEventInfo(data: UpdateEventInput, eventId: string): Promise
   return EventRepository.save(event);
 }
 
-export { addEventManual, getAllEvents, getEventById, updateEventInfo };
+async function deleteEventById(eventId: string): Promise<void> {
+  const event = await EventRepository.findOne({ where: { eventId } });
+
+  if (!event) {
+    return;
+  }
+
+  await EventRepository.remove(event);
+}
+export { addEventManual, deleteEventById, getAllEvents, getEventById, updateEventInfo };

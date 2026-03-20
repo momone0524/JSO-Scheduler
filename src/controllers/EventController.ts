@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import {
   addEventManual,
+  deleteEventById,
   getAllEvents,
   getEventById,
   updateEventInfo,
@@ -175,4 +176,25 @@ async function updateEventFromPollAuto(req: Request, res: Response): Promise<voi
   }
 }
 
-export { CreateNewEventManual, getEventInfo, getEvents, updateEvent, updateEventFromPollAuto };
+// Eventの削除
+async function deleteEvent(req: Request, res: Response): Promise<void> {
+  const { eventId } = req.params;
+  const event = await getEventById(eventId);
+
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+
+  await deleteEventById(eventId);
+  res.sendStatus(204); // 204 No Content — successful, nothing to return
+}
+
+export {
+  CreateNewEventManual,
+  deleteEvent,
+  getEventInfo,
+  getEvents,
+  updateEvent,
+  updateEventFromPollAuto,
+};

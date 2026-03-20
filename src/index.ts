@@ -8,6 +8,7 @@ import {
 } from './controllers/AttendanceController.js';
 import {
   CreateNewEventManual,
+  deleteEvent,
   getEventInfo,
   getEvents,
   updateEvent,
@@ -75,6 +76,7 @@ app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
 app.patch('/events/:eventId/update/:userId', updateEvent);
+app.delete('/events/:eventId', deleteEvent); // Bruno test not yet
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
