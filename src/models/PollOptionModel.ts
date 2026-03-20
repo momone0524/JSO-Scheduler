@@ -37,6 +37,25 @@ async function getPollOptionById(optionId: string): Promise<PollOption | null> {
   });
 }
 
+async function getPollOptionInPollByName(
+  pollId: string,
+  option: string,
+): Promise<PollOption | null> {
+  return PollOptionRepository.findOne({
+    where: { poll: { pollId }, option },
+    relations: ['poll'],
+    select: {
+      optionId: true,
+      option: true,
+      isWinner: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+    },
+  });
+}
+
 async function addPollOption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
   const newPollOption = new PollOption();
   newPollOption.option = data.option;
@@ -44,4 +63,4 @@ async function addPollOption(data: CreatePollOptionInput, poll: Poll): Promise<P
   return PollOptionRepository.save(newPollOption);
 }
 
-export { addPollOption, getAllPollOptions, getPollOptionById };
+export { addPollOption, getAllPollOptions, getPollOptionById, getPollOptionInPollByName };

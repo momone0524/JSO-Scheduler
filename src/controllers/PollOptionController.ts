@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import { getPollById } from '../models/PollModel.js';
-import { addPollOption, getAllPollOptions, getPollOptionById } from '../models/PollOptionModel.js';
+import {
+  addPollOption,
+  getAllPollOptions,
+  getPollOptionById,
+  getPollOptionInPollByName,
+} from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import {
@@ -47,6 +52,13 @@ async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
   const result = CreatePollOptionSchema.safeParse(req.body);
   if (!result.success) {
     res.status(400).json(result.error.flatten());
+    return;
+  }
+
+  // PollOptionが既に存在する場合はエラー
+  const polloption = await getPollOptionInPollByName(pollId, result.data.option);
+  if (polloption) {
+    res.status(404).json({ error: 'PollOption already exists' });
     return;
   }
 
