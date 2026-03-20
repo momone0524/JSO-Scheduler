@@ -8,19 +8,19 @@ http:
   url: http://localhost:1000/users/:userId/update
   params:
     - name: userId
-      value: 019cf3ee-fc3a-744e-963b-42a67505d4a7
+      value: 019cf8ab-f373-776c-af59-978ee54845c5
       type: path
   body:
     type: json
     data: |-
       {
-        "name": "Momone Takahashi",
-        "gradeYear": 4,
-        "major": "Computer Science",
-        "birthday": "2003-05-24",
-        "language": "en",
-        "role": "Board Member",
-        "email": "momone@example.co"
+            "name": "Amane",
+            "gradeYear": 2,
+            "major": "English",
+            "birthday": "2005-03-15T00:00:00.000Z",
+            "language": "ja",
+            "role": "Board Member",
+            "email": "amane.takahashi@example.com"
       }
   auth: inherit
 
