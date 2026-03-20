@@ -68,7 +68,7 @@ app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
 app.patch('/users/:userId/update', updateUsers);
-app.delete('/users/:userId', deleteUser);
+app.delete('/users/:userId/delete', deleteUser);
 
 // Event
 app.post('/events/:userId', CreateNewEventManual);
@@ -76,7 +76,7 @@ app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
 app.patch('/events/:eventId/update/:userId', updateEvent);
-app.delete('/events/:eventId', deleteEvent); // Bruno test not yet
+app.delete('/events/:eventId/delete', deleteEvent); // Bruno test not yet
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);

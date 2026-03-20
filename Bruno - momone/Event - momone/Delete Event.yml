@@ -1,14 +1,14 @@
 info:
-  name: Delete User
+  name: Delete Event
   type: http
-  seq: 7
+  seq: 6
 
 http:
   method: DELETE
-  url: http://localhost:1000/users/:userId/delete
+  url: http://localhost:1000/events/:eventId/delete
   params:
-    - name: userId
-      value: 019d0cf3-19ba-72cc-bbf5-a8cbf68e70f6
+    - name: eventId
+      value: 019d0cf3-e5da-712f-837d-bd44ccfb15de
       type: path
   auth: inherit
 

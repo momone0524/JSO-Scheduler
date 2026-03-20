@@ -147,7 +147,7 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
 
 // Event情報更新From Poll
 async function updateEventFromPollAuto(req: Request, res: Response): Promise<void> {
-  const { pollId } = req.params;
+  const { pollId, userId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -159,6 +159,25 @@ async function updateEventFromPollAuto(req: Request, res: Response): Promise<voi
   const poll = await getPollById(pollId);
   if (!poll) {
     res.status(404).json({ error: 'Poll not found' });
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
+  // ボードメンバーでなければエラー
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to create an Event' });
     return;
   }
 
