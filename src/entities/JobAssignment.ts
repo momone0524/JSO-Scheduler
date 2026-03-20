@@ -18,7 +18,7 @@ export class JobAssignment {
   isLeader: boolean;
 
   // (User.ts) many side: JobAssignment
-  @ManyToOne(() => User, (user) => user.jobassignments, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.jobassignments /*, { onDelete: 'CASCADE' }*/)
   user: Relation<User>;
 
   // (Job.ts) many side: JobAssignment

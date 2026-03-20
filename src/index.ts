@@ -6,12 +6,7 @@ import {
   getAttendanceOfUserInEvent,
   getAttendances,
 } from './controllers/AttendanceController.js';
-import {
-  CreateNewEventManual,
-  getEventInfo,
-  getEvents,
-  updateEvent,
-} from './controllers/EventController.js';
+import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
 import {
   CreateNewJobAssignmentAuto,
   getJobAssignmentInfo,
@@ -36,7 +31,6 @@ import {
   getPollVotes,
 } from './controllers/PollVoteController.js';
 import {
-  deleteUser,
   getUserProfile,
   getUsers,
   logIn,
@@ -66,13 +60,13 @@ app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
 app.patch('/users/:userId/update', updateUsers);
-app.delete('/users/:userId', deleteUser);
+//app.delete('/users/:userId', deleteUser);
 
 // Event
 app.post('/events/:userId', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
-app.patch('/events/:eventId/update', updateEvent); // Brunoテストまだしてない
+//app.patch('/events/:eventId/update', updateEvent); // Brunoテストまだしてない
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);

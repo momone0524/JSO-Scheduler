@@ -20,7 +20,7 @@ export class Attendance {
   attendTime: string;
 
   // (User.ts) many side: Attendance
-  @ManyToOne(() => User, (user) => user.attendances, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.attendances /*, { onDelete: 'CASCADE' }*/)
   user: Relation<User>;
 
   // (Event.ts) many side: Attendance

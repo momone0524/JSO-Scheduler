@@ -16,7 +16,7 @@ export class PollVote {
   }
 
   // (User.ts) many side: PollVote
-  @ManyToOne(() => User, (user) => user.pollvotes, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.pollvotes /*, { onDelete: 'CASCADE' }*/)
   user: Relation<User>;
 
   // (PollOption.ts) many side: PollVote
