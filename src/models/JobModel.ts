@@ -24,7 +24,8 @@ async function getAllJobByEvent(eventId: string): Promise<Job[]> {
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });
@@ -48,7 +49,8 @@ async function getJobById(jobId: string): Promise<Job | null> {
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });
@@ -64,7 +66,7 @@ async function addJobManually(data: CreateJobInput, event: Event): Promise<Job> 
 
 async function addJobAuto(polloption: PollOption, event: Event): Promise<Job> {
   const newJob = new Job();
-  newJob.jobName = polloption.option;
+  newJob.jobName = polloption.joboption;
   newJob.event = event;
   newJob.poll = polloption.poll;
   newJob.polloption = polloption;

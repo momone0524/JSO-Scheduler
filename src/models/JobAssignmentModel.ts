@@ -22,7 +22,8 @@ async function getAllJobAssignmentByJob(jobId: string): Promise<JobAssignment[]>
       },
       pollvote: {
         polloption: {
-          option: true,
+          joboption: true,
+          scheduleoption: true,
         },
       },
     },
@@ -46,7 +47,8 @@ async function getJobAssignmentById(assignmentId: string): Promise<JobAssignment
       },
       pollvote: {
         polloption: {
-          option: true,
+          joboption: true,
+          scheduleoption: true,
         },
       },
     },

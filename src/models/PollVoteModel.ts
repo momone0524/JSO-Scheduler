@@ -21,7 +21,8 @@ async function getAllPollVote(): Promise<PollVote[]> {
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });
@@ -43,7 +44,8 @@ async function getAllPollVoteByOption(optionId: string): Promise<PollVote[]> {
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });
@@ -65,7 +67,8 @@ async function getPollVoteById(voteId: string): Promise<PollVote | null> {
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });
@@ -87,7 +90,8 @@ async function getPollVoteByPollAndUser(pollId: string, userId: string): Promise
       },
       polloption: {
         optionId: true,
-        option: true,
+        joboption: true,
+        scheduleoption: true,
       },
     },
   });

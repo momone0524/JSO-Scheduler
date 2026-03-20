@@ -99,6 +99,7 @@ async function updateEventInfo(data: UpdateEventInput, eventId: string): Promise
   return EventRepository.save(event);
 }
 
+// やっている途中です
 async function updateEventInfoAuto(poll: Poll, eventId: string): Promise<Event | null> {
   const event = await EventRepository.findOne({
     relations: ['user', 'poll'],

@@ -28,6 +28,29 @@ async function getAllPolls(): Promise<Poll[]> {
   });
 }
 
+async function getPollInEvent(eventId: string): Promise<Poll[]> {
+  return PollRepository.find({
+    where: { event: { eventId } },
+    relations: ['user', 'event'],
+    select: {
+      pollId: true,
+      title: true,
+      description: true,
+      closeAt: true,
+      isClosed: true,
+      pollType: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      event: {
+        eventId: true,
+        eventName: true,
+      },
+    },
+  });
+}
+
 async function getPollById(pollId: string): Promise<Poll | null> {
   return PollRepository.findOne({
     where: { pollId },
@@ -58,4 +81,4 @@ async function addPoll(data: CreatePollInput, user: User, event: Event): Promise
   return PollRepository.save(newPoll);
 }
 
-export { addPoll, getAllPolls, getPollById };
+export { addPoll, getAllPolls, getPollById, getPollInEvent };
