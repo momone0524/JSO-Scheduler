@@ -11,6 +11,7 @@ import {
   getEventInfo,
   getEvents,
   updateEvent,
+  updateEventFromPollAuto,
 } from './controllers/EventController.js';
 import {
   CreateNewJobAssignmentAuto,
@@ -72,7 +73,8 @@ app.delete('/users/:userId', deleteUser);
 app.post('/events/:userId', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
-app.patch('/events/:eventId/:userId/update', updateEvent);
+app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
+app.patch('/events/:eventId/update/:userId', updateEvent);
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);

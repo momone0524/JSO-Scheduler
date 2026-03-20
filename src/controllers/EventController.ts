@@ -5,6 +5,7 @@ import {
   getEventById,
   updateEventInfo,
 } from '../models/EventModel.js';
+import { getPollById, updateEventFromPoll } from '../models/PollModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import {
@@ -87,9 +88,9 @@ async function getEvents(req: Request, res: Response): Promise<void> {
   res.json({ events });
 }
 
-// ユーザー情報更新
+// Event情報更新
 async function updateEvent(req: Request, res: Response): Promise<void> {
-  const { eventId } = req.params;
+  const { eventId, userId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -105,7 +106,7 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(event.user.userId);
+  const user = await getUserById(userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
     return;
@@ -143,4 +144,35 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
   }
 }
 
-export { CreateNewEventManual, getEventInfo, getEvents, updateEvent };
+// Event情報更新From Poll
+async function updateEventFromPollAuto(req: Request, res: Response): Promise<void> {
+  const { pollId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // Pollがなければエラー
+  const poll = await getPollById(pollId);
+  if (!poll) {
+    res.status(404).json({ error: 'Poll not found' });
+    return;
+  }
+
+  try {
+    const updated = await updateEventFromPoll(pollId);
+    if (!updated) {
+      res.status(404).json({ error: 'Event not found' });
+      return;
+    }
+    res.json({ user: updated });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export { CreateNewEventManual, getEventInfo, getEvents, updateEvent, updateEventFromPollAuto };

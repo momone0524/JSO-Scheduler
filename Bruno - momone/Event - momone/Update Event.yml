@@ -5,7 +5,7 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/events/:eventId/:userId/update
+  url: http://localhost:1000/events/:eventId/update/:userId
   params:
     - name: userId
       value: 019d0cf3-19ba-72cc-bbf5-a8cbf68e70f6
@@ -18,7 +18,7 @@ http:
     data: |-
       {
             "eventName": "NEW YEAR",
-            "place": "BCM",
+            "place": "Union",
             "date": "2026-05-13",
             "startTime": "17:00",
             "endTime": "20:00"
