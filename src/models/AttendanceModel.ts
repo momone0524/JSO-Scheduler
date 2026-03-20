@@ -26,6 +26,29 @@ async function getAllAttendances(eventId: string): Promise<Attendance[]> {
   });
 }
 
+async function getAttendanceByEventAndUserId(
+  eventId: string,
+  userId: string,
+): Promise<Attendance | null> {
+  return AttendanceRepository.findOne({
+    where: { event: { eventId }, user: { userId } },
+    relations: ['user', 'event'],
+    select: {
+      attendanceId: true,
+      attend: true,
+      attendTime: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      event: {
+        eventId: true,
+        eventName: true,
+      },
+    },
+  });
+}
+
 async function getAttendanceById(attendanceId: string): Promise<Attendance | null> {
   return AttendanceRepository.findOne({
     where: { attendanceId },
@@ -59,4 +82,4 @@ async function addAttendance(
   return AttendanceRepository.save(newAttendance);
 }
 
-export { addAttendance, getAllAttendances, getAttendanceById };
+export { addAttendance, getAllAttendances, getAttendanceByEventAndUserId, getAttendanceById };

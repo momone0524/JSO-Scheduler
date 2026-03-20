@@ -3,6 +3,7 @@ import './config.js'; // do not remove this line
 import {
   CreateNewAttendance,
   getAttendanceInfo,
+  getAttendanceOfUserInEvent,
   getAttendances,
 } from './controllers/AttendanceController.js';
 import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
@@ -66,7 +67,8 @@ app.get('/events/:eventId', getEventInfo);
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
 app.get('/events/:eventId/attendance', getAttendances);
-app.get('/events/:eventId/attendance/:attendanceId', getAttendanceInfo);
+app.get('/events/:eventId/attendance/user/:userId', getAttendanceOfUserInEvent);
+app.get('/attendance/:attendanceId', getAttendanceInfo);
 
 // Poll
 app.post('/events/:eventId/polls/:userId', CreateNewPoll);

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { getAttendanceByEventAndUserId } from '../models/AttendanceModel.js';
 import { getPollById } from '../models/PollModel.js';
 import { getPollOptionById } from '../models/PollOptionModel.js';
 import {
@@ -9,7 +10,6 @@ import {
 } from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
-import { CreatePollVoteInput, CreatePollVoteSchema } from '../validators/PollVoteValidator.js';
 
 async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
   const { userId, pollId, optionId } = req.params;
@@ -40,6 +40,13 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // AttendanceがNoなければエラー
+  const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, userId);
+  if (attendance.attend === 'No') {
+    res.status(404).json({ error: 'You cannot participate this Poll' });
+    return;
+  }
+
   // Poll Optionがなければエラー
   const pollOption = await getPollOptionById(optionId);
   if (!pollOption) {
@@ -47,17 +54,8 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  // 書き込み内容が違ったらエラー
-  const result = CreatePollVoteSchema.safeParse(req.body);
-  if (!result.success) {
-    res.status(400).json(result.error.flatten());
-    return;
-  }
-
-  const data: CreatePollVoteInput = result.data;
-
   try {
-    const newPollVote = await addPollVote(data, poll, user, pollOption);
+    const newPollVote = await addPollVote(poll, user, pollOption);
     console.log(newPollVote);
     res.sendStatus(201);
   } catch (err) {

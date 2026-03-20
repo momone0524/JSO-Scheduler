@@ -3,7 +3,6 @@ import { Poll } from '../entities/Poll.js';
 import { PollOption } from '../entities/PollOption.js';
 import { PollVote } from '../entities/PollVote.js';
 import { User } from '../entities/User.js';
-import { CreatePollVoteInput } from '../validators/PollVoteValidator.js';
 
 const PollVoteRepository = AppDataSource.getRepository(PollVote);
 
@@ -72,12 +71,7 @@ async function getPollVoteById(voteId: string): Promise<PollVote | null> {
   });
 }
 
-async function addPollVote(
-  data: CreatePollVoteInput,
-  poll: Poll,
-  user: User,
-  polloption: PollOption,
-): Promise<PollVote> {
+async function addPollVote(poll: Poll, user: User, polloption: PollOption): Promise<PollVote> {
   const newPollVote = new PollVote();
   newPollVote.user = user;
   newPollVote.polloption = polloption;

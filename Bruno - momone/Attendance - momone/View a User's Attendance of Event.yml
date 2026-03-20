@@ -1,0 +1,22 @@
+info:
+  name: "View a User's Attendance of Event "
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:1000/events/:eventId/attendance/user/:userId
+  params:
+    - name: eventId
+      value: 019d02ef-2fd2-7444-962f-4b2c44b348a1
+      type: path
+    - name: userId
+      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

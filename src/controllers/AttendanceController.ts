@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { addAttendance, getAllAttendances, getAttendanceById } from '../models/AttendanceModel.js';
+import {
+  addAttendance,
+  getAllAttendances,
+  getAttendanceByEventAndUserId,
+  getAttendanceById,
+} from '../models/AttendanceModel.js';
 import { getEventById } from '../models/EventModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
@@ -57,6 +62,41 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
   }
 }
 
+async function getAttendanceOfUserInEvent(req: Request, res: Response): Promise<void> {
+  const { eventId, userId } = req.params;
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
+  // イベントがなければエラー
+  const event = await getEventById(eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+  const attendances = await getAttendanceByEventAndUserId(eventId, userId);
+
+  if (!attendances) {
+    res.status(404).json({ error: 'Attendance not found' });
+    return;
+  }
+  res.json({ attendances });
+}
+
 async function getAttendanceInfo(req: Request, res: Response): Promise<void> {
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -96,4 +136,4 @@ async function getAttendances(req: Request, res: Response): Promise<void> {
   res.json({ attendances });
 }
 
-export { CreateNewAttendance, getAttendanceInfo, getAttendances };
+export { CreateNewAttendance, getAttendanceInfo, getAttendanceOfUserInEvent, getAttendances };
