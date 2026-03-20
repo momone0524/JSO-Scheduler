@@ -71,6 +71,28 @@ async function getPollVoteById(voteId: string): Promise<PollVote | null> {
   });
 }
 
+async function getPollVoteByPollAndUser(pollId: string, userId: string): Promise<PollVote | null> {
+  return PollVoteRepository.findOne({
+    where: { poll: { pollId }, user: { userId } },
+    relations: ['poll', 'user', 'polloption'],
+    select: {
+      voteId: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+      user: {
+        userId: true,
+        name: true,
+      },
+      polloption: {
+        optionId: true,
+        option: true,
+      },
+    },
+  });
+}
+
 async function addPollVote(poll: Poll, user: User, polloption: PollOption): Promise<PollVote> {
   const newPollVote = new PollVote();
   newPollVote.user = user;
@@ -79,4 +101,10 @@ async function addPollVote(poll: Poll, user: User, polloption: PollOption): Prom
   return PollVoteRepository.save(newPollVote);
 }
 
-export { addPollVote, getAllPollVote, getAllPollVoteByOption, getPollVoteById };
+export {
+  addPollVote,
+  getAllPollVote,
+  getAllPollVoteByOption,
+  getPollVoteById,
+  getPollVoteByPollAndUser,
+};

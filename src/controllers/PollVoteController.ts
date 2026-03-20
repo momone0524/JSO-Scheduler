@@ -7,6 +7,7 @@ import {
   getAllPollVote,
   getAllPollVoteByOption,
   getPollVoteById,
+  getPollVoteByPollAndUser,
 } from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
@@ -42,8 +43,15 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
 
   // AttendanceがNoなければエラー
   const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, userId);
-  if (attendance.attend === 'No') {
+  if (attendance.attend === 'No' && poll.pollType === 'job') {
     res.status(404).json({ error: 'You cannot participate this Poll' });
+    return;
+  }
+
+  // すでに投票済みならばエラー
+  const exist = await getPollVoteByPollAndUser(pollId, userId);
+  if (exist) {
+    res.status(400).json({ error: 'You cannot participate this Poll' });
     return;
   }
 
