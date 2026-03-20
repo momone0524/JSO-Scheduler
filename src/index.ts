@@ -72,7 +72,7 @@ app.delete('/users/:userId', deleteUser);
 app.post('/events/:userId', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
-app.patch('/events/:eventId/update', updateEvent); // Brunoテストまだしてない
+app.patch('/events/:eventId/:userId/update', updateEvent);
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);

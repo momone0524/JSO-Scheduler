@@ -5,8 +5,11 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/events/:eventId/update
+  url: http://localhost:1000/events/:eventId/:userId/update
   params:
+    - name: userId
+      value: 019d0cf3-19ba-72cc-bbf5-a8cbf68e70f6
+      type: path
     - name: eventId
       value: 019d0cf3-e5da-712f-837d-bd44ccfb15de
       type: path
