@@ -36,6 +36,7 @@ import {
   logIn,
   logOut,
   registerUser,
+  updateUsers,
 } from './controllers/UserController.js';
 import { sessionMiddleware } from './sessionConfig.js';
 
@@ -58,6 +59,7 @@ app.post('/login', logIn);
 app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
+app.patch('/users/:userId/update', updateUsers);
 
 // Event
 app.post('/events/:userId', CreateNewEventManual);

@@ -54,7 +54,19 @@ async function addUser(data: CreateUserInput, passwordHash: string): Promise<Use
 
 // ユーザー情報の更新
 async function updateUserInfo(data: UpdateUserInput, userId: string): Promise<User | null> {
-  const user = await UserRepository.findOne({ where: { userId } });
+  const user = await UserRepository.findOne({
+    select: {
+      userId: true,
+      name: true,
+      gradeYear: true,
+      major: true,
+      birthday: true,
+      language: true,
+      role: true,
+      email: true,
+    },
+    where: { userId },
+  });
 
   if (!user) {
     return null;
