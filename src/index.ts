@@ -6,7 +6,12 @@ import {
   getAttendanceOfUserInEvent,
   getAttendances,
 } from './controllers/AttendanceController.js';
-import { CreateNewEventManual, getEventInfo, getEvents } from './controllers/EventController.js';
+import {
+  CreateNewEventManual,
+  getEventInfo,
+  getEvents,
+  updateEvent,
+} from './controllers/EventController.js';
 import {
   CreateNewJobAssignmentAuto,
   getJobAssignmentInfo,
@@ -67,6 +72,7 @@ app.delete('/users/:userId', deleteUser);
 app.post('/events/:userId', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
+app.patch('/events/:eventId/update', updateEvent);
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);

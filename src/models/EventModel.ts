@@ -1,7 +1,7 @@
 import { AppDataSource } from '../dataSource.js';
 import { Event } from '../entities/Event.js';
 import { User } from '../entities/User.js';
-import { CreateEventInput } from '../validators/EventValidator.js';
+import { CreateEventInput, UpdateEventInput } from '../validators/EventValidator.js';
 
 const EventRepository = AppDataSource.getRepository(Event);
 
@@ -63,4 +63,39 @@ async function addEventManual(data: CreateEventInput, user: User): Promise<Event
   return EventRepository.save(newEvent);
 }
 
-export { addEventManual, getAllEvents, getEventById };
+async function updateEventInfo(data: UpdateEventInput, eventId: string): Promise<Event | null> {
+  const event = await EventRepository.findOne({
+    relations: ['user', 'poll'],
+    where: { eventId },
+    select: {
+      eventId: true,
+      eventName: true,
+      place: true,
+      date: true,
+      startTime: true,
+      endTime: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      poll: {
+        pollId: true,
+        title: true,
+        pollType: true,
+      },
+    },
+  });
+
+  if (!event) {
+    return null;
+  }
+
+  event.eventName = data.eventName;
+  event.place = data.place;
+  event.date = new Date(data.date);
+  event.startTime = data.startTime;
+  event.endTime = data.endTime;
+  return EventRepository.save(event);
+}
+
+export { addEventManual, getAllEvents, getEventById, updateEventInfo };

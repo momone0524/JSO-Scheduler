@@ -9,6 +9,16 @@ const CreateEventSchema = z.object({
   pollId: z.string().optional(),
 });
 
-export type CreateEventInput = z.infer<typeof CreateEventSchema>;
+const UpdateEventSchema = z.object({
+  eventName: z.string().min(1).max(100),
+  place: z.string().min(1).max(100),
+  date: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
+  pollId: z.string().optional(),
+});
 
-export { CreateEventSchema };
+export type CreateEventInput = z.infer<typeof CreateEventSchema>;
+export type UpdateEventInput = z.infer<typeof UpdateEventSchema>;
+
+export { CreateEventSchema, UpdateEventSchema };

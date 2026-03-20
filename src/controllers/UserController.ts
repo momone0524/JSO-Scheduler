@@ -112,6 +112,25 @@ async function getUsers(req: Request, res: Response): Promise<void> {
 async function updateUsers(req: Request, res: Response): Promise<void> {
   const { userId } = req.params;
 
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
   const result = UpdateUserSchema.safeParse(req.body);
   if (!result.success) {
     res.status(400).json({ errors: result.error });

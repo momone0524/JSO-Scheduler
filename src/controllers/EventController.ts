@@ -1,8 +1,17 @@
 import { Request, Response } from 'express';
-import { addEventManual, getAllEvents, getEventById } from '../models/EventModel.js';
+import {
+  addEventManual,
+  getAllEvents,
+  getEventById,
+  updateEventInfo,
+} from '../models/EventModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
-import { CreateEventInput, CreateEventSchema } from '../validators/EventValidator.js';
+import {
+  CreateEventInput,
+  CreateEventSchema,
+  UpdateEventSchema,
+} from '../validators/EventValidator.js';
 
 async function CreateNewEventManual(req: Request, res: Response): Promise<void> {
   const { userId } = req.params;
@@ -78,4 +87,60 @@ async function getEvents(req: Request, res: Response): Promise<void> {
   res.json({ events });
 }
 
-export { CreateNewEventManual, getEventInfo, getEvents };
+// ユーザー情報更新
+async function updateEvent(req: Request, res: Response): Promise<void> {
+  const { eventId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // イベントがなければエラー
+  const event = await getEventById(eventId);
+  if (!event) {
+    res.status(404).json({ error: 'Event not found' });
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(event.user.userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
+  // ボードメンバーでなければエラー
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to create an Event' });
+    return;
+  }
+
+  const result = UpdateEventSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json({ errors: result.error });
+    return;
+  }
+
+  try {
+    const updatedEvent = await updateEventInfo(result.data, eventId);
+    if (!updatedEvent) {
+      res.status(404).json({ error: 'Event not found' });
+      return;
+    }
+    res.json({ user: updatedEvent });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export { CreateNewEventManual, getEventInfo, getEvents, updateEvent };
