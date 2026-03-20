@@ -45,7 +45,7 @@ export class Poll {
   event: Relation<Event>;
 
   // (User.ts) many side: Poll
-  @ManyToOne(() => User, (user) => user.polls /*, { nullable: true, onDelete: 'SET NULL' }*/)
+  @ManyToOne(() => User, (user) => user.polls, { nullable: true, onDelete: 'SET NULL' })
   user: Relation<User>;
 
   // (PollOption.ts) one side: Poll
