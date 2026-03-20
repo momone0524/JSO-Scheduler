@@ -1,0 +1,19 @@
+info:
+  name: Delete User
+  type: http
+  seq: 7
+
+http:
+  method: DELETE
+  url: http://localhost:1000/users/:userId
+  params:
+    - name: userId
+      value: 019cfd64-0af1-70b7-8cd2-9dc4c873c9dc
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

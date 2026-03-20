@@ -2,6 +2,7 @@ import argon2 from 'argon2';
 import { Request, Response } from 'express';
 import {
   addUser,
+  deleteUserById,
   getAllUsers,
   getUserByEmail,
   getUserById,
@@ -131,4 +132,17 @@ async function updateUsers(req: Request, res: Response): Promise<void> {
   }
 }
 
-export { getUserProfile, getUsers, logIn, logOut, registerUser, updateUsers };
+// ユーザーアカウントの削除
+async function deleteUser(req: Request, res: Response): Promise<void> {
+  const { userId } = req.params;
+  const user = await getUserById(userId);
+
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  await deleteUserById(userId);
+  res.sendStatus(204); // 204 No Content — successful, nothing to return
+}
+export { deleteUser, getUserProfile, getUsers, logIn, logOut, registerUser, updateUsers };

@@ -82,4 +82,14 @@ async function updateUserInfo(data: UpdateUserInput, userId: string): Promise<Us
   return UserRepository.save(user);
 }
 
-export { addUser, getAllUsers, getUserByEmail, getUserById, updateUserInfo };
+async function deleteUserById(userId: string): Promise<void> {
+  const user = await UserRepository.findOne({ where: { userId } });
+
+  if (!user) {
+    return;
+  }
+
+  await UserRepository.remove(user);
+}
+
+export { addUser, deleteUserById, getAllUsers, getUserByEmail, getUserById, updateUserInfo };

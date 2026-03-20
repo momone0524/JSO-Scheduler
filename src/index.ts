@@ -31,6 +31,7 @@ import {
   getPollVotes,
 } from './controllers/PollVoteController.js';
 import {
+  deleteUser,
   getUserProfile,
   getUsers,
   logIn,
@@ -60,6 +61,7 @@ app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
 app.patch('/users/:userId/update', updateUsers);
+app.delete('/users/:userId', deleteUser);
 
 // Event
 app.post('/events/:userId', CreateNewEventManual);
