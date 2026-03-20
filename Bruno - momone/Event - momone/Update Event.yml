@@ -8,8 +8,18 @@ http:
   url: http://localhost:1000/events/:eventId/update
   params:
     - name: eventId
-      value: ""
+      value: 019d0cf3-e5da-712f-837d-bd44ccfb15de
       type: path
+  body:
+    type: json
+    data: |-
+      {
+            "eventName": "NEW YEAR",
+            "place": "BCM",
+            "date": "2026-05-13",
+            "startTime": "17:00",
+            "endTime": "20:00"
+      }
   auth: inherit
 
 settings:
