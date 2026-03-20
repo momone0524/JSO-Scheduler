@@ -18,10 +18,7 @@ http:
       type: path
   body:
     type: json
-    data: |-
-      {
-        "optionId": "019d07f8-7dcf-7231-88a5-76fd193da3e2"
-      }
+    data: ""
   auth: inherit
 
 settings:
