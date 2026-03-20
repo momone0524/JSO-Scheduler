@@ -1,0 +1,19 @@
+info:
+  name: Update Event
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://localhost:1000/events/:eventId/update
+  params:
+    - name: eventId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -45,7 +45,7 @@ export class User {
   events: Relation<Event>[];
 
   // (Attendance.ts) one side: User
-  @OneToMany(() => Attendance, (attendance) => attendance.user)
+  @OneToMany(() => Attendance, (attendance) => attendance.user, { cascade: ['remove'] })
   attendances: Relation<Attendance>[];
 
   // (Poll.ts) one side: User
@@ -53,10 +53,10 @@ export class User {
   polls: Relation<Poll>[];
 
   // (PollVote.ts) one side: User
-  @OneToMany(() => PollVote, (pollvote) => pollvote.user)
+  @OneToMany(() => PollVote, (pollvote) => pollvote.user, { cascade: ['remove'] })
   pollvotes: Relation<PollVote>[];
 
   // (JobAssignment.ts) one side: User
-  @OneToMany(() => JobAssignment, (jobassignment) => jobassignment.user)
+  @OneToMany(() => JobAssignment, (jobassignment) => jobassignment.user, { cascade: ['remove'] })
   jobassignments: Relation<JobAssignment>[];
 }
