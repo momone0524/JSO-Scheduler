@@ -16,6 +16,16 @@ const LoginUserSchema = z.object({
   password: z.string().min(8).max(100),
 });
 
-export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+const UpdateUserSchema = z.object({
+  name: z.string().min(1).max(100),
+  gradeYear: z.number().min(1).max(5),
+  major: z.string().min(1).max(100),
+  birthday: z.string(),
+  language: z.enum(['ja', 'en']),
+  role: z.enum(['Board Member', 'Member']),
+  email: z.string().email(),
+});
 
-export { CreateUserSchema, LoginUserSchema };
+export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
+export { CreateUserSchema, LoginUserSchema, UpdateUserSchema };

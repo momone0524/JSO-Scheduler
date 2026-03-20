@@ -1,6 +1,6 @@
 import { AppDataSource } from '../dataSource.js';
 import { User } from '../entities/User.js';
-import { CreateUserInput } from '../validators/UserValidator.js';
+import { CreateUserInput, UpdateUserInput } from '../validators/UserValidator.js';
 
 const UserRepository = AppDataSource.getRepository(User);
 
@@ -52,4 +52,22 @@ async function addUser(data: CreateUserInput, passwordHash: string): Promise<Use
   return UserRepository.save(newUser);
 }
 
-export { addUser, getAllUsers, getUserByEmail, getUserById };
+// ユーザー情報の更新
+async function updateUserInfo(data: UpdateUserInput, userId: string): Promise<User | null> {
+  const user = await UserRepository.findOne({ where: { userId } });
+
+  if (!user) {
+    return null;
+  }
+
+  user.name = data.name;
+  user.gradeYear = data.gradeYear;
+  user.major = data.major;
+  user.birthday = new Date(data.birthday);
+  user.language = data.language;
+  user.role = data.role;
+  user.email = data.email;
+  return UserRepository.save(user);
+}
+
+export { addUser, getAllUsers, getUserByEmail, getUserById, updateUserInfo };

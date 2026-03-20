@@ -1,8 +1,19 @@
 import argon2 from 'argon2';
 import { Request, Response } from 'express';
-import { addUser, getAllUsers, getUserByEmail, getUserById } from '../models/UserModel.js';
+import {
+  addUser,
+  getAllUsers,
+  getUserByEmail,
+  getUserById,
+  updateUserInfo,
+} from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
-import { CreateUserInput, CreateUserSchema, LoginUserSchema } from '../validators/UserValidator.js';
+import {
+  CreateUserInput,
+  CreateUserSchema,
+  LoginUserSchema,
+  UpdateUserSchema,
+} from '../validators/UserValidator.js';
 
 async function registerUser(req: Request, res: Response): Promise<void> {
   const result = CreateUserSchema.safeParse(req.body);
@@ -96,4 +107,28 @@ async function getUsers(req: Request, res: Response): Promise<void> {
   res.json({ users });
 }
 
-export { getUserProfile, getUsers, logIn, logOut, registerUser };
+// ユーザー情報更新
+async function updateUsers(req: Request, res: Response): Promise<void> {
+  const { userId } = req.params;
+
+  const result = UpdateUserSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json({ errors: result.error });
+    return;
+  }
+
+  try {
+    const updatedUser = await updateUserInfo(result.data, userId);
+    if (!updatedUser) {
+      res.status(404).json({ error: 'User not found' });
+      return;
+    }
+    res.json({ user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export { getUserProfile, getUsers, logIn, logOut, registerUser, updateUsers };
