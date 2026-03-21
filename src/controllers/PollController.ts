@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getEventById } from '../models/EventModel.js';
-import { addPoll, getAllPolls, getPollById } from '../models/PollModel.js';
+import { addPoll, closedPollByTime, getAllPolls, getPollById } from '../models/PollModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreatePollInput, CreatePollSchema } from '../validators/PollValidator.js';
@@ -86,4 +86,28 @@ async function getPolls(req: Request, res: Response): Promise<void> {
   res.json({ polls });
 }
 
-export { CreateNewPoll, getPollInfo, getPolls };
+// Poll isClosed 情報更新
+async function closedPollExpire(req: Request, res: Response): Promise<void> {
+  const { pollId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  try {
+    const closedPoll = await closedPollByTime(pollId);
+    if (!closedPoll) {
+      res.status(404).json({ error: 'Poll not found' });
+      return;
+    }
+    res.json({ closedPoll });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export { closedPollExpire, CreateNewPoll, getPollInfo, getPolls };

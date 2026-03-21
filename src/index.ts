@@ -27,7 +27,12 @@ import {
   getJobInEvent,
   getJobInfo,
 } from './controllers/JobController.js';
-import { CreateNewPoll, getPollInfo, getPolls } from './controllers/PollController.js';
+import {
+  closedPollExpire,
+  CreateNewPoll,
+  getPollInfo,
+  getPolls,
+} from './controllers/PollController.js';
 import {
   CreateNewPollOption,
   getPollOptionInfo,
@@ -92,6 +97,7 @@ app.delete('/attendance/:attendanceId/delete/:userId', deleteAttendance);
 app.post('/events/:eventId/polls/:userId', CreateNewPoll);
 app.get('/polls', getPolls);
 app.get('/polls/:pollId', getPollInfo);
+app.patch('/polls/:pollId/close', closedPollExpire);
 
 // PollOption
 app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);

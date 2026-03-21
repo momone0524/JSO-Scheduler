@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000//events/:eventId/polls/:userId
   params:
     - name: eventId
-      value: 019d07f5-6d80-75cb-9d9e-65b79a3bf3c4
+      value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
       type: path
     - name: userId
-      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   body:
     type: json
@@ -19,7 +19,7 @@ http:
       {
         "title": "New Year JOB",
         "description": "Choose your job preference",
-        "closedAt": "2026-04-28",
+        "closeAt": "2020-04-28",
         "pollType": "job"
       }
   auth: inherit
