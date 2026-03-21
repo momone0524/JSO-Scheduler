@@ -55,7 +55,7 @@ async function getPollInEvent(eventId: string): Promise<Poll[]> {
 async function getPollById(pollId: string): Promise<Poll | null> {
   return PollRepository.findOne({
     where: { pollId },
-    relations: ['user'],
+    relations: ['user', 'event'],
     select: {
       pollId: true,
       title: true,
@@ -66,6 +66,10 @@ async function getPollById(pollId: string): Promise<Poll | null> {
       user: {
         userId: true,
         name: true,
+      },
+      event: {
+        eventId: true,
+        eventName: true,
       },
     },
   });

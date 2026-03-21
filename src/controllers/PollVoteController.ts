@@ -41,7 +41,13 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  // AttendanceがNoなければエラー
+  // Pollがclosedならエラー
+  if (poll.isClosed === true) {
+    res.status(404).json({ error: 'Poll is already closed' });
+    return;
+  }
+
+  // AttendanceがNoならばエラー
   const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, userId);
   if (attendance.attend === 'No' && poll.pollType === 'job') {
     res.status(404).json({ error: 'You cannot participate this Poll' });
@@ -51,7 +57,7 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
   // すでに投票済みならばエラー
   const exist = await getPollVoteByPollAndUser(pollId, userId);
   if (exist) {
-    res.status(400).json({ error: 'You cannot participate this Poll' });
+    res.status(400).json({ error: 'You already participated this Poll' });
     return;
   }
 

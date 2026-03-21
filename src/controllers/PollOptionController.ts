@@ -42,6 +42,7 @@ async function CreateNewPollJobOption(req: Request, res: Response): Promise<void
     return;
   }
 
+  // Pollがclosedならエラー
   if (poll.isClosed === true) {
     res.status(404).json({ error: 'Poll is already closed' });
     return;
@@ -114,6 +115,7 @@ async function CreateNewPollScheduleOption(req: Request, res: Response): Promise
     return;
   }
 
+  // Pollがclosedならエラー
   if (poll.isClosed === true) {
     res.status(404).json({ error: 'Poll is already closed' });
     return;
