@@ -82,4 +82,41 @@ async function addAttendance(
   return AttendanceRepository.save(newAttendance);
 }
 
-export { addAttendance, getAllAttendances, getAttendanceByEventAndUserId, getAttendanceById };
+async function updateAttendanceInfo(
+  data: CreateAttendanceInput,
+  attendanceId: string,
+): Promise<Attendance | null> {
+  const attendance = await AttendanceRepository.findOne({
+    where: { attendanceId },
+    relations: ['user', 'event'],
+    select: {
+      attendanceId: true,
+      attend: true,
+      attendTime: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      event: {
+        eventId: true,
+        eventName: true,
+      },
+    },
+  });
+
+  if (!attendance) {
+    return null;
+  }
+
+  attendance.attend = data.attend;
+  attendance.attendTime = data.attendTime;
+  return AttendanceRepository.save(attendance);
+}
+
+export {
+  addAttendance,
+  getAllAttendances,
+  getAttendanceByEventAndUserId,
+  getAttendanceById,
+  updateAttendanceInfo,
+};

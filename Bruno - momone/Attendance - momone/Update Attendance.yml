@@ -1,12 +1,15 @@
 info:
-  name: Add Event - Valid
+  name: Update Attendance
   type: http
-  seq: 2
+  seq: 5
 
 http:
-  method: POST
-  url: http://localhost:1000/events/:userId
+  method: PATCH
+  url: http://localhost:1000/attendance/:attendanceId/update/:userId
   params:
+    - name: attendanceId
+      value: 019d0db2-a213-76ce-b795-dd08feda3afa
+      type: path
     - name: userId
       value: 019d0d9e-169f-71be-9710-bdb85b72e4ed
       type: path
@@ -14,11 +17,7 @@ http:
     type: json
     data: |-
       {
-            "eventName": "NEW YEAR",
-            "place": "Union",
-            "date": "2026-05-13",
-            "startTime": "17:00",
-            "endTime": "20:00"
+        "attend": "Yes"
       }
   auth: inherit
 

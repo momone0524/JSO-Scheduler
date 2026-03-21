@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/events/:eventId/attendance/:userId
   params:
     - name: userId
-      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      value: 019d0d9e-169f-71be-9710-bdb85b72e4ed
       type: path
     - name: eventId
-      value: 019d02ef-2fd2-7444-962f-4b2c44b348a1
+      value: 019d0db1-d6f3-7458-952e-c469ab7c73f6
       type: path
   body:
     type: json

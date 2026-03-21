@@ -4,6 +4,7 @@ import {
   getAllAttendances,
   getAttendanceByEventAndUserId,
   getAttendanceById,
+  updateAttendanceInfo,
 } from '../models/AttendanceModel.js';
 import { getEventById } from '../models/EventModel.js';
 import { getUserById } from '../models/UserModel.js';
@@ -136,4 +137,53 @@ async function getAttendances(req: Request, res: Response): Promise<void> {
   res.json({ attendances });
 }
 
-export { CreateNewAttendance, getAttendanceInfo, getAttendanceOfUserInEvent, getAttendances };
+// Attendance 情報更新
+async function updateAttendance(req: Request, res: Response): Promise<void> {
+  const { attendanceId, userId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
+  const result = CreateAttendanceSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json({ errors: result.error });
+    return;
+  }
+
+  try {
+    const updatedAttendance = await updateAttendanceInfo(result.data, attendanceId);
+    if (!updatedAttendance) {
+      res.status(404).json({ error: 'Attendance not found' });
+      return;
+    }
+    res.json({ user: updatedAttendance });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export {
+  CreateNewAttendance,
+  getAttendanceInfo,
+  getAttendanceOfUserInEvent,
+  getAttendances,
+  updateAttendance,
+};

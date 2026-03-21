@@ -5,6 +5,7 @@ import {
   getAttendanceInfo,
   getAttendanceOfUserInEvent,
   getAttendances,
+  updateAttendance,
 } from './controllers/AttendanceController.js';
 import {
   CreateNewEventManual,
@@ -76,13 +77,14 @@ app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
 app.patch('/events/:eventId/update/:userId', updateEvent);
-app.delete('/events/:eventId/delete', deleteEvent); // Bruno test not yet
+app.delete('/events/:eventId/delete', deleteEvent);
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
 app.get('/events/:eventId/attendance', getAttendances);
 app.get('/events/:eventId/attendance/user/:userId', getAttendanceOfUserInEvent);
 app.get('/attendance/:attendanceId', getAttendanceInfo);
+app.patch('/attendance/:attendanceId/update/:userId', updateAttendance);
 
 // Poll
 app.post('/events/:eventId/polls/:userId', CreateNewPoll);
