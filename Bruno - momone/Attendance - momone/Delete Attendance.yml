@@ -1,17 +1,17 @@
 info:
-  name: Delete Event
+  name: Delete Attendance
   type: http
   seq: 6
 
 http:
   method: DELETE
-  url: http://localhost:1000/events/:eventId/delete/:userId
+  url: http://localhost:1000/attendance/:attendanceId/delete/:userId
   params:
+    - name: attendanceId
+      value: 019d0ddf-c9d0-750a-92bd-cc24e5241899
+      type: path
     - name: userId
       value: 019d0dd7-8836-7491-86bf-29c4d5306403
-      type: path
-    - name: eventId
-      value: 019d0db1-d6f3-7458-952e-c469ab7c73f6
       type: path
   auth: inherit
 

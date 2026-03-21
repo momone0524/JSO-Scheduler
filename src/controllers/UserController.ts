@@ -154,6 +154,13 @@ async function updateUsers(req: Request, res: Response): Promise<void> {
 // ユーザーアカウントの削除
 async function deleteUser(req: Request, res: Response): Promise<void> {
   const { userId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
   const user = await getUserById(userId);
 
   if (!user) {

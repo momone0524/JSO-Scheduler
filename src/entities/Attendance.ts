@@ -24,6 +24,6 @@ export class Attendance {
   user: Relation<User>;
 
   // (Event.ts) many side: Attendance
-  @ManyToOne(() => Event, (event) => event.attendances)
+  @ManyToOne(() => Event, (event) => event.attendances, { onDelete: 'CASCADE' })
   event: Relation<Event>;
 }

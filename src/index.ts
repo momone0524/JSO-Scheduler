@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import './config.js'; // do not remove this line
 import {
   CreateNewAttendance,
+  deleteAttendance,
   getAttendanceInfo,
   getAttendanceOfUserInEvent,
   getAttendances,
@@ -77,7 +78,7 @@ app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
 app.patch('/events/:eventId/update/:userId', updateEvent);
-app.delete('/events/:eventId/delete', deleteEvent);
+app.delete('/events/:eventId/delete/:userId', deleteEvent);
 
 // Attendance
 app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
@@ -85,6 +86,7 @@ app.get('/events/:eventId/attendance', getAttendances);
 app.get('/events/:eventId/attendance/user/:userId', getAttendanceOfUserInEvent);
 app.get('/attendance/:attendanceId', getAttendanceInfo);
 app.patch('/attendance/:attendanceId/update/:userId', updateAttendance);
+app.delete('/attendance/:attendanceId/delete/:userId', deleteAttendance);
 
 // Poll
 app.post('/events/:eventId/polls/:userId', CreateNewPoll);

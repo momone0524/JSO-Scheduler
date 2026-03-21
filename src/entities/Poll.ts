@@ -41,7 +41,7 @@ export class Poll {
   pollType: string;
 
   // (Event.ts) many side: Poll
-  @ManyToOne(() => Event, (event) => event.poll)
+  @ManyToOne(() => Event, (event) => event.poll, { onDelete: 'CASCADE' })
   event: Relation<Event>;
 
   // (User.ts) many side: Poll

@@ -38,7 +38,7 @@ export class Job {
   polloption: Relation<PollOption>;
 
   // (Event.ts) many side: Job
-  @ManyToOne(() => Event, (event) => event.jobs)
+  @ManyToOne(() => Event, (event) => event.jobs, { onDelete: 'CASCADE' })
   event: Relation<Event>;
 
   // (JobAssignment.ts) one side: Job

@@ -113,8 +113,19 @@ async function updateAttendanceInfo(
   return AttendanceRepository.save(attendance);
 }
 
+async function deleteAttendanceById(attendanceId: string): Promise<void> {
+  const attendance = await AttendanceRepository.findOne({ where: { attendanceId } });
+
+  if (!attendance) {
+    return;
+  }
+
+  await AttendanceRepository.remove(attendance);
+}
+
 export {
   addAttendance,
+  deleteAttendanceById,
   getAllAttendances,
   getAttendanceByEventAndUserId,
   getAttendanceById,

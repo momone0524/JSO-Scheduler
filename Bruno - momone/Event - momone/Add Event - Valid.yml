@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/events/:userId
   params:
     - name: userId
-      value: 019d0d9e-169f-71be-9710-bdb85b72e4ed
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   body:
     type: json

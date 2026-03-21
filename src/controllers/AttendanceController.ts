@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import {
   addAttendance,
+  deleteAttendanceById,
   getAllAttendances,
   getAttendanceByEventAndUserId,
   getAttendanceById,
@@ -180,8 +181,42 @@ async function updateAttendance(req: Request, res: Response): Promise<void> {
   }
 }
 
+// Attendanceの削除
+async function deleteAttendance(req: Request, res: Response): Promise<void> {
+  const { attendanceId, userId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+  const attendance = await getAttendanceById(attendanceId);
+
+  if (!attendance) {
+    res.status(404).json({ error: 'Attendance not found' });
+    return;
+  }
+
+  await deleteAttendanceById(attendanceId);
+  res.sendStatus(204); // 204 No Content — successful, nothing to return
+}
+
 export {
   CreateNewAttendance,
+  deleteAttendance,
   getAttendanceInfo,
   getAttendanceOfUserInEvent,
   getAttendances,

@@ -197,7 +197,33 @@ async function updateEventFromPollAuto(req: Request, res: Response): Promise<voi
 
 // Eventの削除
 async function deleteEvent(req: Request, res: Response): Promise<void> {
-  const { eventId } = req.params;
+  const { eventId, userId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ユーザーがなければエラー
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  // 自分のセッションからアクセスしていなければエラー
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403); // Authenticated but not authorized
+    return;
+  }
+
+  // ボードメンバーでなければエラー
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to create an Event' });
+    return;
+  }
+
   const event = await getEventById(eventId);
 
   if (!event) {
