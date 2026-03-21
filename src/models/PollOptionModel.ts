@@ -59,12 +59,24 @@ async function getPollOptionInPollByName(
   });
 }
 
-async function addPollOption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
+async function addPollJobOption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
   const newPollOption = new PollOption();
   newPollOption.joboption = data.joboption;
+  newPollOption.poll = poll;
+  return PollOptionRepository.save(newPollOption);
+}
+
+async function addPollScheduleption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
+  const newPollOption = new PollOption();
   newPollOption.scheduleoption = new Date(data.scheduleoption);
   newPollOption.poll = poll;
   return PollOptionRepository.save(newPollOption);
 }
 
-export { addPollOption, getAllPollOptions, getPollOptionById, getPollOptionInPollByName };
+export {
+  addPollJobOption,
+  addPollScheduleption,
+  getAllPollOptions,
+  getPollOptionById,
+  getPollOptionInPollByName,
+};
