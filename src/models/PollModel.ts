@@ -75,7 +75,7 @@ async function addPoll(data: CreatePollInput, user: User, event: Event): Promise
   const newPoll = new Poll();
   newPoll.title = data.title;
   newPoll.description = data.description;
-  newPoll.closeAt = new Date(data.closedAt);
+  newPoll.closeAt = new Date(data.closeAt);
   newPoll.pollType = data.pollType;
   newPoll.user = user;
   newPoll.event = event;
