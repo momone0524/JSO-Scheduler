@@ -66,7 +66,7 @@ async function addPollJobOption(data: CreatePollOptionInput, poll: Poll): Promis
   return PollOptionRepository.save(newPollOption);
 }
 
-async function addPollScheduleption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
+async function addPollScheduleOption(data: CreatePollOptionInput, poll: Poll): Promise<PollOption> {
   const newPollOption = new PollOption();
   newPollOption.scheduleoption = new Date(data.scheduleoption);
   newPollOption.poll = poll;
@@ -75,7 +75,7 @@ async function addPollScheduleption(data: CreatePollOptionInput, poll: Poll): Pr
 
 export {
   addPollJobOption,
-  addPollScheduleption,
+  addPollScheduleOption,
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,

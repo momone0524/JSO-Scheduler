@@ -34,8 +34,7 @@ import {
   getPolls,
 } from './controllers/PollController.js';
 import {
-  CreateNewPollJobOption,
-  CreateNewPollScheduleOption,
+  CreateNewPollOption,
   getPollOptionInfo,
   getPollOptions,
 } from './controllers/PollOptionController.js';
@@ -101,8 +100,7 @@ app.get('/polls/:pollId', getPollInfo);
 app.patch('/polls/:pollId/close', closedPollExpire);
 
 // PollOption
-app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollJobOption);
-app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollScheduleOption);
+app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
 
