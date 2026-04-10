@@ -8,6 +8,15 @@ const CreateJobSchema = z.object({
   pollOptionId: z.string().optional(),
 });
 
-export type CreateJobInput = z.infer<typeof CreateJobSchema>;
+const UpdateJobSchema = z.object({
+  jobName: z.string().min(1).max(100).optional().optional,
+  description: z.string().max(500).optional(),
+  eventId: z.string().min(1).optional(),
+  pollId: z.string().optional(),
+  pollOptionId: z.string().optional(),
+});
 
-export { CreateJobSchema };
+export type CreateJobInput = z.infer<typeof CreateJobSchema>;
+export type UpdateJobInput = z.infer<typeof UpdateJobSchema>;
+
+export { CreateJobSchema, UpdateJobSchema };

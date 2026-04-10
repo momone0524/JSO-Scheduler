@@ -5,6 +5,11 @@ const CreatePollOptionSchema = z.object({
   scheduleoption: z.string().min(1).max(100).optional(),
 });
 
-export type CreatePollOptionInput = z.infer<typeof CreatePollOptionSchema>;
+const UpdatePollOptionSchema = z.object({
+  scheduleoption: z.string().min(1).max(100).optional(),
+});
 
-export { CreatePollOptionSchema };
+export type CreatePollOptionInput = z.infer<typeof CreatePollOptionSchema>;
+export type UpdatePollOptionInput = z.infer<typeof UpdatePollOptionSchema>;
+
+export { CreatePollOptionSchema, UpdatePollOptionSchema };
