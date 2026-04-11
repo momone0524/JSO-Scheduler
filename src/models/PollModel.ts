@@ -162,7 +162,7 @@ async function closedPollByTime(pollId: string): Promise<Poll | null> {
   return PollRepository.save(poll);
 }
 
-async function UpdatePollSchema(data: UpdatePollInput, pollId: string): Promise<Poll | null> {
+async function updatePoll(data: UpdatePollInput, pollId: string): Promise<Poll | null> {
   const poll = await PollRepository.findOne({
     where: { pollId },
     relations: ['user', 'event'],
@@ -203,5 +203,5 @@ export {
   getPollById,
   getPollInEvent,
   updateEventFromPoll,
-  UpdatePollSchema,
+  updatePoll,
 };
