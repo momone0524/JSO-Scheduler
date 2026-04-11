@@ -162,4 +162,46 @@ async function closedPollByTime(pollId: string): Promise<Poll | null> {
   return PollRepository.save(poll);
 }
 
-export { addPoll, closedPollByTime, getAllPolls, getPollById, getPollInEvent, updateEventFromPoll };
+async function UpdatePollSchema(data: UpdatePollInput, pollId: string): Promise<Poll | null> {
+  const poll = await PollRepository.findOne({
+    where: { pollId },
+    relations: ['user', 'event'],
+    select: {
+      pollId: true,
+      title: true,
+      description: true,
+      closeAt: true,
+      isClosed: true,
+      pollType: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      event: {
+        eventId: true,
+        eventName: true,
+      },
+    },
+  });
+
+  if (!poll) {
+    return null;
+  }
+
+  poll.title = data.title;
+  poll.description = data.description;
+  poll.closeAt = new Date(data.closeAt);
+  poll.pollType = data.pollType;
+
+  return PollRepository.save(poll);
+}
+
+export {
+  addPoll,
+  closedPollByTime,
+  getAllPolls,
+  getPollById,
+  getPollInEvent,
+  updateEventFromPoll,
+  UpdatePollSchema,
+};
