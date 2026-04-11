@@ -1,7 +1,7 @@
 import { AppDataSource } from '../dataSource.js';
 import { Poll } from '../entities/Poll.js';
 import { PollOption } from '../entities/PollOption.js';
-import { CreatePollOptionInput } from '../validators/PollOptionValidator.js';
+import { CreatePollOptionInput, UpdatePollOptionInput } from '../validators/PollOptionValidator.js';
 
 const PollOptionRepository = AppDataSource.getRepository(PollOption);
 
@@ -73,10 +73,44 @@ async function addPollScheduleOption(data: CreatePollOptionInput, poll: Poll): P
   return PollOptionRepository.save(newPollOption);
 }
 
+async function updatePollOption(
+  data: UpdatePollOptionInput,
+  optionId: string,
+): Promise<PollOption | null> {
+  const pollOption = await PollOptionRepository.findOne({
+    where: { optionId },
+    relations: ['poll'],
+    select: {
+      optionId: true,
+      joboption: true,
+      scheduleoption: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+    },
+  });
+
+  if (!pollOption) {
+    return null;
+  }
+
+  if (data.joboption !== undefined) {
+    pollOption.joboption = data.joboption;
+  }
+
+  if (data.scheduleoption !== undefined) {
+    pollOption.scheduleoption = new Date(data.scheduleoption);
+  }
+
+  return PollOptionRepository.save(pollOption);
+}
+
 export {
   addPollJobOption,
   addPollScheduleOption,
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
+  updatePollOption,
 };

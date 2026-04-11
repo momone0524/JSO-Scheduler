@@ -6,6 +6,7 @@ const CreatePollOptionSchema = z.object({
 });
 
 const UpdatePollOptionSchema = z.object({
+  joboption: z.string().min(1).max(100).optional(),
   scheduleoption: z.string().min(1).max(100).optional(),
 });
 
