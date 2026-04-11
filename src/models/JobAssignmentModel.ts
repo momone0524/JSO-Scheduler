@@ -63,4 +63,19 @@ async function addJobAssignmentAuto(pollvote: PollVote, job: Job): Promise<JobAs
   return JobAssignmentRepository.save(newJobAssignemnt);
 }
 
-export { addJobAssignmentAuto, getAllJobAssignmentByJob, getJobAssignmentById };
+async function deleteJobAssignment(assignmentId: string): Promise<void> {
+  const jobAssignment = await JobAssignmentRepository.findOne({ where: { assignmentId } });
+
+  if (!jobAssignment) {
+    return;
+  }
+
+  await JobAssignmentRepository.remove(jobAssignment);
+}
+
+export {
+  addJobAssignmentAuto,
+  deleteJobAssignment,
+  getAllJobAssignmentByJob,
+  getJobAssignmentById,
+};
