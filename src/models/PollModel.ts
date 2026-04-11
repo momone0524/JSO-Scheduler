@@ -2,7 +2,7 @@ import { AppDataSource } from '../dataSource.js';
 import { Event } from '../entities/Event.js';
 import { Poll } from '../entities/Poll.js';
 import { User } from '../entities/User.js';
-import { CreatePollInput } from '../validators/PollValidator.js';
+import { CreatePollInput, UpdatePollInput } from '../validators/PollValidator.js';
 
 const PollRepository = AppDataSource.getRepository(Poll);
 const EventRepository = AppDataSource.getRepository(Event);
