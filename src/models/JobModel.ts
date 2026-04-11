@@ -2,7 +2,7 @@ import { AppDataSource } from '../dataSource.js';
 import { Event } from '../entities/Event.js';
 import { Job } from '../entities/Job.js';
 import { PollOption } from '../entities/PollOption.js';
-import { CreateJobInput } from '../validators/JobValidator.js';
+import { CreateJobInput, UpdateJobInput } from '../validators/JobValidator.js';
 
 const JobRepository = AppDataSource.getRepository(Job);
 
@@ -73,4 +73,38 @@ async function addJobAuto(polloption: PollOption, event: Event): Promise<Job> {
   return JobRepository.save(newJob);
 }
 
-export { addJobAuto, addJobManually, getAllJobByEvent, getJobById };
+async function updateJob(data: UpdateJobInput, jobId: string): Promise<Job | null> {
+  const job = await JobRepository.findOne({
+    where: { jobId },
+    relations: ['event', 'poll', 'polloption'],
+    select: {
+      jobId: true,
+      jobName: true,
+      description: true,
+      event: {
+        eventId: true,
+        eventName: true,
+      },
+      poll: {
+        pollId: true,
+        title: true,
+      },
+      polloption: {
+        optionId: true,
+        joboption: true,
+        scheduleoption: true,
+      },
+    },
+  });
+
+  if (!job) {
+    return null;
+  }
+
+  job.jobName = data.jobName;
+  job.description = data.description;
+
+  return JobRepository.save(job);
+}
+
+export { addJobAuto, addJobManually, getAllJobByEvent, getJobById, updateJob };

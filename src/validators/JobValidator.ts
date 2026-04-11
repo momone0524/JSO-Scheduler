@@ -9,7 +9,7 @@ const CreateJobSchema = z.object({
 });
 
 const UpdateJobSchema = z.object({
-  jobName: z.string().min(1).max(100).optional().optional,
+  jobName: z.string().min(1).max(100).optional(),
   description: z.string().max(500).optional(),
   eventId: z.string().min(1).optional(),
   pollId: z.string().optional(),

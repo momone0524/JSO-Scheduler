@@ -95,13 +95,9 @@ async function updatePollOption(
     return null;
   }
 
-  if (data.joboption !== undefined) {
-    pollOption.joboption = data.joboption;
-  }
+  pollOption.joboption = data.joboption;
 
-  if (data.scheduleoption !== undefined) {
-    pollOption.scheduleoption = new Date(data.scheduleoption);
-  }
+  pollOption.scheduleoption = new Date(data.scheduleoption);
 
   return PollOptionRepository.save(pollOption);
 }
