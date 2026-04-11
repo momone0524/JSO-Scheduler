@@ -196,9 +196,20 @@ async function updatePoll(data: UpdatePollInput, pollId: string): Promise<Poll |
   return PollRepository.save(poll);
 }
 
+async function deletePoll(pollId: string): Promise<void> {
+  const poll = await PollRepository.findOne({ where: { pollId } });
+
+  if (!poll) {
+    return;
+  }
+
+  await PollRepository.remove(poll);
+}
+
 export {
   addPoll,
   closedPollByTime,
+  deletePoll,
   getAllPolls,
   getPollById,
   getPollInEvent,

@@ -106,9 +106,19 @@ async function updatePollOption(
   return PollOptionRepository.save(pollOption);
 }
 
+async function deletePollOption(optionId: string): Promise<void> {
+  const pollOption = await PollOptionRepository.findOne({ where: { optionId } });
+
+  if (!pollOption) {
+    return;
+  }
+  await PollOptionRepository.remove(pollOption);
+}
+
 export {
   addPollJobOption,
   addPollScheduleOption,
+  deletePollOption,
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,

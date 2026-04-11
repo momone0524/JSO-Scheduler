@@ -105,10 +105,49 @@ async function addPollVote(poll: Poll, user: User, polloption: PollOption): Prom
   return PollVoteRepository.save(newPollVote);
 }
 
+async function updatePollVote(voteId: string, polloption: PollOption): Promise<PollVote | null> {
+  const pollVote = await PollVoteRepository.findOne({
+    where: { voteId },
+    relations: ['poll', 'user', 'polloption'],
+    select: {
+      voteId: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+      polloption: {
+        optionId: true,
+        joboption: true,
+        scheduleoption: true,
+      },
+    },
+  });
+
+  if (!pollVote) {
+    return null;
+  }
+
+  pollVote.polloption = polloption;
+
+  return PollVoteRepository.save(pollVote);
+}
+
+async function deletePollVote(voteId: string): Promise<void> {
+  const pollVote = await PollVoteRepository.findOne({ where: { voteId } });
+
+  if (!pollVote) {
+    return;
+  }
+
+  await PollVoteRepository.remove(pollVote);
+}
+
 export {
   addPollVote,
+  deletePollVote,
   getAllPollVote,
   getAllPollVoteByOption,
   getPollVoteById,
   getPollVoteByPollAndUser,
+  updatePollVote,
 };

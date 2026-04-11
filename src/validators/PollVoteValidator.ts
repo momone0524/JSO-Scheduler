@@ -5,7 +5,7 @@ const CreatePollVoteSchema = z.object({
 });
 
 const UpdatePollVoteSchema = z.object({
-  optionId: z.string().min(1).optional(),
+  optionId: z.string().min(1).max(100).optional(),
 });
 
 export type CreatePollVoteInput = z.infer<typeof CreatePollVoteSchema>;
