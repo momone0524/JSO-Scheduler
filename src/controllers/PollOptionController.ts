@@ -6,12 +6,14 @@ import {
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
+  updatePollOption,
 } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 import {
   CreatePollOptionInput,
   CreatePollOptionSchema,
+  UpdatePollOptionSchema,
 } from '../validators/PollOptionValidator.js';
 
 async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
@@ -128,4 +130,65 @@ async function getPollOptions(req: Request, res: Response): Promise<void> {
   res.json({ pollOptions });
 }
 
-export { CreateNewPollOption, getPollOptionInfo, getPollOptions };
+async function updatePollOptionInfo(req: Request, res: Response): Promise<void> {
+  const { userId, optionId } = req.params;
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const pollOption = await getPollOptionById(optionId);
+  if (!pollOption) {
+    res.status(404).json({ error: 'PollOption not found' });
+    return;
+  }
+
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403);
+    return;
+  }
+
+  const poll = await getPollById(pollOption.poll.pollId);
+  if (!poll) {
+    res.status(404).json({ error: 'Poll not found' });
+    return;
+  }
+
+  if (poll.isClosed == true) {
+    res.status(404).json({ error: 'Poll is already closed' });
+    return;
+  }
+
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to update a PollOption' });
+    return;
+  }
+
+  const result = UpdatePollOptionSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json(result.error.flatten());
+    return;
+  }
+
+  try {
+    const updatedPollOption = await updatePollOption(result.data, optionId);
+    if (!updatedPollOption) {
+      res.status(404).json({ error: 'PollOption not found' });
+      return;
+    }
+
+    res.json({ pollOption: updatedPollOption });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+export { CreateNewPollOption, getPollOptionInfo, getPollOptions, updatePollOptionInfo };

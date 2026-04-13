@@ -170,6 +170,7 @@ async function updatePollInfo(req: Request, res: Response): Promise<void> {
     res.status(500).json(databaseErrorMessage);
   }
 }
+
 async function deletePollInfo(req: Request, res: Response): Promise<void> {
   const { pollId, userId } = req.params;
 
