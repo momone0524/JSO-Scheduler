@@ -128,4 +128,13 @@ async function getPollVoteInOption(req: Request, res: Response): Promise<void> {
   res.json({ votes });
 }
 
+async function updatePollVoteInfo(req: Request, res: Response): Promise<void> {
+  const {userId, optionId, voteId} = req.params;
+  if(!req.session.isLoggedIn){
+    res.sendStatus(401);
+    return;
+  }
+
+  const
+}
 export { CreateNewPollVote, getPollVoteInfo, getPollVoteInOption, getPollVotes };
