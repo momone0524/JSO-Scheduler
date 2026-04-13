@@ -3,6 +3,7 @@ import { getPollById } from '../models/PollModel.js';
 import {
   addPollJobOption,
   addPollScheduleOption,
+  deletePollOption,
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
@@ -15,7 +16,6 @@ import {
   CreatePollOptionSchema,
   UpdatePollOptionSchema,
 } from '../validators/PollOptionValidator.js';
-
 async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
   const { userId, pollId } = req.params;
 
@@ -191,4 +191,54 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
   }
 }
 
-export { CreateNewPollOption, getPollOptionInfo, getPollOptions, updatePollOptionInfo };
+async function deletePollOptionInfo(req: Request, res: Response): Promise<void> {
+  const { userId, optionId } = req.params;
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const pollOption = await getPollOptionById(optionId);
+  if (!pollOption) {
+    res.status(404).json({ error: 'PollOption not found' });
+    return;
+  }
+
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ erro: 'PollOption not found' });
+    return;
+  }
+
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403);
+    return;
+  }
+
+  const poll = await getPollById(pollOption.poll.pollId);
+  if (!poll) {
+    res.status(404).json({ error: 'Poll not found' });
+    return;
+  }
+
+  if (poll.isClosed == true) {
+    res.status(404).json({ error: 'Poll is already closed' });
+    return;
+  }
+
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to delete a PollOption' });
+    return;
+  }
+
+  await deletePollOption(optionId);
+  res.sendStatus(204);
+}
+
+export {
+  CreateNewPollOption,
+  deletePollOptionInfo,
+  getPollOptionInfo,
+  getPollOptions,
+  updatePollOptionInfo,
+};
