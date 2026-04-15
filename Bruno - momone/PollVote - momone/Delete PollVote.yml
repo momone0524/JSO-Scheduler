@@ -5,16 +5,16 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:1000/pollvote/:voteId/delete/:optionId/:userId
+  url: http://localhost:1000/pollvotes/:voteId/delete/:optionId/:userId
   params:
     - name: voteId
-      value: ""
+      value: 019d11c0-cbff-74b7-811a-b22a0e0a0e62
       type: path
     - name: optionId
-      value: ""
+      value: 019d11a5-5163-7378-8100-44365399003a
       type: path
     - name: userId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   auth: inherit
 

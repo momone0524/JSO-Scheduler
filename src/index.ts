@@ -52,7 +52,6 @@ import {
   getPollVoteInfo,
   getPollVoteInOption,
   getPollVotes,
-  updatePollVoteInfo,
 } from './controllers/PollVoteController.js';
 import {
   deleteUser,
@@ -123,7 +122,7 @@ app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollV
 app.get('/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
-app.patch('/pollvote/:voteId/update/:optionId/:userId', updatePollVoteInfo);
+//app.patch('/pollvote/:voteId/update/:optionId/:userId', updatePollVoteInfo);
 app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
 
 // Job
