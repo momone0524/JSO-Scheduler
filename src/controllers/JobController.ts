@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 import { getEventById } from '../models/EventModel.js';
-import { addJobAuto, addJobManually, getAllJobByEvent, getJobById } from '../models/JobModel.js';
+import {
+  addJobAuto,
+  addJobManually,
+  deleteJob,
+  getAllJobByEvent,
+  getJobById,
+  updateJob,
+} from '../models/JobModel.js';
 import { getPollById } from '../models/PollModel.js';
 import { getAllPollOptions } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
-import { CreateJobInput, CreateJobSchema } from '../validators/JobValidator.js';
+import { CreateJobInput, CreateJobSchema, UpdateJobSchema } from '../validators/JobValidator.js';
 
 async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
   const { userId, eventId } = req.params;
@@ -145,4 +152,88 @@ async function getJobInEvent(req: Request, res: Response): Promise<void> {
   res.json({ jobs });
 }
 
-export { CreateNewJobAuto, CreateNewJobManual, getJobInEvent, getJobInfo };
+async function updateJobInfo(req: Request, res: Response): Promise<void> {
+  const { userId, jobId } = req.params;
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const job = await getJobById(jobId);
+  if (!job) {
+    res.status(404).json({ error: 'Job not found' });
+    return;
+  }
+
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  if (req.session.authenticatedUser.userId !== req.params.userId) {
+    res.sendStatus(403);
+    return;
+  }
+
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to update a Job' });
+    return;
+  }
+
+  const result = UpdateJobSchema.safeParse(req.body);
+  if (!result.success) {
+    res.status(400).json(result.error.flatten());
+    return;
+  }
+
+  try {
+    const updatedJob = await updateJob(result.data, jobId);
+    if (!updatedJob) {
+      res.status(404).json({ error: 'Job not found' });
+      return;
+    }
+    res.json({ job: updatedJob });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
+async function deleteJobInfo(req: Request, res: Response): Promise<void> {
+  const { userId, jobId } = req.params;
+  if (!req.session.isLoggedIn) {
+    res.status(401);
+    return;
+  }
+
+  const job = await getJobById(jobId);
+  if (!job) {
+    res.status(404).json({ error: 'Job not fourd' });
+    return;
+  }
+
+  const user = await getUserById(userId);
+  if (!user) {
+    res.status(404).json({ error: 'User not found' });
+    return;
+  }
+
+  if (user.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission t o delete Job' });
+    return;
+  }
+
+  await deleteJob(jobId);
+  res.sendStatus(204);
+}
+
+export {
+  CreateNewJobAuto,
+  CreateNewJobManual,
+  deleteJobInfo,
+  getJobInEvent,
+  getJobInfo,
+  updateJobInfo,
+};

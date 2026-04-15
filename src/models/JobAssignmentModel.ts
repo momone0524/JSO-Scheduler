@@ -63,6 +63,42 @@ async function addJobAssignmentAuto(pollvote: PollVote, job: Job): Promise<JobAs
   return JobAssignmentRepository.save(newJobAssignemnt);
 }
 
+async function updateJobAssignment(
+  assignmentId: string,
+  isLeader: boolean,
+): Promise<JobAssignment | null> {
+  const jobAssignment = await JobAssignmentRepository.findOne({
+    where: { assignmentId },
+    relations: ['user', 'job', 'pollvote'],
+    select: {
+      assignmentId: true,
+      isLeader: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+      job: {
+        jobId: true,
+        jobName: true,
+      },
+      pollvote: {
+        polloption: {
+          joboption: true,
+          scheduleoption: true,
+        },
+      },
+    },
+  });
+
+  if (!jobAssignment) {
+    return null;
+  }
+
+  jobAssignment.isLeader = isLeader;
+
+  return JobAssignmentRepository.save(jobAssignment);
+}
+
 async function deleteJobAssignment(assignmentId: string): Promise<void> {
   const jobAssignment = await JobAssignmentRepository.findOne({ where: { assignmentId } });
 
@@ -78,4 +114,5 @@ export {
   deleteJobAssignment,
   getAllJobAssignmentByJob,
   getJobAssignmentById,
+  updateJobAssignment,
 };

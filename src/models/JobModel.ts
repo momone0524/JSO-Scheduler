@@ -107,4 +107,14 @@ async function updateJob(data: UpdateJobInput, jobId: string): Promise<Job | nul
   return JobRepository.save(job);
 }
 
-export { addJobAuto, addJobManually, getAllJobByEvent, getJobById, updateJob };
+async function deleteJob(jobId: string): Promise<void> {
+  const job = await JobRepository.findOne({
+    where: { jobId },
+  });
+  if (!job) {
+    return;
+  }
+
+  await JobRepository.remove(job);
+}
+export { addJobAuto, addJobManually, deleteJob, getAllJobByEvent, getJobById, updateJob };
