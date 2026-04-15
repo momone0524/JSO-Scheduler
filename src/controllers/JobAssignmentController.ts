@@ -126,12 +126,6 @@ async function updateJobAssignmentInfo(req: Request, res: Response): Promise<voi
     return;
   }
 
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
-    return;
-  }
-
   if (req.session.authenticatedUser.role !== 'Board Member') {
     res.status(403).json({ error: 'You do not have permission to update JobAssignment' });
     return;
@@ -154,7 +148,7 @@ async function updateJobAssignmentInfo(req: Request, res: Response): Promise<voi
 }
 
 async function deleteJobAssignmentInfo(req: Request, res: Response): Promise<void> {
-  const { userId, assignmentId } = req.params;
+  const { assignmentId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -166,14 +160,9 @@ async function deleteJobAssignmentInfo(req: Request, res: Response): Promise<voi
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 

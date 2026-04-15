@@ -5,13 +5,10 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:1000/assignments/:assignemntId/delete/:userId
+  url: http://localhost:1000/assignments/:assignemntId/delete
   params:
-    - name: userId
-      value: ""
-      type: path
     - name: assignemntId
-      value: ""
+      value: 019d933d-c120-71e9-8c45-d570bb24e3ac
       type: path
   auth: inherit
 

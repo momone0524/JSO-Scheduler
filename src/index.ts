@@ -87,20 +87,20 @@ app.patch('/users/:userId/update', updateUsers);
 app.delete('/users/:userId/delete', deleteUser);
 
 // Event
-app.post('/events/:userId', CreateNewEventManual);
+app.post('/events', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
-app.patch('/events/:eventId/update/:userId', updateEvent);
-app.delete('/events/:eventId/delete/:userId', deleteEvent);
+app.patch('/events/:eventId/update', updateEvent);
+app.delete('/events/:eventId/delete', deleteEvent);
 
 // Attendance
-app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
+app.post('/events/:eventId/attendance', CreateNewAttendance);
 app.get('/events/:eventId/attendance', getAttendances);
-app.get('/events/:eventId/attendance/user/:userId', getAttendanceOfUserInEvent);
+app.get('/events/:eventId/attendance/user', getAttendanceOfUserInEvent);
 app.get('/attendance/:attendanceId', getAttendanceInfo);
-app.patch('/attendance/:attendanceId/update/:userId', updateAttendance);
-app.delete('/attendance/:attendanceId/delete/:userId', deleteAttendance);
+app.patch('/attendance/:attendanceId/update', updateAttendance);
+app.delete('/attendance/:attendanceId/delete', deleteAttendance);
 
 // Poll
 app.post('/events/:eventId/polls/:userId', CreateNewPoll);
@@ -136,8 +136,8 @@ app.delete('/jobs/:jobId/delete/:userId', deleteJobInfo);
 app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
 app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
 app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
-app.patch('assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
-app.delete('assignments/:assignmentId/delete/:userId', deleteJobAssignmentInfo);
+app.patch('/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
+app.delete('/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

@@ -16,7 +16,7 @@ import {
 } from '../validators/AttendanceValidator.js';
 
 async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
-  const { userId, eventId } = req.params;
+  const { eventId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -32,15 +32,9 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -52,7 +46,7 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
   }
 
   // 既にAttendanceが存在している場合はエラー
-  const attendance = await getAttendanceByEventAndUserId(eventId, userId);
+  const attendance = await getAttendanceByEventAndUserId(eventId, user.userId);
   if (attendance) {
     res.status(404).json({ error: 'Attendance already exist' });
     return;
@@ -72,22 +66,16 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
 }
 
 async function getAttendanceOfUserInEvent(req: Request, res: Response): Promise<void> {
-  const { eventId, userId } = req.params;
+  const { eventId } = req.params;
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
   }
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -97,7 +85,7 @@ async function getAttendanceOfUserInEvent(req: Request, res: Response): Promise<
     res.status(404).json({ error: 'Event not found' });
     return;
   }
-  const attendances = await getAttendanceByEventAndUserId(eventId, userId);
+  const attendances = await getAttendanceByEventAndUserId(eventId, user.userId);
 
   if (!attendances) {
     res.status(404).json({ error: 'Attendance not found' });
@@ -147,7 +135,7 @@ async function getAttendances(req: Request, res: Response): Promise<void> {
 
 // Attendance 情報更新
 async function updateAttendance(req: Request, res: Response): Promise<void> {
-  const { attendanceId, userId } = req.params;
+  const { attendanceId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -156,15 +144,9 @@ async function updateAttendance(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -190,7 +172,7 @@ async function updateAttendance(req: Request, res: Response): Promise<void> {
 
 // Attendanceの削除
 async function deleteAttendance(req: Request, res: Response): Promise<void> {
-  const { attendanceId, userId } = req.params;
+  const { attendanceId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -199,17 +181,12 @@ async function deleteAttendance(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
     return;
   }
 
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
-    return;
-  }
   const attendance = await getAttendanceById(attendanceId);
 
   if (!attendance) {

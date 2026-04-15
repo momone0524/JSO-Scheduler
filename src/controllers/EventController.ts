@@ -15,9 +15,8 @@ import {
   UpdateEventSchema,
 } from '../validators/EventValidator.js';
 
+// イベント作成
 async function CreateNewEventManual(req: Request, res: Response): Promise<void> {
-  const { userId } = req.params;
-
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
@@ -25,15 +24,9 @@ async function CreateNewEventManual(req: Request, res: Response): Promise<void> 
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -63,6 +56,7 @@ async function CreateNewEventManual(req: Request, res: Response): Promise<void> 
   }
 }
 
+// イベントを全部見る
 async function getEventInfo(req: Request, res: Response): Promise<void> {
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -70,8 +64,8 @@ async function getEventInfo(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // イベントがなければエラー
   const event = await getEventById(req.params.eventId);
-
   if (!event) {
     res.status(404).json({ error: 'Event not found' });
     return;
@@ -91,7 +85,7 @@ async function getEvents(req: Request, res: Response): Promise<void> {
 
 // Event情報更新
 async function updateEvent(req: Request, res: Response): Promise<void> {
-  const { eventId, userId } = req.params;
+  const { eventId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -107,15 +101,9 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -147,7 +135,7 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
 
 // Event情報更新From Poll
 async function updateEventFromPollAuto(req: Request, res: Response): Promise<void> {
-  const { pollId, userId } = req.params;
+  const { pollId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -163,15 +151,9 @@ async function updateEventFromPollAuto(req: Request, res: Response): Promise<voi
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
@@ -197,7 +179,7 @@ async function updateEventFromPollAuto(req: Request, res: Response): Promise<voi
 
 // Eventの削除
 async function deleteEvent(req: Request, res: Response): Promise<void> {
-  const { eventId, userId } = req.params;
+  const { eventId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -206,15 +188,9 @@ async function deleteEvent(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403); // Authenticated but not authorized
     return;
   }
 
