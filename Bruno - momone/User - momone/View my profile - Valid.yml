@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/users/:userId
   params:
     - name: userId
-      value: 019cf8ab-f373-776c-af59-978ee54845c5
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   auth: inherit
 

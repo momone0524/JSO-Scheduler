@@ -5,7 +5,14 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/
+  url: http://localhost:1000/polls/:pollId/update/:userId
+  params:
+    - name: userId
+      value: ""
+      type: path
+    - name: pollId
+      value: ""
+      type: path
   auth: inherit
 
 settings:

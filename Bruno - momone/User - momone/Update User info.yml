@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/users/:userId/update
   params:
     - name: userId
-      value: 019d0ce7-cd55-725c-8f1a-fe405772b042
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   body:
     type: json

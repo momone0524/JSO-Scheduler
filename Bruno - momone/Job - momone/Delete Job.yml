@@ -5,7 +5,14 @@ info:
 
 http:
   method: DELETE
-  url: ""
+  url: http://localhost:1000/jobs/:jobId/delete/:useId
+  params:
+    - name: useId
+      value: ""
+      type: path
+    - name: jobId
+      value: ""
+      type: path
   auth: inherit
 
 settings:

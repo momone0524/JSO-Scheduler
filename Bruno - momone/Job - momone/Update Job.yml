@@ -5,7 +5,7 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/job/:jobId/update/:useId
+  url: http://localhost:1000/jobs/:jobId/update/:useId
   params:
     - name: useId
       value: ""

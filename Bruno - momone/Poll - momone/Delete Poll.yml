@@ -5,7 +5,14 @@ info:
 
 http:
   method: DELETE
-  url: ""
+  url: http://localhost:1000/polls/:pollId/delete/:userId
+  params:
+    - name: pollId
+      value: ""
+      type: path
+    - name: userId
+      value: ""
+      type: path
   auth: inherit
 
 settings:
