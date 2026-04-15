@@ -122,7 +122,6 @@ app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollV
 app.get('/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
-//app.patch('/pollvote/:voteId/update/:optionId/:userId', updatePollVoteInfo);
 app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
 
 // Job
@@ -137,7 +136,7 @@ app.delete('/jobs/:jobId/delete/:userId', deleteJobInfo);
 app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
 app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
 app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
-app.patch('assignments/:assignmentId/update/:userId', updateJobAssignmentInfo);
+app.patch('assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
 app.delete('assignments/:assignmentId/delete/:userId', deleteJobAssignmentInfo);
 
 app.listen(process.env.PORT, () => {
