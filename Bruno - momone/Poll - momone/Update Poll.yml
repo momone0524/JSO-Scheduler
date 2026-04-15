@@ -8,11 +8,20 @@ http:
   url: http://localhost:1000/polls/:pollId/update/:userId
   params:
     - name: userId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: pollId
-      value: ""
+      value: 019d9247-b669-7079-9d68-757d5c97bd8f
       type: path
+  body:
+    type: json
+    data: |-
+      {
+        "title": "New Year schedule",
+        "description": "schedule for new year event",
+        "closeAt": "2020-04-28",
+        "pollType": "schedule"
+      }
   auth: inherit
 
 settings:
