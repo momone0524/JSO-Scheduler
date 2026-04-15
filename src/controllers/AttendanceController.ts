@@ -51,6 +51,13 @@ async function CreateNewAttendance(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // 既にAttendanceが存在している場合はエラー
+  const attendance = await getAttendanceByEventAndUserId(eventId, userId);
+  if (attendance) {
+    res.status(404).json({ error: 'Attendance already exist' });
+    return;
+  }
+
   const data: CreateAttendanceInput = result.data;
 
   try {
