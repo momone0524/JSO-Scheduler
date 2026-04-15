@@ -17,7 +17,7 @@ http:
     type: json
     data: |-
       {
-        "joboption": "Reception"
+        "joboption": "Camera"
       }
   auth: inherit
 
