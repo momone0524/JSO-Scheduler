@@ -8,13 +8,13 @@ http:
   url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote/:voteId
   params:
     - name: voteId
-      value: 019d02e8-f9d0-7339-bd1a-31cf02679916
+      value: 019d926a-567e-73fc-973c-e64cadf2bb96
       type: path
     - name: optionId
-      value: 019d02e1-123f-7696-8b4c-ab508c6a6bf7
+      value: 019d9268-ba2a-7517-b56b-a8bfe6b6239d
       type: path
     - name: pollId
-      value: 019d02de-66e9-707f-aa47-24824c8c28ab
+      value: 019d9253-5504-74eb-9f6e-b6d6af52dfc4
       type: path
   auth: inherit
 

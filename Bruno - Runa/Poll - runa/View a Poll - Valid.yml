@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: http://localhost:1000/polls/019cfd82-343c-7254-b80e-24025ddcdd43
+  url: http://localhost:1000/polls/:pollId
+  params:
+    - name: pollId
+      value: 019d9249-ea0d-773e-a5b6-8cef88614a89
+      type: path
   auth: inherit
 
 settings:

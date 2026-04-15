@@ -1,11 +1,11 @@
 info:
-  name: Create Poll - Valid
+  name: Update Event
   type: http
-  seq: 1
+  seq: 4
 
 http:
-  method: POST
-  url: http://localhost:1000/events/:eventId/polls/:userId
+  method: PATCH
+  url: http://localhost:1000/events/:eventId/update/:userId
   params:
     - name: userId
       value: 019d922b-47ac-7272-9042-bb691c9e8f57
@@ -17,10 +17,11 @@ http:
     type: json
     data: |-
       {
-        "title": "Meeting for April Event",
-        "description": "We will talk about next Event",
-        "closeAt": "2026-04-07",
-        "pollType": "schedule"
+        "eventName" : "International Food Fastival",
+        "place" : "BCM",
+        "date" : "2026-04-10",
+        "startTime" : "6:00",
+        "endTime" : "8:00"
       }
   auth: inherit
 

@@ -1,14 +1,17 @@
 info:
-  name: View my profile - Valid
+  name: Delete Poll
   type: http
-  seq: 4
+  seq: 5
 
 http:
-  method: GET
-  url: http://localhost:1000/users/:userId
+  method: DELETE
+  url: http://localhost:1000/polls/:pollId/delete/:userId
   params:
     - name: userId
       value: 019d922b-47ac-7272-9042-bb691c9e8f57
+      type: path
+    - name: pollId
+      value: 019d9249-ea0d-773e-a5b6-8cef88614a89
       type: path
   auth: inherit
 

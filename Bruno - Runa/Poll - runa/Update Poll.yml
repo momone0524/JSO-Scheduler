@@ -1,17 +1,17 @@
 info:
-  name: Create Poll - Valid
+  name: "Update Poll "
   type: http
-  seq: 1
+  seq: 4
 
 http:
-  method: POST
-  url: http://localhost:1000/events/:eventId/polls/:userId
+  method: PATCH
+  url: http://localhost:1000/polls/:pollId/update/:userId
   params:
     - name: userId
       value: 019d922b-47ac-7272-9042-bb691c9e8f57
       type: path
-    - name: eventId
-      value: 019d9236-4e56-76cb-94ec-e118530e7489
+    - name: pollId
+      value: 019d9249-ea0d-773e-a5b6-8cef88614a89
       type: path
   body:
     type: json
@@ -19,7 +19,7 @@ http:
       {
         "title": "Meeting for April Event",
         "description": "We will talk about next Event",
-        "closeAt": "2026-04-07",
+        "closeAt": "2026-04-04",
         "pollType": "schedule"
       }
   auth: inherit

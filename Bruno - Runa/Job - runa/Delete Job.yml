@@ -1,12 +1,15 @@
 info:
-  name: View my profile - Valid
+  name: Delete Job
   type: http
-  seq: 4
+  seq: 5
 
 http:
-  method: GET
-  url: http://localhost:1000/users/:userId
+  method: DELETE
+  url: http://localhost:1000/job/:jobId/delete/:userId
   params:
+    - name: jobId
+      value: 019d9278-aed4-77ca-b005-20f22f7adefb
+      type: path
     - name: userId
       value: 019d922b-47ac-7272-9042-bb691c9e8f57
       type: path

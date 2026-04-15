@@ -1,0 +1,30 @@
+info:
+  name: Update Job
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://localhost:1000/job/:jobId/update/:userId
+  params:
+    - name: jobId
+      value: 019d9278-aed4-77ca-b005-20f22f7adefb
+      type: path
+    - name: userId
+      value: 019d922b-47ac-7272-9042-bb691c9e8f57
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "jobName": "Cooking",
+        "description": "Making food of event",
+        "eventId": "019d9236-4e56-76cb-94ec-e118530e748"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: http://localhost:1000/events/
+  url: http://localhost:1000/events/:eventId
+  params:
+    - name: eventId
+      value: 019d9236-4e56-76cb-94ec-e118530e7489
+      type: path
   auth: inherit
 
 settings:

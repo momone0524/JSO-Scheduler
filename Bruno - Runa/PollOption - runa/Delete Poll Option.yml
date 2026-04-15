@@ -1,14 +1,17 @@
 info:
-  name: View a PollOptions - Valid
+  name: Delete Poll Option
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: GET
-  url: http://localhost:1000/pollOptions/:optionId
+  method: DELETE
+  url: http://localhost:1000/pollOptions/:optionId/delete/:userId
   params:
     - name: optionId
       value: 019d9260-ec97-748b-a869-a257528d3e4a
+      type: path
+    - name: userId
+      value: 019d922b-47ac-7272-9042-bb691c9e8f57
       type: path
   auth: inherit
 

@@ -5,13 +5,20 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/events/019cf8d5-9d39-71a7-883c-4516346aae7b/attendance
+  url: http://localhost:1000/events/:evnetId/attendance/:userId
+  params:
+    - name: userId
+      value: 019d922b-47ac-7272-9042-bb691c9e8f57
+      type: path
+    - name: evnetId
+      value: 019d9236-4e56-76cb-94ec-e118530e7489
+      type: path
   body:
     type: json
     data: |-
       {
         "attend": "Joining Midway",
-        "attendTime": "18:00"
+        "attendTime": "3:00"
       }
   auth: inherit
 
