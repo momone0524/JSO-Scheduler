@@ -17,10 +17,7 @@ http:
     type: json
     data: |-
       {
-        "title": "New Year schedule",
-        "description": "schedule for new year event",
-        "closeAt": "2020-04-28",
-        "pollType": "schedule"
+        "title": "New Year schedule"
       }
   auth: inherit
 

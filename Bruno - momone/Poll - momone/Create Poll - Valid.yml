@@ -17,10 +17,10 @@ http:
     type: json
     data: |-
       {
-        "title": "New Year SCHEDULE",
-        "description": "schedule for event",
+        "title": "New Year Job Open",
+        "description": "job for event",
         "closeAt": "2020-04-28",
-        "pollType": "schedule"
+        "pollType": "job"
       }
   auth: inherit
 

@@ -115,7 +115,7 @@ app.delete('/polls/:pollId/delete/:userId', deletePollInfo);
 app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
-app.patch('/pollOptiions/:optionId/update/:userId', updatePollOptionInfo);
+app.patch('/pollOptions/:optionId/update/:userId', updatePollOptionInfo);
 app.delete('/pollOptions/:optionId/delete/:userId', deletePollOptionInfo);
 
 // PollVote
