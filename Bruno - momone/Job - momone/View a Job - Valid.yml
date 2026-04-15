@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/event/:eventId/jobs/:jobId
   params:
     - name: jobId
-      value: 019d0344-5fab-74a6-bc90-7b1d6dbafde0
+      value: 019d930d-8da5-713f-a72a-5078700343cb
       type: path
     - name: eventId
-      value: 019d02ef-2fd2-7444-962f-4b2c44b348a1
+      value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
       type: path
   auth: inherit
 

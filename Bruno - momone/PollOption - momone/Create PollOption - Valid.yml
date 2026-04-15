@@ -11,13 +11,13 @@ http:
       value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: pollId
-      value: 019d92e6-89ee-71e0-8544-0548b16d2977
+      value: 019d9331-0f13-71aa-b58b-137e9bfc250e
       type: path
   body:
     type: json
     data: |-
       {
-        "joboption": "Camera"
+        "joboption": "Reception"
       }
   auth: inherit
 

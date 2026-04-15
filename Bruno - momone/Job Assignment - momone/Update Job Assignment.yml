@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/assignments/:assignmentId/update/:userId
   params:
     - name: assignmentId
-      value: ""
+      value: 019d933d-c120-71e9-8c45-d570bb24e3ac
       type: path
     - name: userId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   auth: inherit
 

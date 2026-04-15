@@ -8,11 +8,17 @@ http:
   url: http://localhost:1000/jobs/:jobId/update/:useId
   params:
     - name: useId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: jobId
-      value: ""
+      value: 019d9305-4f7f-70cd-b4f2-d393a589e23c
       type: path
+  body:
+    type: json
+    data: |-
+      {
+        "jobName": "Camera"
+      }
   auth: inherit
 
 settings:

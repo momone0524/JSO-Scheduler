@@ -8,17 +8,16 @@ http:
   url: http://localhost:1000/events/:eventId/attendance/:userId
   params:
     - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
+      value: 019d9337-a139-7190-8a4a-99fac604dea5
       type: path
     - name: eventId
-      value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
+      value: 019d932e-74af-725e-80a9-b30978026420
       type: path
   body:
     type: json
     data: |-
       {
-        "attend": "Joining Midway",
-        "attendTime": "15:00"
+        "attend": "Yes"
       }
   auth: inherit
 

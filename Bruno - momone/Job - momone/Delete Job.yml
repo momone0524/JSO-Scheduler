@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/jobs/:jobId/delete/:useId
   params:
     - name: useId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: jobId
-      value: ""
+      value: 019d930d-8daa-73e4-8865-68f93bc8f2b0
       type: path
   auth: inherit
 
