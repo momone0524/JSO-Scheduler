@@ -1,0 +1,25 @@
+info:
+  name: Delete PollVote
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: http://localhost:1000/pollvote/:voteId/delete/:optionId/:userId
+  params:
+    - name: voteId
+      value: ""
+      type: path
+    - name: optionId
+      value: ""
+      type: path
+    - name: userId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

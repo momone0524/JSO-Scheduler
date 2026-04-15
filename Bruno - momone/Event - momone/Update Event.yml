@@ -8,17 +8,17 @@ http:
   url: http://localhost:1000/events/:eventId/update/:userId
   params:
     - name: userId
-      value: 019d0cf3-19ba-72cc-bbf5-a8cbf68e70f6
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: eventId
-      value: 019d0cf3-e5da-712f-837d-bd44ccfb15de
+      value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
       type: path
   body:
     type: json
     data: |-
       {
             "eventName": "NEW YEAR",
-            "place": "Union",
+            "place": "BCM",
             "date": "2026-05-13",
             "startTime": "17:00",
             "endTime": "20:00"

@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/attendance/:attendanceId/update/:userId
   params:
     - name: attendanceId
-      value: 019d0db2-a213-76ce-b795-dd08feda3afa
+      value: 019d923c-9708-71f6-83da-b77f40500ac7
       type: path
     - name: userId
-      value: 019d0d9e-169f-71be-9710-bdb85b72e4ed
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   body:
     type: json

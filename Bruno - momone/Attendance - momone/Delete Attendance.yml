@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/attendance/:attendanceId/delete/:userId
   params:
     - name: attendanceId
-      value: 019d0ddf-c9d0-750a-92bd-cc24e5241899
+      value: 019d11b8-1279-734f-b36d-3b1f4f45f398
       type: path
     - name: userId
       value: 019d0dd7-8836-7491-86bf-29c4d5306403

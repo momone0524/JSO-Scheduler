@@ -1,0 +1,22 @@
+info:
+  name: Update Job Assignment
+  type: http
+  seq: 4
+
+http:
+  method: PATCH
+  url: http://localhost:1000/assignments/:assignmentId/update/:userId
+  params:
+    - name: assignmentId
+      value: ""
+      type: path
+    - name: userId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
