@@ -1,14 +1,17 @@
 info:
-  name: Close Poll if expires
+  name: Update Job
   type: http
-  seq: 4
+  seq: 5
 
 http:
   method: PATCH
-  url: http://localhost:1000/polls/:pollId/close
+  url: http://localhost:1000/job/:jobId/update/:useId
   params:
-    - name: pollId
-      value: 019d9247-b669-7079-9d68-757d5c97bd8f
+    - name: useId
+      value: ""
+      type: path
+    - name: jobId
+      value: ""
       type: path
   auth: inherit
 

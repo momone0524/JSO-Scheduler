@@ -1,0 +1,22 @@
+info:
+  name: Delete Job Assignment
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: http://localhost:1000/assignments/:assignemntId/delete/:userId
+  params:
+    - name: userId
+      value: ""
+      type: path
+    - name: assignemntId
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

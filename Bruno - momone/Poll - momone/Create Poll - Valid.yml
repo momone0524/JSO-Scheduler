@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000//events/:eventId/polls/:userId
+  url: http://localhost:1000/events/:eventId/polls/:userId
   params:
     - name: eventId
       value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
@@ -17,10 +17,10 @@ http:
     type: json
     data: |-
       {
-        "title": "New Year JOB",
-        "description": "Choose your job preference",
+        "title": "New Year SCHEDULE",
+        "description": "schedule for event",
         "closeAt": "2020-04-28",
-        "pollType": "job"
+        "pollType": "schedule"
       }
   auth: inherit
 
