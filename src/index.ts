@@ -122,7 +122,7 @@ app.delete('/pollOptions/:optionId/delete/:userId', deletePollOptionInfo);
 app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
 app.get('/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
-app.get('/polls/:pollId/pollOptions/:optionId/pollvoteInOption', getPollVoteInOption);
+app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
 app.patch('/pollvote/:voteId/update/:optionId/:userId', updatePollVoteInfo);
 app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
 
