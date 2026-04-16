@@ -114,41 +114,83 @@ async function deleteJobAssignment(assignmentId: string): Promise<void> {
 
   await JobAssignmentRepository.remove(jobAssignment);
 }
-/*
-async function isLeaderSet(assignmentId: string): Promise<JobAssignment | null> {
-  const assignment = await JobAssignmentRepository.findOne({
-    where: { assignmentId },
-    relations: ['user'],
+
+async function isLeaderSet(jobId: string): Promise<JobAssignment[]> {
+  const jobassignment = await JobAssignmentRepository.find({
+    where: { job: { jobId } },
+    relations: ['user', 'job'],
     select: {
-      pollId: true,
-      title: true,
-      description: true,
-      closeAt: true,
-      isClosed: true,
-      pollType: true,
+      assignmentId: true,
+      isLeader: true,
       user: {
         userId: true,
         name: true,
+        gradeYear: true,
+        birthday: true,
+        role: true,
+      },
+      job: {
+        jobId: true,
+        jobName: true,
       },
     },
   });
 
-  if (!poll) {
-    return null;
+  // いったん全員falseにする
+  for (const assignment of jobassignment) {
+    assignment.isLeader = false;
   }
 
-  const now = new Date();
+  // Board Member だけ取り出す
+  const boardAssignments = jobassignment.filter(
+    (assignment) => assignment.user.role === 'Board Member',
+  );
 
-  if (poll.closeAt <= now && !poll.isClosed) {
-    poll.isClosed = true;
+  let candidateList: JobAssignment[];
+
+  // Board Member がいればその人たちを対象にする
+  if (boardAssignments.length > 0) {
+    candidateList = boardAssignments;
+  } else {
+    // いなければ全体を見る
+    candidateList = jobassignment;
   }
-  return PollRepository.save(poll);
-}*/
+
+  let leader: JobAssignment | null = null;
+
+  for (let i = 0; i < candidateList.length; i++) {
+    const current = candidateList[i];
+
+    if (!leader) {
+      leader = current;
+      continue;
+    }
+
+    // gradeYear が高い人を優先
+    if (current.user.gradeYear > leader.user.gradeYear) {
+      leader = current;
+      continue;
+    }
+
+    // gradeYear が同じなら birthday 比較
+    const currentBirthday = new Date(current.user.birthday).getTime();
+    const leaderBirthday = new Date(leader.user.birthday).getTime();
+    if (currentBirthday < leaderBirthday) {
+      leader = current;
+    }
+  }
+  if (leader) {
+    leader.isLeader = true;
+  }
+
+  return await JobAssignmentRepository.save(jobassignment);
+}
 
 export {
   addJobAssignmentAuto,
   deleteJobAssignment,
   getAllJobAssignmentByJob,
   getJobAssignmentById,
+  isLeaderSet,
   updateJobAssignment,
 };
