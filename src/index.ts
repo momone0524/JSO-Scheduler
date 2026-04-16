@@ -21,6 +21,7 @@ import {
   deleteJobAssignmentInfo,
   getJobAssignmentInfo,
   getJobAssignmentInJob,
+  settingLeader,
   updateJobAssignmentInfo,
 } from './controllers/JobAssignmentController.js';
 import {
@@ -137,8 +138,8 @@ app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
 app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
 app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
 app.patch('/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
+app.patch('/jobs/:jobId/setLeader', settingLeader);
 app.delete('/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
-
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);
 });

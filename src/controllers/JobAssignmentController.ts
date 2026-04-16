@@ -5,6 +5,7 @@ import {
   deleteJobAssignment,
   getAllJobAssignmentByJob,
   getJobAssignmentById,
+  isLeaderSet,
   updateJobAssignment,
 } from '../models/JobAssignmentModel.js';
 import { getJobById } from '../models/JobModel.js';
@@ -175,10 +176,40 @@ async function deleteJobAssignmentInfo(req: Request, res: Response): Promise<voi
   res.sendStatus(204);
 }
 
+async function settingLeader(req: Request, res: Response): Promise<void> {
+  const { jobId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ボードメンバーでなければエラー
+  if (req.session.authenticatedUser.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to create a Poll' });
+    return;
+  }
+
+  try {
+    const leaderSet = await isLeaderSet(jobId);
+    if (!leaderSet) {
+      res.status(404).json({ error: 'Job not found' });
+      return;
+    }
+    res.json({ leaderSet });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
 export {
   CreateNewJobAssignmentAuto,
   deleteJobAssignmentInfo,
   getJobAssignmentInfo,
   getJobAssignmentInJob,
+  settingLeader,
   updateJobAssignmentInfo,
 };
