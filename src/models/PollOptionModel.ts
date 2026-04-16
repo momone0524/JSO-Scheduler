@@ -134,6 +134,46 @@ async function deletePollOption(optionId: string): Promise<void> {
   await PollOptionRepository.remove(pollOption);
 }
 
+async function isWinnerSet(pollId: string): Promise<PollOption[]> {
+  const pollOption = await PollOptionRepository.find({
+    where: { poll: { pollId } },
+    relations: ['pollVotes'],
+    select: {
+      optionId: true,
+      joboption: true,
+      scheduleoption: true,
+      isWinner: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+    },
+  });
+
+  // いったん全て false
+  for (const option of pollOption) {
+    option.isWinner = false;
+  }
+
+  let winner: PollOption | null = null;
+  let maxVotes = -1;
+
+  for (const option of pollOption) {
+    const voteCount = option.pollvotes.length;
+
+    if (voteCount > maxVotes) {
+      maxVotes = voteCount;
+      winner = option;
+    }
+  }
+
+  if (winner) {
+    winner.isWinner = true;
+  }
+
+  return PollOptionRepository.save(pollOption);
+}
+
 export {
   addPollJobOption,
   addPollScheduleOption,
@@ -141,6 +181,7 @@ export {
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
+  isWinnerSet,
   updatePollJobOption,
   updatePollScheduleOption,
 };
