@@ -140,6 +140,12 @@ async function updatePollInfo(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  // Pollがclosedならエラー
+  if (poll.isClosed === true) {
+    res.status(404).json({ error: 'Poll is already closed' });
+    return;
+  }
+
   const result = UpdatePollSchema.safeParse(req.body);
   if (!result.success) {
     res.status(400).json({ errors: result.error });
