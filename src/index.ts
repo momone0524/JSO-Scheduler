@@ -118,11 +118,11 @@ app.patch('/pollOptions/:optionId/update/:userId', updatePollOptionInfo);
 app.delete('/pollOptions/:optionId/delete/:userId', deletePollOptionInfo);
 
 // PollVote
-app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
+app.post('/polls/:pollId/pollOptions/:optionId/pollvote', CreateNewPollVote);
 app.get('/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
-app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
+app.delete('/pollvote/:voteId/delete', deletePollVoteInfo);
 
 // Job
 app.post('/event/:eventId/jobs', CreateNewJobManual);
