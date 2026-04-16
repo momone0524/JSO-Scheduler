@@ -5,7 +5,11 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000
+  url: http://localhost:1000/jobs/:jobId/assignment/auto
+  params:
+    - name: jobId
+      value: 019d9282-5600-7576-93e2-036d04d8cb60
+      type: path
   auth: inherit
 
 settings:

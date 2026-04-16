@@ -8,7 +8,8 @@ http:
   url: http://localhost:1000/users/:userId/delete
   params:
     - name: userId
-      value: 019d0212-2b76-715e-aa93-81df98159955
+      value: |
+        019d0212-2b76-715e-aa93-81df98159955
       type: path
   auth: inherit
 
