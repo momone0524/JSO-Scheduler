@@ -118,9 +118,8 @@ async function getJobInfo(req: Request, res: Response): Promise<void> {
     res.sendStatus(401);
     return;
   }
-
+  // Jobがなければエラー
   const job = await getJobById(req.params.jobId);
-
   if (!job) {
     res.status(404).json({ error: 'Job not found' });
     return;
@@ -148,28 +147,29 @@ async function getJobInEvent(req: Request, res: Response): Promise<void> {
 
 async function updateJobInfo(req: Request, res: Response): Promise<void> {
   const { jobId } = req.params;
+  // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
   }
-
+  // Jobがなければエラー
   const job = await getJobById(jobId);
   if (!job) {
     res.status(404).json({ error: 'Job not found' });
     return;
   }
-
+  // ユーザーがなければエラー
   const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
     return;
   }
-
+  // ボードメンバーでなければエラー
   if (user.role !== 'Board Member') {
     res.status(403).json({ error: 'You do not have permission to update a Job' });
     return;
   }
-
+  // データが正しい形式でなければエラー
   const result = UpdateJobSchema.safeParse(req.body);
   if (!result.success) {
     res.status(400).json(result.error.flatten());
@@ -191,24 +191,25 @@ async function updateJobInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteJobInfo(req: Request, res: Response): Promise<void> {
+  // ログインしていなければエラー
   const { jobId } = req.params;
   if (!req.session.isLoggedIn) {
     res.status(401);
     return;
   }
-
+  // Jobがなければエラー
   const job = await getJobById(jobId);
   if (!job) {
     res.status(404).json({ error: 'Job not fourd' });
     return;
   }
-
+  // ユーザーがなければエラー
   const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
     return;
   }
-
+  // ボードメンバーでなければエラー
   if (user.role !== 'Board Member') {
     res.status(403).json({ error: 'You do not have permission t o delete Job' });
     return;
