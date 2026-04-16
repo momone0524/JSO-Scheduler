@@ -103,12 +103,12 @@ app.patch('/attendance/:attendanceId/update', updateAttendance);
 app.delete('/attendance/:attendanceId/delete', deleteAttendance);
 
 // Poll
-app.post('/events/:eventId/polls/:userId', CreateNewPoll);
+app.post('/events/:eventId/polls', CreateNewPoll);
 app.get('/polls', getPolls);
 app.get('/polls/:pollId', getPollInfo);
 app.patch('/polls/:pollId/close', closedPollExpire);
-app.patch('/polls/:pollId/update/:userId', updatePollInfo);
-app.delete('/polls/:pollId/delete/:userId', deletePollInfo);
+app.patch('/polls/:pollId/update', updatePollInfo);
+app.delete('/polls/:pollId/delete', deletePollInfo);
 
 // PollOption
 app.post('/polls/:pollId/pollOptions', CreateNewPollOption);
