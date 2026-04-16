@@ -15,7 +15,7 @@ import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreateJobInput, CreateJobSchema, UpdateJobSchema } from '../validators/JobValidator.js';
 
 async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
-  const { userId, eventId } = req.params;
+  const { eventId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -24,15 +24,9 @@ async function CreateNewJobManual(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -153,7 +147,7 @@ async function getJobInEvent(req: Request, res: Response): Promise<void> {
 }
 
 async function updateJobInfo(req: Request, res: Response): Promise<void> {
-  const { userId, jobId } = req.params;
+  const { jobId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -165,14 +159,9 @@ async function updateJobInfo(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -202,7 +191,7 @@ async function updateJobInfo(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteJobInfo(req: Request, res: Response): Promise<void> {
-  const { userId, jobId } = req.params;
+  const { jobId } = req.params;
   if (!req.session.isLoggedIn) {
     res.status(401);
     return;
@@ -214,7 +203,7 @@ async function deleteJobInfo(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
     return;

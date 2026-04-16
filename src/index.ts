@@ -125,12 +125,12 @@ app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
 app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
 
 // Job
+app.post('/event/:eventId/jobs', CreateNewJobManual);
 app.post('/event/:eventId/jobs/auto', CreateNewJobAuto);
-app.post('/event/:eventId/jobs/:userId', CreateNewJobManual);
 app.get('/event/:eventId/jobs', getJobInEvent);
 app.get('/event/:eventId/jobs/:jobId', getJobInfo);
-app.patch('/jobs/:jobId/update/:userId', updateJobInfo);
-app.delete('/jobs/:jobId/delete/:userId', deleteJobInfo);
+app.patch('/jobs/:jobId/update', updateJobInfo);
+app.delete('/jobs/:jobId/delete', deleteJobInfo);
 
 // JobAssignment
 app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
