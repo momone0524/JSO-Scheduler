@@ -17,7 +17,9 @@ http:
     type: json
     data: |-
       {
-        "title": "New Year schedule"
+        "title": "New Year Schedule",
+        "description": "schedule for new year event",
+        "closeAt": "2020-04-28"
       }
   auth: inherit
 
