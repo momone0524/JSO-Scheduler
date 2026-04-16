@@ -111,11 +111,11 @@ app.patch('/polls/:pollId/update/:userId', updatePollInfo);
 app.delete('/polls/:pollId/delete/:userId', deletePollInfo);
 
 // PollOption
-app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);
+app.post('/polls/:pollId/pollOptions', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
-app.patch('/pollOptions/:optionId/update/:userId', updatePollOptionInfo);
-app.delete('/pollOptions/:optionId/delete/:userId', deletePollOptionInfo);
+app.patch('/pollOptions/:optionId/update', updatePollOptionInfo);
+app.delete('/pollOptions/:optionId/delete', deletePollOptionInfo);
 
 // PollVote
 app.post('/polls/:pollId/pollOptions/:optionId/pollvote', CreateNewPollVote);
