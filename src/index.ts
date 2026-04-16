@@ -45,6 +45,7 @@ import {
   deletePollOptionInfo,
   getPollOptionInfo,
   getPollOptions,
+  settingWinner,
   updatePollOptionInfo,
 } from './controllers/PollOptionController.js';
 import {
@@ -116,6 +117,7 @@ app.post('/polls/:pollId/pollOptions', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
 app.patch('/pollOptions/:optionId/update', updatePollOptionInfo);
+app.patch('/polls/:pollId/winner', settingWinner);
 app.delete('/pollOptions/:optionId/delete', deletePollOptionInfo);
 
 // PollVote
@@ -138,7 +140,7 @@ app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
 app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
 app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
 app.patch('/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
-app.patch('/jobs/:jobId/setLeader', settingLeader);
+app.patch('/jobs/:jobId/leader', settingLeader);
 app.delete('/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

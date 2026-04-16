@@ -7,6 +7,7 @@ import {
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
+  isWinnerSet,
   updatePollJobOption,
   updatePollScheduleOption,
 } from '../models/PollOptionModel.js';
@@ -222,10 +223,53 @@ async function deletePollOptionInfo(req: Request, res: Response): Promise<void> 
   res.sendStatus(204);
 }
 
+async function settingWinner(req: Request, res: Response): Promise<void> {
+  const { pollId } = req.params;
+
+  // ログインしていなければエラー
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // ボードメンバーでなければエラー
+  if (req.session.authenticatedUser.role !== 'Board Member') {
+    res.status(403).json({ error: 'You do not have permission to create a Poll' });
+    return;
+  }
+
+  // Pollがなければエラー
+  const poll = await getPollById(pollId);
+  if (!poll) {
+    res.status(404).json({ error: 'Poll not found' });
+    return;
+  }
+
+  // Pollがclosedしてないならエラー
+  if (poll.isClosed === false) {
+    res.status(404).json({ error: 'Poll is already closed' });
+    return;
+  }
+
+  try {
+    const winnerSet = await isWinnerSet(pollId);
+    if (!winnerSet) {
+      res.status(404).json({ error: 'Poll not found' });
+      return;
+    }
+    res.json({ winnerSet });
+  } catch (err) {
+    console.error(err);
+    const databaseErrorMessage = parseDatabaseError(err);
+    res.status(500).json(databaseErrorMessage);
+  }
+}
+
 export {
   CreateNewPollOption,
   deletePollOptionInfo,
   getPollOptionInfo,
   getPollOptions,
+  settingWinner,
   updatePollOptionInfo,
 };
