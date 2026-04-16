@@ -7,7 +7,8 @@ import {
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
-  updatePollOption,
+  updatePollJobOption,
+  updatePollScheduleOption,
 } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
@@ -166,13 +167,15 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
   }
 
   try {
-    const updatedPollOption = await updatePollOption(result.data, optionId);
-    if (!updatedPollOption) {
-      res.status(404).json({ error: 'PollOption not found' });
-      return;
+    if (poll.pollType === 'schedule') {
+      const updatedPollScheduleOption = await updatePollScheduleOption(result.data, optionId);
+      res.json({ pollOption: updatedPollScheduleOption });
+      res.sendStatus(201);
+    } else if (poll.pollType === 'job') {
+      const updatedPollJobOption = await updatePollJobOption(result.data, optionId);
+      res.json({ pollOption: updatedPollJobOption });
+      res.sendStatus(201);
     }
-
-    res.json({ pollOption: updatedPollOption });
   } catch (err) {
     console.error(err);
     const databaseErrorMessage = parseDatabaseError(err);

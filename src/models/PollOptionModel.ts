@@ -73,7 +73,7 @@ async function addPollScheduleOption(data: CreatePollOptionInput, poll: Poll): P
   return PollOptionRepository.save(newPollOption);
 }
 
-async function updatePollOption(
+async function updatePollJobOption(
   data: UpdatePollOptionInput,
   optionId: string,
 ): Promise<PollOption | null> {
@@ -96,9 +96,32 @@ async function updatePollOption(
   }
 
   pollOption.joboption = data.joboption;
+  return PollOptionRepository.save(pollOption);
+}
+
+async function updatePollScheduleOption(
+  data: UpdatePollOptionInput,
+  optionId: string,
+): Promise<PollOption | null> {
+  const pollOption = await PollOptionRepository.findOne({
+    where: { optionId },
+    relations: ['poll'],
+    select: {
+      optionId: true,
+      joboption: true,
+      scheduleoption: true,
+      poll: {
+        pollId: true,
+        title: true,
+      },
+    },
+  });
+
+  if (!pollOption) {
+    return null;
+  }
 
   pollOption.scheduleoption = new Date(data.scheduleoption);
-
   return PollOptionRepository.save(pollOption);
 }
 
@@ -118,5 +141,6 @@ export {
   getAllPollOptions,
   getPollOptionById,
   getPollOptionInPollByName,
-  updatePollOption,
+  updatePollJobOption,
+  updatePollScheduleOption,
 };
