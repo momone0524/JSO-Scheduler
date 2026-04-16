@@ -4,6 +4,7 @@ import { JobAssignment } from '../entities/JobAssignment.js';
 import { PollVote } from '../entities/PollVote.js';
 
 const JobAssignmentRepository = AppDataSource.getRepository(JobAssignment);
+const JobRepository = AppDataSource.getRepository(Job);
 
 async function getAllJobAssignmentByJob(jobId: string): Promise<JobAssignment[]> {
   return JobAssignmentRepository.find({
@@ -65,7 +66,7 @@ async function addJobAssignmentAuto(pollvote: PollVote, job: Job): Promise<JobAs
 
 async function updateJobAssignment(
   assignmentId: string,
-  isLeader: boolean,
+  jobId: string,
 ): Promise<JobAssignment | null> {
   const jobAssignment = await JobAssignmentRepository.findOne({
     where: { assignmentId },
@@ -94,7 +95,12 @@ async function updateJobAssignment(
     return null;
   }
 
-  jobAssignment.isLeader = isLeader;
+  const newJob = await JobRepository.findOne({ where: { jobId } });
+
+  if (!newJob) {
+    return null;
+  }
+  jobAssignment.job = newJob;
 
   return JobAssignmentRepository.save(jobAssignment);
 }

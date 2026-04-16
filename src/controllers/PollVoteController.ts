@@ -9,13 +9,12 @@ import {
   getAllPollVoteByOption,
   getPollVoteById,
   getPollVoteByPollAndUser,
-  updatePollVote,
 } from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
 import { parseDatabaseError } from '../utils/db-utils.js';
 
 async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
-  const { userId, pollId, optionId } = req.params;
+  const { pollId, optionId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -24,15 +23,9 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -50,14 +43,14 @@ async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
   }
 
   // AttendanceがNoならばエラー
-  const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, userId);
+  const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, user.userId);
   if (attendance.attend === 'No' && poll.pollType === 'job') {
     res.status(404).json({ error: 'You cannot participate this Poll' });
     return;
   }
 
   // すでに投票済みならばエラー
-  const exist = await getPollVoteByPollAndUser(pollId, userId);
+  const exist = await getPollVoteByPollAndUser(pollId, user.userId);
   if (exist) {
     res.status(400).json({ error: 'You already participated this Poll' });
     return;
@@ -130,69 +123,8 @@ async function getPollVoteInOption(req: Request, res: Response): Promise<void> {
   res.json({ votes });
 }
 
-async function updatePollVoteInfo(req: Request, res: Response): Promise<void> {
-  const { userId, optionId, voteId } = req.params;
-  if (!req.session.isLoggedIn) {
-    res.sendStatus(401);
-    return;
-  }
-
-  const pollVote = await getPollVoteById(voteId);
-  if (!pollVote) {
-    res.status(404).json({ error: 'PollVote not found' });
-    return;
-  }
-
-  const user = await getUserById(userId);
-  if (!user) {
-    res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
-    return;
-  }
-
-  const poll = await getPollById(pollVote.poll.pollId);
-  if (!poll) {
-    res.status(404).json({ error: 'Poll not found' });
-    return;
-  }
-
-  if (poll.isClosed === true) {
-    res.status(404).json({ error: 'Poll is already closed' });
-    return;
-  }
-
-  const attendance = await getAttendanceByEventAndUserId(poll.event.eventId, userId);
-  if (attendance.attend === 'No' && poll.pollType === 'job') {
-    res.status(404).json({ error: 'You can not participate this Poll' });
-    return;
-  }
-
-  const pollOption = await getPollOptionById(optionId);
-  if (!pollOption) {
-    res.status(404).json({ error: 'Poll option not found' });
-    return;
-  }
-
-  try {
-    const updatedPollVote = await updatePollVote(voteId, pollOption);
-    if (!updatedPollVote) {
-      res.status(404).json({ error: 'PollVote not found' });
-      return;
-    }
-    res.json({ pollVote: updatedPollVote });
-  } catch (err) {
-    console.error(err);
-    const databaseErrorMessage = parseDatabaseError(err);
-    res.status(500).json(databaseErrorMessage);
-  }
-}
-
 async function deletePollVoteInfo(req: Request, res: Response): Promise<void> {
-  const { userId, voteId } = req.params;
+  const { voteId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -204,14 +136,9 @@ async function deletePollVoteInfo(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -236,5 +163,4 @@ export {
   getPollVoteInfo,
   getPollVoteInOption,
   getPollVotes,
-  updatePollVoteInfo,
 };

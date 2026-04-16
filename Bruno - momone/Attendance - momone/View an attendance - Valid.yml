@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/attendance/:attendanceId
   params:
     - name: attendanceId
-      value: 019d02f3-4320-752c-a06c-5a0e5be5d8cd
+      value: 019d923c-9708-71f6-83da-b77f40500ac7
       type: path
   body:
     type: json

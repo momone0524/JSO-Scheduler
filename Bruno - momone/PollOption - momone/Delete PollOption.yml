@@ -5,13 +5,13 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:1000/pollOption/:optionId/delete/:userId
+  url: http://localhost:1000/pollOptions/:optionId/delete/:userId
   params:
     - name: optionId
-      value: ""
+      value: 019d92f5-15e9-744d-8d7f-e375e262f2f7
       type: path
     - name: userId
-      value: ""
+      value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
   auth: inherit
 

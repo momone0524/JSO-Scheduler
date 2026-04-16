@@ -52,7 +52,6 @@ import {
   getPollVoteInfo,
   getPollVoteInOption,
   getPollVotes,
-  updatePollVoteInfo,
 } from './controllers/PollVoteController.js';
 import {
   deleteUser,
@@ -88,58 +87,57 @@ app.patch('/users/:userId/update', updateUsers);
 app.delete('/users/:userId/delete', deleteUser);
 
 // Event
-app.post('/events/:userId', CreateNewEventManual);
+app.post('/events', CreateNewEventManual);
 app.get('/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
-app.patch('/events/:eventId/update/:userId', updateEvent);
-app.delete('/events/:eventId/delete/:userId', deleteEvent);
+app.patch('/events/:eventId/update', updateEvent);
+app.delete('/events/:eventId/delete', deleteEvent);
 
 // Attendance
-app.post('/events/:eventId/attendance/:userId', CreateNewAttendance);
+app.post('/events/:eventId/attendance', CreateNewAttendance);
 app.get('/events/:eventId/attendance', getAttendances);
-app.get('/events/:eventId/attendance/user/:userId', getAttendanceOfUserInEvent);
+app.get('/events/:eventId/attendance/user', getAttendanceOfUserInEvent);
 app.get('/attendance/:attendanceId', getAttendanceInfo);
-app.patch('/attendance/:attendanceId/update/:userId', updateAttendance);
-app.delete('/attendance/:attendanceId/delete/:userId', deleteAttendance);
+app.patch('/attendance/:attendanceId/update', updateAttendance);
+app.delete('/attendance/:attendanceId/delete', deleteAttendance);
 
 // Poll
-app.post('/events/:eventId/polls/:userId', CreateNewPoll);
+app.post('/events/:eventId/polls', CreateNewPoll);
 app.get('/polls', getPolls);
 app.get('/polls/:pollId', getPollInfo);
 app.patch('/polls/:pollId/close', closedPollExpire);
-app.patch('/polls/:pollId/update/:userId', updatePollInfo);
-app.delete('/polls/:pollId/delete/:userId', deletePollInfo);
+app.patch('/polls/:pollId/update', updatePollInfo);
+app.delete('/polls/:pollId/delete', deletePollInfo);
 
 // PollOption
-app.post('/polls/:pollId/pollOptions/:userId', CreateNewPollOption);
+app.post('/polls/:pollId/pollOptions', CreateNewPollOption);
 app.get('/polls/:pollId/pollOptions', getPollOptions);
 app.get('/pollOptions/:optionId', getPollOptionInfo);
-app.patch('/pollOptiions/:optionId/update/:userId', updatePollOptionInfo);
-app.delete('/pollOptions/:optionId/delete/:userId', deletePollOptionInfo);
+app.patch('/pollOptions/:optionId/update', updatePollOptionInfo);
+app.delete('/pollOptions/:optionId/delete', deletePollOptionInfo);
 
 // PollVote
-app.post('/polls/:pollId/pollOptions/:optionId/pollvote/:userId', CreateNewPollVote);
-app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVotes);
+app.post('/polls/:pollId/pollOptions/:optionId/pollvote', CreateNewPollVote);
+app.get('/pollvote', getPollVotes);
 app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
-app.get('/polls/:pollId/pollOptions/:optionId/pollvoteInOption', getPollVoteInOption);
-app.patch('/pollvote/:voteId/update/:optionId/:userId', updatePollVoteInfo);
-app.delete('/pollvote/:voteId/delete/:userId', deletePollVoteInfo);
+app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
+app.delete('/pollvote/:voteId/delete', deletePollVoteInfo);
 
 // Job
+app.post('/event/:eventId/jobs', CreateNewJobManual);
 app.post('/event/:eventId/jobs/auto', CreateNewJobAuto);
-app.post('/event/:eventId/jobs/:userId', CreateNewJobManual);
 app.get('/event/:eventId/jobs', getJobInEvent);
 app.get('/event/:eventId/jobs/:jobId', getJobInfo);
-app.patch('/jobs/:jobId/update/:userId', updateJobInfo);
-app.delete('/jobs/:jobId/delete/:userId', deleteJobInfo);
+app.patch('/jobs/:jobId/update', updateJobInfo);
+app.delete('/jobs/:jobId/delete', deleteJobInfo);
 
 // JobAssignment
 app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
 app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
 app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
-app.patch('assignments/:assignmentId/update/:userId', updateJobAssignmentInfo);
-app.delete('assignments/:assignmentId/delete/:userId', deleteJobAssignmentInfo);
+app.patch('/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
+app.delete('/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);

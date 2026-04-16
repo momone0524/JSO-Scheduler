@@ -5,13 +5,13 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/assignments/:assignmentId/update/:userId
+  url: http://localhost:1000/assignments/:assignmentId/update/:jobId
   params:
-    - name: assignmentId
-      value: ""
+    - name: jobId
+      value: 019d933b-ec7e-71da-822c-11ff62b6cef5
       type: path
-    - name: userId
-      value: ""
+    - name: assignmentId
+      value: 019d933d-c128-71a1-97f8-32cfb25a456a
       type: path
   auth: inherit
 

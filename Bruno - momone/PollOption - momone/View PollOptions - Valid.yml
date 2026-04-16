@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/polls/:pollId/pollOptions
   params:
     - name: pollId
-      value: 019d1195-c738-72a9-98b8-0f761eb23b08
+      value: 019d9331-0f13-71aa-b58b-137e9bfc250e
       type: path
   auth: inherit
 

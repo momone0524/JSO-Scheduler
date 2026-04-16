@@ -114,7 +114,7 @@ async function getJobAssignmentInJob(req: Request, res: Response): Promise<void>
 }
 
 async function updateJobAssignmentInfo(req: Request, res: Response): Promise<void> {
-  const { userId, assignmentId } = req.params;
+  const { assignmentId, jobId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -126,30 +126,13 @@ async function updateJobAssignmentInfo(req: Request, res: Response): Promise<voi
     return;
   }
 
-  const user = await getUserById(userId);
-  if (!user) {
-    res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
-    return;
-  }
-
-  if (user.role !== 'Board Member') {
+  if (req.session.authenticatedUser.role !== 'Board Member') {
     res.status(403).json({ error: 'You do not have permission to update JobAssignment' });
     return;
   }
 
-  const { isLeader } = req.body;
-  if (typeof isLeader !== 'boolean') {
-    res.status(400).json({ error: 'isLeader must be boolean' });
-    return;
-  }
-
   try {
-    const updated = await updateJobAssignment(assignmentId, isLeader);
+    const updated = await updateJobAssignment(assignmentId, jobId);
 
     if (!updated) {
       res.status(404).json({ error: 'JobAssignment not found' });
@@ -165,7 +148,7 @@ async function updateJobAssignmentInfo(req: Request, res: Response): Promise<voi
 }
 
 async function deleteJobAssignmentInfo(req: Request, res: Response): Promise<void> {
-  const { userId, assignmentId } = req.params;
+  const { assignmentId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -177,14 +160,9 @@ async function deleteJobAssignmentInfo(req: Request, res: Response): Promise<voi
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 

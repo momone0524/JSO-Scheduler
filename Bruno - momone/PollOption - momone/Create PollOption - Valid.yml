@@ -11,13 +11,13 @@ http:
       value: 019d0dd7-8836-7491-86bf-29c4d5306403
       type: path
     - name: pollId
-      value: 019d1195-c738-72a9-98b8-0f761eb23b08
+      value: 019d9331-0f13-71aa-b58b-137e9bfc250e
       type: path
   body:
     type: json
     data: |-
       {
-        "scheduleoption": "2022-01-22"
+        "joboption": "Reception"
       }
   auth: inherit
 

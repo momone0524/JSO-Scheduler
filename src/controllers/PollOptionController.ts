@@ -17,7 +17,7 @@ import {
   UpdatePollOptionSchema,
 } from '../validators/PollOptionValidator.js';
 async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
-  const { userId, pollId } = req.params;
+  const { pollId } = req.params;
 
   // ログインしていなければエラー
   if (!req.session.isLoggedIn) {
@@ -26,15 +26,9 @@ async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
   }
 
   // ユーザーがなければエラー
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  // 自分のセッションからアクセスしていなければエラー
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -131,7 +125,7 @@ async function getPollOptions(req: Request, res: Response): Promise<void> {
 }
 
 async function updatePollOptionInfo(req: Request, res: Response): Promise<void> {
-  const { userId, optionId } = req.params;
+  const { optionId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -143,14 +137,9 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ error: 'User not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 
@@ -192,7 +181,7 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
 }
 
 async function deletePollOptionInfo(req: Request, res: Response): Promise<void> {
-  const { userId, optionId } = req.params;
+  const { optionId } = req.params;
   if (!req.session.isLoggedIn) {
     res.sendStatus(401);
     return;
@@ -204,14 +193,9 @@ async function deletePollOptionInfo(req: Request, res: Response): Promise<void> 
     return;
   }
 
-  const user = await getUserById(userId);
+  const user = await getUserById(req.session.authenticatedUser.userId);
   if (!user) {
     res.status(404).json({ erro: 'PollOption not found' });
-    return;
-  }
-
-  if (req.session.authenticatedUser.userId !== req.params.userId) {
-    res.sendStatus(403);
     return;
   }
 

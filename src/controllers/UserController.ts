@@ -61,7 +61,7 @@ async function logIn(req: Request, res: Response): Promise<void> {
     }
 
     await req.session.clearSession();
-    req.session.authenticatedUser = { userId: user.userId, email: user.email };
+    req.session.authenticatedUser = { userId: user.userId, email: user.email, role: user.role };
     req.session.isLoggedIn = true;
 
     res.sendStatus(200);
