@@ -114,7 +114,7 @@ async function deleteJobAssignment(assignmentId: string): Promise<void> {
 
   await JobAssignmentRepository.remove(jobAssignment);
 }
-
+/*
 async function isLeaderSet(assignmentId: string): Promise<JobAssignment | null> {
   const assignment = await JobAssignmentRepository.findOne({
     where: { assignmentId },
@@ -143,7 +143,7 @@ async function isLeaderSet(assignmentId: string): Promise<JobAssignment | null> 
     poll.isClosed = true;
   }
   return PollRepository.save(poll);
-}
+}*/
 
 export {
   addJobAssignmentAuto,

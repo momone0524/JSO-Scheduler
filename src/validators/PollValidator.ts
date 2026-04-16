@@ -8,10 +8,9 @@ const CreatePollSchema = z.object({
 });
 
 const UpdatePollSchema = z.object({
-  title: z.string().min(1).max(100).optional(),
-  description: z.string().min(1).max(100).optional(),
-  closeAt: z.string().optional(),
-  pollType: z.enum(['schedule', 'job']).optional(),
+  title: z.string().min(1).max(100),
+  description: z.string().min(1).max(100),
+  closeAt: z.string(),
 });
 
 export type CreatePollInput = z.infer<typeof CreatePollSchema>;

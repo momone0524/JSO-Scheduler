@@ -191,7 +191,6 @@ async function updatePoll(data: UpdatePollInput, pollId: string): Promise<Poll |
   poll.title = data.title;
   poll.description = data.description;
   poll.closeAt = new Date(data.closeAt);
-  poll.pollType = data.pollType;
 
   return PollRepository.save(poll);
 }
