@@ -9,7 +9,7 @@ declare module 'express-session' {
       userId: string;
       email: string;
       role: string;
-      displayName: string;
+      //displayName: string;
     };
     isLoggedIn?: boolean;
     logInAttempts?: number;
