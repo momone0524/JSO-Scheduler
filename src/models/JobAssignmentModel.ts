@@ -115,6 +115,36 @@ async function deleteJobAssignment(assignmentId: string): Promise<void> {
   await JobAssignmentRepository.remove(jobAssignment);
 }
 
+async function isLeaderSet(assignmentId: string): Promise<JobAssignment | null> {
+  const assignment = await JobAssignmentRepository.findOne({
+    where: { assignmentId },
+    relations: ['user'],
+    select: {
+      pollId: true,
+      title: true,
+      description: true,
+      closeAt: true,
+      isClosed: true,
+      pollType: true,
+      user: {
+        userId: true,
+        name: true,
+      },
+    },
+  });
+
+  if (!poll) {
+    return null;
+  }
+
+  const now = new Date();
+
+  if (poll.closeAt <= now && !poll.isClosed) {
+    poll.isClosed = true;
+  }
+  return PollRepository.save(poll);
+}
+
 export {
   addJobAssignmentAuto,
   deleteJobAssignment,
