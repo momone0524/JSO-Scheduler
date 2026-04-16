@@ -5,7 +5,17 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000
+  url: http://localhost:1000/pollvote/:voteId/update/:optionId/:userId
+  params:
+    - name: voteId
+      value: 019d926a-567e-73fc-973c-e64cadf2bb96
+      type: path
+    - name: optionId
+      value: 019d9268-ba2a-7517-b56b-a8bfe6b6239d
+      type: path
+    - name: userId
+      value: ""
+      type: path
   auth: inherit
 
 settings:
