@@ -8,6 +8,7 @@ declare module 'express-session' {
     authenticatedUser?: {
       userId: string;
       email: string;
+      role: string;
       displayName: string;
     };
     isLoggedIn?: boolean;
