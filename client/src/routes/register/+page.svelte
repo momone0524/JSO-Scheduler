@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { api } from '$lib/api';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
 
   let name = $state('');
@@ -13,6 +14,7 @@
   let password = $state('');
   let submitting = $state(false);
 
+  const lang = $derived(language);
   async function handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
     submitting = true;
@@ -29,74 +31,77 @@
         password,
       });
 
-      toast.success('Account created! Please log in.');
+      toast.success(t(lang, 'accountCreated'));
       goto('/login');
     } catch (error) {
-      toast.error('Registration failed. Please check your input.');
+      toast.error(t(lang, 'registrationFailed'));
     } finally {
       submitting = false;
     }
   }
 </script>
 
-<h1>Register</h1>
+<h1>{t(lang, 'register')}</h1>
 
 <form onsubmit={handleSubmit}>
   <label>
-    Name
+    {t(lang, 'name')}
     <input type="text" bind:value={name} required />
   </label>
 
   <label>
-    Grade Year
+    {t(lang, 'gradeYear')}
     <select bind:value={gradeYear}>
       <option value={1}>1</option>
       <option value={2}>2</option>
       <option value={3}>3</option>
       <option value={4}>4</option>
-      <option value={5}>5: Graduate Studeut</option>
+      <option value={5}>{t(lang, 'graduateStudent')}</option>
     </select>
   </label>
 
   <label>
-    Major
+    {t(lang, 'major')}
     <input type="text" bind:value={major} required />
   </label>
 
   <label>
-    Birthday
+    {t(lang, 'birthday')}
     <input type="date" bind:value={birthday} required />
   </label>
 
   <label>
-    Language
+    {t(lang, 'language')}
     <select bind:value={language} required>
-      <option value="ja">Japanese</option>
-      <option value="en">English</option>
+      <option value="ja">{t(lang, 'japanese')}</option>
+      <option value="en">{t(lang, 'english')}</option>
     </select>
   </label>
 
   <label>
-    Role
+    {t(lang, 'role')}
     <select bind:value={role} required>
-      <option value="Member">Member</option>
-      <option value="Board Member">Board Member</option>
+      <option value="Member">{t(lang, 'member')}</option>
+      <option value="Board Member">{t(lang, 'boardMember')}</option>
     </select>
   </label>
 
   <label>
-    Email
+    {t(lang, 'email')}
     <input type="email" bind:value={email} required />
   </label>
 
   <label>
-    Password
+    {t(lang, 'password')}
     <input type="password" bind:value={password} minlength="8" required />
   </label>
 
   <button type="submit" disabled={submitting}>
-    {submitting ? 'Creating account...' : 'Register'}
+    {submitting ? t(lang, 'creatingAccount') : t(lang, 'register')}
   </button>
 </form>
 
-<p>Already have an account? <a href="/login">Log in</a></p>
+<p>
+  {t(lang, 'alreadyHaveAccount')}
+  <a href="/login">{t(lang, 'login')}</a>
+</p>
