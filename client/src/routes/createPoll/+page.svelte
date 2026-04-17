@@ -4,24 +4,30 @@
   import { toast } from '$lib/toast.svelte';
 
   let title = $state('');
-  let description = $state('');
   let submitting = $state(false);
+  let description = $state('');
+  let closeDate = $state('');
+  let pollType = $state('');
 
   async function handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
     submitting = true;
 
-    const result = await api.post('/api/users', { email, password });
+    try {
+      await api.post('/users', {
+        title,
+        description,
+        closeDate,
+        pollType,
+      });
 
-    submitting = false;
-
-    if (!result.ok) {
-      toast.error('Registration failed. Try a different email.');
-      return;
+      toast.success('Poll created!');
+      goto('/login');
+    } catch (error) {
+      toast.error('Poll Creation failed. Please check your input.');
+    } finally {
+      submitting = false;
     }
-
-    toast.success('Account created! Please log in.');
-    goto('/login');
   }
 </script>
 
@@ -29,17 +35,30 @@
 
 <form onsubmit={handleSubmit}>
   <label>
-    Email
-    <input type="email" bind:value={email} required />
+    Title
+    <input type="text" bind:value={title} required />
   </label>
 
   <label>
-    Password
-    <input type="password" bind:value={password} required />
+    Description
+    <input type="text" bind:value={title} required />
+  </label>
+
+  <label>
+    Close Date
+    <input type="date" bind:value={closeDate} required />
+  </label>
+
+  <label>
+    Close Date
+    <select bind:value={closeDate} required>
+      <option value="job">job</option>
+      <option value="scedule">schedule</option>
+    </select>
   </label>
 
   <button type="submit" disabled={submitting}>
-    {submitting ? 'Creating account...' : 'Register'}
+    {submitting ? 'Creating poll...' : 'Create Poll'}
   </button>
 </form>
 
