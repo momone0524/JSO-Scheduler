@@ -2,36 +2,25 @@
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
 
-  let currentDate = $state(new Date());
-
-  function prevMonth() {
-    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
-  }
-
-  function nextMonth() {
-    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
-  }
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
 
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  function getCalendarData(date: Date) {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-
+  function getCalendarData(year: number, month: number) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     return [...Array(firstDay).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
   }
 
-  const cells = $derived(getCalendarData(currentDate));
+  const cells = getCalendarData(currentYear, currentMonth);
 
-  const monthLabel = $derived(
-    currentDate.toLocaleString('en-US', {
-      month: 'long',
-      year: 'numeric',
-    }),
-  );
+  const monthLabel = new Date(currentYear, currentMonth, 1).toLocaleString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
 
   interface EventItem {
     eventId: string;
@@ -52,14 +41,11 @@
   }
 
   function getEventsForDay(day: number) {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-
     return events.filter((event) => {
       const eventDate = new Date(event.date);
       return (
-        eventDate.getFullYear() === year &&
-        eventDate.getMonth() === month &&
+        eventDate.getFullYear() === currentYear &&
+        eventDate.getMonth() === currentMonth &&
         eventDate.getDate() === day
       );
     });
@@ -82,9 +68,7 @@
 
     <article class="calendar-card">
       <header class="calendar-header">
-        <button on:click={prevMonth}>◀</button>
         <strong>{monthLabel}</strong>
-        <button on:click={nextMonth}>▶</button>
       </header>
 
       <div class="calendar-grid calendar-weekdays">
@@ -112,7 +96,6 @@
   <div class="actions">
     <a href="/events" role="button">View Events</a>
     <a href="/polls" role="button" class="secondary">View Polls</a>
-
     <a href="/users" role="button">View Members</a>
     <a href={`/users/${auth.user.id}`} role="button" class="secondary">My Profile</a>
   </div>
@@ -127,13 +110,15 @@
 {/if}
 
 <style>
-  .calendar-section {
-    margin-top: 2rem;
-  }
-
   .calendar-card {
     margin-top: 1rem;
     padding: 1rem;
+  }
+
+  .calendar-header {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.1rem;
   }
 
   .calendar-grid {
@@ -161,6 +146,19 @@
 
   .day-cell {
     background: white;
+  }
+
+  .date-number {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .event-badge {
+    margin-top: 0.25rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.4rem;
+    background: #e8f0fe;
+    font-size: 0.8rem;
   }
 
   .actions {
