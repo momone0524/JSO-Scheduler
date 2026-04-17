@@ -20,7 +20,7 @@
     try {
       await api.post('/users', {
         name,
-        gradeYear,
+        gradeYear: Number(gradeYear),
         major,
         birthday,
         language,
@@ -32,7 +32,14 @@
       toast.success('Account created! Please log in.');
       goto('/login');
     } catch (error) {
-      toast.error('Registration failed. Please check your input.');
+      console.error('Registration error:', error);
+
+      const message =
+        error instanceof Error ? error.message : 'Registration failed. Please check your input.';
+
+      toast.error(message);
+      //catch (error) {
+      //toast.error('Registration failed. Please check your input.');
     } finally {
       submitting = false;
     }
