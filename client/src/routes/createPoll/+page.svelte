@@ -51,7 +51,7 @@
 
   <label>
     Poll Type
-    <select bind:value={closeDate} required>
+    <select bind:value={pollType} required>
       <option value="job">job</option>
       <option value="schedule">schedule</option>
     </select>
