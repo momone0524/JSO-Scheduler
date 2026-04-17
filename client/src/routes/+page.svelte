@@ -97,7 +97,7 @@
     <a href="/events" role="button">View Events</a>
     <a href="/polls" role="button" class="secondary">View Polls</a>
     <a href="/users" role="button">View Members</a>
-    <a href={`/users/${auth.user.id}`} role="button" class="secondary">My Profile</a>
+    <a href={`/users/${auth.user.userId}`} role="button" class="secondary">My Profile</a>
   </div>
 {:else}
   <h1>JSO Scheduler</h1>
