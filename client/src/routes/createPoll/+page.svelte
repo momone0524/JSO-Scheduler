@@ -14,7 +14,7 @@
     submitting = true;
 
     try {
-      await api.post('/api/polls', {
+      await api.post('/polls', {
         title,
         description,
         closeDate,
@@ -22,7 +22,7 @@
       });
 
       toast.success('Poll created!');
-      goto('/Event');
+      goto('/events');
     } catch (error) {
       toast.error('Poll Creation failed. Please check your input.');
     } finally {
@@ -51,7 +51,7 @@
 
   <label>
     Poll Type
-    <select bind:value={closeDate} required>
+    <select bind:value={pollType} required>
       <option value="job">job</option>
       <option value="schedule">schedule</option>
     </select>
