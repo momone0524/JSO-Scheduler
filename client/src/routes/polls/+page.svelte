@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import { api } from '$lib/api';
   import Loading from '$lib/components/Loading.svelte';
-  import { addToast } from 'lib/toast.svelte';
+  import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
-  const { get } = api;
 
   interface Poll {
     pollId: string;
@@ -13,23 +11,17 @@
     pollType: string;
   }
 
-  let poll: Poll | null = $state(null);
+  let polls: Poll[] = $state([]);
   let loading = $state(true);
 
   onMount(async () => {
-    const result = await get<Poll[]>('/api/polls');
-    if (result.status === 401) {
-      addToast('Please log in to contunue', 'error');
-      goto('/login');
-      return;
+    try {
+      polls = await api.get<Poll[]>('/api/polls');
+    } catch (error) {
+      toast.error('Failed to load polls.');
+    } finally {
+      loading = false;
     }
-
-    if (result.ok) {
-      poll = result.data;
-    } else {
-      addToast('Failed to load polls', 'error');
-    }
-    loading = false;
   });
 </script>
 
@@ -37,12 +29,20 @@
 
 {#if loading}
   <Loading />
-{:else if !poll}
-  <p>Poll not found.</p>
+{:else if polls.length === 0}
+  <p>There are not polls yet.</p>
 {:else}
-  <h1>{poll.title}</h1>
-  <p>Type: {poll.pollType}</p>
-  <p>Close Date:{poll.closeDate}</p>
+  <ul>
+    {#each polls as poll (poll.pollId)}
+      <li>
+        <a href="/polls/{poll.pollId}">{poll.title}</a>
+        <strong>{poll.title}</strong><br />
+        Close Date: {poll.closeDate}<br />
+        Poll Type: {poll.pollType}<br />
+        <a href="/polls/{poll.pollId}" role="button">Detail</a>
+      </li>
+    {/each}
+  </ul>
 {/if}
 
 <a href="/login">Log In</a>
