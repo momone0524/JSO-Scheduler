@@ -3,6 +3,12 @@
   import { api } from '$lib/api';
   import { toast } from '$lib/toast.svelte';
 
+  let name = $state('');
+  let gradeYear = $state(1);
+  let major = $state('');
+  let birthday = $state('');
+  let language = $state<'ja' | 'en'>('ja');
+  let role = $state<'Board Member' | 'Member'>('Member');
   let email = $state('');
   let password = $state('');
   let submitting = $state(false);
@@ -15,13 +21,25 @@
 
     submitting = false;
 
-    if (!result.ok) {
-      toast.error('Registration failed. Try a different email.');
-      return;
-    }
+    try {
+      await api.post('/users', {
+        name,
+        gradeYear,
+        major,
+        birthday,
+        language,
+        role,
+        email,
+        password,
+      });
 
-    toast.success('Account created! Please log in.');
-    goto('/login');
+      toast.success('Account created! Please log in.');
+      goto('/login');
+    } catch (error) {
+      toast.error('Registration failed. Please check your input.');
+    } finally {
+      submitting = false;
+    }
   }
 </script>
 
@@ -29,13 +47,49 @@
 
 <form onsubmit={handleSubmit}>
   <label>
+    Name
+    <input type="text" bind:value={name} required />
+  </label>
+
+  <label>
+    Grade Year
+    <input type="number" min="1" max="5" bind:value={gradeYear} required />
+  </label>
+
+  <label>
+    Major
+    <input type="text" bind:value={major} required />
+  </label>
+
+  <label>
+    Birthday
+    <input type="date" bind:value={birthday} required />
+  </label>
+
+  <label>
+    Language
+    <select bind:value={language} required>
+      <option value="ja">Japanese</option>
+      <option value="en">English</option>
+    </select>
+  </label>
+
+  <label>
+    Role
+    <select bind:value={role} required>
+      <option value="Member">Member</option>
+      <option value="Board Member">Board Member</option>
+    </select>
+  </label>
+
+  <label>
     Email
     <input type="email" bind:value={email} required />
   </label>
 
   <label>
     Password
-    <input type="password" bind:value={password} required />
+    <input type="password" bind:value={password} minlength="8" required />
   </label>
 
   <button type="submit" disabled={submitting}>
