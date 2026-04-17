@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
 
   let currentDate = $state(new Date());
@@ -31,6 +32,42 @@
       year: 'numeric',
     }),
   );
+
+  interface EventItem {
+    eventId: string;
+    eventName: string;
+    date: string;
+    place: string;
+  }
+
+  let events = $state<EventItem[]>([]);
+
+  async function loadEvents() {
+    try {
+      events = await api.get<EventItem[]>('/events');
+    } catch (error) {
+      console.error('Failed to load events:', error);
+      events = [];
+    }
+  }
+
+  function getEventsForDay(day: number) {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    return events.filter((event) => {
+      const eventDate = new Date(event.date);
+      return (
+        eventDate.getFullYear() === year &&
+        eventDate.getMonth() === month &&
+        eventDate.getDate() === day
+      );
+    });
+  }
+
+  $effect(() => {
+    loadEvents();
+  });
 </script>
 
 {#if auth.loading}
@@ -60,7 +97,11 @@
         {#each cells as day}
           <div class="calendar-cell day-cell">
             {#if day !== null}
-              {day}
+              <div class="date-number">{day}</div>
+
+              {#each getEventsForDay(day) as event}
+                <div class="event-badge">{event.eventName}</div>
+              {/each}
             {/if}
           </div>
         {/each}
@@ -71,6 +112,9 @@
   <div class="actions">
     <a href="/events" role="button">View Events</a>
     <a href="/polls" role="button" class="secondary">View Polls</a>
+
+    <a href="/users" role="button">View Members</a>
+    <a href={`/users/${auth.user.id}`} role="button" class="secondary">My Profile</a>
   </div>
 {:else}
   <h1>JSO Scheduler</h1>

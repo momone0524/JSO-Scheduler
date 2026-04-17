@@ -92,7 +92,7 @@ app.delete('/users/:userId/delete', deleteUser);
 
 // Event
 app.post('/events', CreateNewEventManual);
-app.get('/events', getEvents);
+app.get('/api/events', getEvents);
 app.get('/events/:eventId', getEventInfo);
 app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
 app.patch('/events/:eventId/update', updateEvent);
