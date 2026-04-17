@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@sveltejs/adapter-static": "^3.0.10",
     "@types/argon2": "^0.14.1",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/ejs": "^3.1.5",
