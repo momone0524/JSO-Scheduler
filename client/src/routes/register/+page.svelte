@@ -49,7 +49,13 @@
 
   <label>
     Grade Year
-    <input type="number" min="1" max="5" bind:value={gradeYear} required />
+    <select bind:value={gradeYear}>
+      <option value={1}>1</option>
+      <option value={2}>2</option>
+      <option value={3}>3</option>
+      <option value={4}>4</option>
+      <option value={5}>5: Graduate Studeut</option>
+    </select>
   </label>
 
   <label>
