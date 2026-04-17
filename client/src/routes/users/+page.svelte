@@ -47,8 +47,6 @@
         <p><strong>Grade Year:</strong> {user.gradeYear}</p>
         <p><strong>Role:</strong> {user.role}</p>
         <p><strong>Language:</strong> {user.language}</p>
-
-        <a href={`/users/${user.userId}`} role="button" class="secondary"> View Profile </a>
       </article>
     {/each}
   </div>
