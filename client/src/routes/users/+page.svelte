@@ -9,6 +9,7 @@
     email: string;
     major: string;
     gradeYear: number;
+    birthday: string;
     role: string;
     language: string;
   }
@@ -45,6 +46,7 @@
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Major:</strong> {user.major}</p>
         <p><strong>Grade Year:</strong> {user.gradeYear}</p>
+        <p><strong>Birthday:</strong> {user.birthday.split('T')[0]}</p>
         <p><strong>Role:</strong> {user.role}</p>
         <p><strong>Language:</strong> {user.language}</p>
       </article>

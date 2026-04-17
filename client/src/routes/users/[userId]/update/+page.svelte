@@ -11,7 +11,6 @@
     email: string;
     major: string;
     gradeYear: number;
-    birthday: string;
     role: string;
     language: string;
   }
@@ -20,15 +19,28 @@
     user: UserItem;
   }
 
-  let user = $state<UserItem | null>(null);
-  let loading = $state(true);
+    let loading = $state(true);
+  let submitting = $state(false);
+
+  let name = $state('');
+  let email = $state('');
+  let major = $state('');
+  let gradeYear = $state(1);
+  let role = $state('');
+  let language = $state('');
 
   onMount(async () => {
     try {
       const id = page.params.userId;
 
       const result = await api.get<GetUserResponse>(`/users/${id}`);
-      user = result.user;
+      const user = result.user;
+      name = user.name;
+      email = user.email;
+      major = user.major;
+      gradeYear = user.gradeYear;
+      role = user.role;
+      language = user.language;
     } catch (error) {
       console.error(error);
       toast.error('Failed to load profile.');
@@ -36,6 +48,30 @@
       loading = false;
     }
   });
+
+  async function handleSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    submitting = true;
+
+    try {
+      const id = page.params.userId;
+      await api.patch('/users/${id}', {
+        name,
+        gradeYear: Number(gradeYear),
+        major,
+        birthday,
+        language,
+        role,
+        email,
+      });
+
+      toast.success('Account created! Please log in.');
+      goto('/login');
+    } catch (error) {
+      toast.error('Registration failed. Please check your input.');
+    } finally {
+      submitting = false;
+    }
 </script>
 
 {#if loading}
@@ -64,11 +100,6 @@
     <div class="profile-row">
       <strong>Grade Year</strong>
       <span>{user.gradeYear}</span>
-    </div>
-
-    <div class="profile-row">
-      <strong>Birthday</strong>
-      <span>{user.birthday.split('T')[0]}</span>
     </div>
 
     <div class="profile-row">
