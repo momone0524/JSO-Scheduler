@@ -1,37 +1,21 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { api } from '$lib/api';
-  import { toast } from '$lib/toast.svelte';
+import { page } from '$app/state';
+import { onMount } from 'svelte';
+import { get } from '$lib/api';
 
-  let title = $state('');
-  let submitting = $state(false);
-  let description = $state('');
-  let closeDate = $state('');
-  let pollType = $state('');
+interface Poll{
+  pollId: string;
+  title: string;
+  description: string;
+  closeDate: string;
+  pollType:string;
+}
+  let poll: Poll | null = $state(null);
+  let loading = $state(true);
 
-  async function handleSubmit(event: Event): Promise<void> {
-    event.preventDefault();
-    submitting = true;
 
-    try {
-      await api.post('/users', {
-        title,
-        description,
-        closeDate,
-        pollType,
-      });
-
-      toast.success('Poll created!');
-      goto('/login');
-    } catch (error) {
-      toast.error('Poll Creation failed. Please check your input.');
-    } finally {
-      submitting = false;
-    }
-  }
-</script>
-
-<h1>Create Poll</h1>
+<h1>Poll</h1>
+<h1>Poll</h1>
 
 <form onsubmit={handleSubmit}>
   <label>
@@ -61,3 +45,6 @@
     {submitting ? 'Creating poll...' : 'Create Poll'}
   </button>
 </form>
+
+<a href="/login">Log In</a>
+<a href="/register">Register</a>
