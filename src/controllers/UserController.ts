@@ -176,4 +176,13 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
   await deleteUserById(userId);
   res.sendStatus(204); // 204 No Content — successful, nothing to return
 }
-export { deleteUser, getUserProfile, getUsers, logIn, logOut, registerUser, updateUsers };
+
+function getMe(req: Request, res: Response): void {
+  if (!req.session.isLoggedIn) {
+    res.sendStatus(401);
+    return;
+  }
+
+  res.json(req.session.authenticatedUser);
+}
+export { deleteUser, getMe, getUserProfile, getUsers, logIn, logOut, registerUser, updateUsers };

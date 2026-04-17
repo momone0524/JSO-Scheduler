@@ -57,6 +57,7 @@ import {
 } from './controllers/PollVoteController.js';
 import {
   deleteUser,
+  getMe,
   getUserProfile,
   getUsers,
   logIn,
@@ -85,6 +86,7 @@ app.post('/login', logIn);
 app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
+app.get('/api/me', getMe);
 app.patch('/users/:userId/update', updateUsers);
 app.delete('/users/:userId/delete', deleteUser);
 
