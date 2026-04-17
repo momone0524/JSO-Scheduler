@@ -10,14 +10,14 @@ http:
     type: json
     data: |-
       {
-        "name": "Amane",
-        "gradeYear": 3,
-        "major": "Science",
-        "birthday": "2006-03-15",
+        "name": "Suzune",
+        "gradeYear": 2,
+        "major": "History",
+        "birthday": "2008-06-24",
         "language": "ja",
         "role": "Board Member",
-        "email": "amane@example.com",
-        "password": "amane0315"
+        "email": "suzune@example.com",
+        "password": "suzune0624"
       }
   auth: inherit
 

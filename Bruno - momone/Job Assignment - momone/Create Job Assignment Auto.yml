@@ -8,7 +8,7 @@ http:
   url: http://localhost:1000/jobs/:jobId/assignment/auto
   params:
     - name: jobId
-      value: 019d933b-ec7e-71da-822c-11ff62b6cef5
+      value: 019d98da-3925-727c-a1d3-83d2b992039b
       type: path
   auth: inherit
 

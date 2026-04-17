@@ -5,19 +5,16 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/events/:eventId/polls/:userId
+  url: http://localhost:1000/events/:eventId/polls
   params:
     - name: eventId
-      value: 019d932e-74af-725e-80a9-b30978026420
-      type: path
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
+      value: 019d98c0-bbc7-732c-a61f-edf0b02245d2
       type: path
   body:
     type: json
     data: |-
       {
-        "title": "Spring Job",
+        "title": "Test Poll Job",
         "description": "job for event",
         "closeAt": "2020-04-28",
         "pollType": "job"

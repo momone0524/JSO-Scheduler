@@ -151,7 +151,7 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
     return;
   }
 
-  if (poll.isClosed == true) {
+  if (poll.isClosed === true) {
     res.status(404).json({ error: 'Poll is already closed' });
     return;
   }
@@ -170,12 +170,12 @@ async function updatePollOptionInfo(req: Request, res: Response): Promise<void> 
   try {
     if (poll.pollType === 'schedule') {
       const updatedPollScheduleOption = await updatePollScheduleOption(result.data, optionId);
-      res.json({ pollOption: updatedPollScheduleOption });
-      res.sendStatus(201);
+      res.status(200).json({ pollOption: updatedPollScheduleOption });
+      return;
     } else if (poll.pollType === 'job') {
       const updatedPollJobOption = await updatePollJobOption(result.data, optionId);
-      res.json({ pollOption: updatedPollJobOption });
-      res.sendStatus(201);
+      res.status(200).json({ pollOption: updatedPollJobOption });
+      return;
     }
   } catch (err) {
     console.error(err);

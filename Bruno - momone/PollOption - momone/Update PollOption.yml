@@ -5,13 +5,10 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/pollOptions/:optionId/update/:userId
+  url: http://localhost:1000/pollOptions/:optionId/update
   params:
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
-      type: path
     - name: optionId
-      value: 019d92e8-e7c1-72dc-b2bb-c447a6bdb032
+      value: 019d98c7-45a1-7487-a9e2-bb3bf900f594
       type: path
   body:
     type: json

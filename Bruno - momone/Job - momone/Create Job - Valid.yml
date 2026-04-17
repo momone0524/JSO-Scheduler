@@ -5,19 +5,16 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000//event/:eventId/jobs/:userId
+  url: http://localhost:1000//event/:eventId/jobs
   params:
     - name: eventId
-      value: 019d932e-74af-725e-80a9-b30978026420
-      type: path
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
+      value: 019d98c0-bbc7-732c-a61f-edf0b02245d2
       type: path
   body:
     type: json
     data: |-
       {
-        "jobName": "Server"
+        "jobName": "Kimono"
       }
   auth: inherit
 

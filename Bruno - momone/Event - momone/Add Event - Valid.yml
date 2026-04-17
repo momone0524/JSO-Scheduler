@@ -5,16 +5,12 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/events/:userId
-  params:
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
-      type: path
+  url: http://localhost:1000/events
   body:
     type: json
     data: |-
       {
-            "eventName": "Spring Festival",
+            "eventName": "Test Event",
             "place": "Union",
             "date": "2026-04-13",
             "startTime": "17:00",

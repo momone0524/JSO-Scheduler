@@ -87,6 +87,7 @@ async function updatePollJobOption(
       poll: {
         pollId: true,
         title: true,
+        pollType: true,
       },
     },
   });
@@ -113,6 +114,7 @@ async function updatePollScheduleOption(
       poll: {
         pollId: true,
         title: true,
+        pollType: true,
       },
     },
   });

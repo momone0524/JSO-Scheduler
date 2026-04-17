@@ -5,16 +5,13 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote/:userId
+  url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote
   params:
     - name: pollId
-      value: 019d9331-0f13-71aa-b58b-137e9bfc250e
+      value: 019d98c5-e71b-720b-9117-31c1eeb8e385
       type: path
     - name: optionId
-      value: 019d9334-b427-739e-a427-3bff67cf6acc
-      type: path
-    - name: userId
-      value: 019d9337-a139-7190-8a4a-99fac604dea5
+      value: 019d98c7-0d7c-756e-85b9-037c2bf10b24
       type: path
   body:
     type: json
