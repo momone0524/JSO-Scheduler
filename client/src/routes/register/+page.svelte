@@ -32,14 +32,7 @@
       toast.success('Account created! Please log in.');
       goto('/login');
     } catch (error) {
-      console.error('Registration error:', error);
-
-      const message =
-        error instanceof Error ? error.message : 'Registration failed. Please check your input.';
-
-      toast.error(message);
-      //catch (error) {
-      //toast.error('Registration failed. Please check your input.');
+      toast.error('Registration failed. Please check your input.');
     } finally {
       submitting = false;
     }

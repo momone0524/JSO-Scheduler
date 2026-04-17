@@ -16,7 +16,7 @@
       await api.post('/login', { email, password });
       await auth.refresh();
       toast.success('Logged in successfully.');
-      goto('/');
+      goto('/dashboard');
     } catch (error) {
       toast.error('Invalid email or password.');
     } finally {
