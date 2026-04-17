@@ -139,7 +139,7 @@ async function deletePollOption(optionId: string): Promise<void> {
 async function isWinnerSet(pollId: string): Promise<PollOption[]> {
   const pollOption = await PollOptionRepository.find({
     where: { poll: { pollId } },
-    relations: ['pollVotes'],
+    relations: ['pollvotes', 'poll'],
     select: {
       optionId: true,
       joboption: true,

@@ -5,11 +5,8 @@ info:
 
 http:
   method: DELETE
-  url: http://localhost:1000/events/:eventId/delete/:userId
+  url: http://localhost:1000/events/:eventId/delete
   params:
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
-      type: path
     - name: eventId
       value: 019d0dd8-0222-77ef-a2bc-4c84c3e3a25f
       type: path

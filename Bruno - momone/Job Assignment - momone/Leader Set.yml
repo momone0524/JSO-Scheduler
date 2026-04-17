@@ -4,8 +4,12 @@ info:
   seq: 6
 
 http:
-  method: POST
-  url: ""
+  method: PATCH
+  url: http://localhost:1000/jobs/:jobId/leader
+  params:
+    - name: jobId
+      value: 019d98da-ef39-728c-a052-60376b4f540f
+      type: path
   auth: inherit
 
 settings:

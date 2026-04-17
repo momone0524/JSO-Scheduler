@@ -5,13 +5,10 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/events/:eventId/attendance/:userId
+  url: http://localhost:1000/events/:eventId/attendance
   params:
-    - name: userId
-      value: 019d9337-a139-7190-8a4a-99fac604dea5
-      type: path
     - name: eventId
-      value: 019d932e-74af-725e-80a9-b30978026420
+      value: 019d98c0-bbc7-732c-a61f-edf0b02245d2
       type: path
   body:
     type: json

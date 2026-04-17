@@ -8,10 +8,10 @@ http:
   url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote
   params:
     - name: pollId
-      value: 019d98c5-e71b-720b-9117-31c1eeb8e385
+      value: 019d98e5-ef48-742f-b1fd-d5a75338fb5a
       type: path
     - name: optionId
-      value: 019d98c7-0d7c-756e-85b9-037c2bf10b24
+      value: 019d98eb-35c2-70ba-8034-0ae0f024c97b
       type: path
   body:
     type: json

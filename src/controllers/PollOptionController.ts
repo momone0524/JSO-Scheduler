@@ -6,7 +6,6 @@ import {
   deletePollOption,
   getAllPollOptions,
   getPollOptionById,
-  getPollOptionInPollByName,
   isWinnerSet,
   updatePollJobOption,
   updatePollScheduleOption,
@@ -60,12 +59,12 @@ async function CreateNewPollOption(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  // PollOptionが既に存在する場合はエラー
+  /* PollOptionが既に存在する場合はエラー
   const polloption = await getPollOptionInPollByName(pollId, result.data.joboption);
   if (polloption) {
     res.status(404).json({ error: 'PollOption already exists' });
     return;
-  }
+  }*/
 
   const data: CreatePollOptionInput = result.data;
 
@@ -234,7 +233,7 @@ async function settingWinner(req: Request, res: Response): Promise<void> {
 
   // ボードメンバーでなければエラー
   if (req.session.authenticatedUser.role !== 'Board Member') {
-    res.status(403).json({ error: 'You do not have permission to create a Poll' });
+    res.status(403).json({ error: 'You do not have permission to set a winner' });
     return;
   }
 
@@ -247,13 +246,13 @@ async function settingWinner(req: Request, res: Response): Promise<void> {
 
   // Pollがclosedしてないならエラー
   if (poll.isClosed === false) {
-    res.status(404).json({ error: 'Poll is already closed' });
+    res.status(404).json({ error: 'Poll is not closed yet' });
     return;
   }
 
   try {
     const winnerSet = await isWinnerSet(pollId);
-    if (!winnerSet) {
+    if (winnerSet.length === 0) {
       res.status(404).json({ error: 'Poll not found' });
       return;
     }

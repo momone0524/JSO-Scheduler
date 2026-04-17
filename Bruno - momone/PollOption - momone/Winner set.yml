@@ -1,11 +1,11 @@
 info:
-  name: Close Poll if expires
+  name: Winner set
   type: http
-  seq: 4
+  seq: 6
 
 http:
   method: PATCH
-  url: http://localhost:1000/polls/:pollId/close
+  url: http://localhost:1000/polls/:pollId/winner
   params:
     - name: pollId
       value: 019d98e5-ef48-742f-b1fd-d5a75338fb5a

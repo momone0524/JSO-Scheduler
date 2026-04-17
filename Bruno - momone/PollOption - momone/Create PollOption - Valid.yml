@@ -5,19 +5,16 @@ info:
 
 http:
   method: POST
-  url: http://localhost:1000/polls/:pollId/pollOptions/:userId
+  url: http://localhost:1000/polls/:pollId/pollOptions
   params:
-    - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
-      type: path
     - name: pollId
-      value: 019d9331-0f13-71aa-b58b-137e9bfc250e
+      value: 019d98e5-ef48-742f-b1fd-d5a75338fb5a
       type: path
   body:
     type: json
     data: |-
       {
-        "joboption": "Reception"
+        "scheduleoption": "2021-01-31"
       }
   auth: inherit
 
