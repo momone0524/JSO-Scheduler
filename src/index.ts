@@ -81,8 +81,8 @@ app.use(express.static('public', { extensions: ['html'] }));
 // -- Routes --------------------------------------------------
 // Register your routes below this line
 // User
-app.post('/users', registerUser);
-app.post('/login', logIn);
+app.post('/api/users', registerUser);
+app.post('/api/login', logIn);
 app.delete('/sessions', logOut);
 app.get('/users/:userId', getUserProfile);
 app.get('/users', getUsers);
