@@ -17,10 +17,6 @@
     event.preventDefault();
     submitting = true;
 
-    const result = await api.post('/api/users', { email, password });
-
-    submitting = false;
-
     try {
       await api.post('/users', {
         name,
