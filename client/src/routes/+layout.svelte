@@ -13,7 +13,7 @@
 {:else}
   <nav class="container">
     <ul>
-      <li><a href="/"><strong>JSO Scheduler</strong></a></li>
+      <li><a href="/"><strong>Dashboard</strong></a></li>
     </ul>
     <ul>
       {#if user}
