@@ -83,67 +83,67 @@ app.use(express.static('public', { extensions: ['html'] }));
 // User
 app.post('/api/users', registerUser);
 app.post('/api/login', logIn);
-app.delete('/sessions', logOut);
-app.get('/users/:userId', getUserProfile);
-app.get('/users', getUsers);
+app.delete('/api/sessions', logOut);
+app.get('/api/users/:userId', getUserProfile);
+app.get('/api/users', getUsers);
 app.get('/api/me', getMe);
-app.patch('/users/:userId/update', updateUsers);
-app.delete('/users/:userId/delete', deleteUser);
+app.patch('/api/users/:userId/update', updateUsers);
+app.delete('/api/users/:userId/delete', deleteUser);
 
 // Event
-app.post('/events', CreateNewEventManual);
+app.post('/api/events', CreateNewEventManual);
 app.get('/api/events', getEvents);
-app.get('/events/:eventId', getEventInfo);
-app.patch('/events/:eventId/update/auto', updateEventFromPollAuto);
-app.patch('/events/:eventId/update', updateEvent);
-app.delete('/events/:eventId/delete', deleteEvent);
+app.get('/api/events/:eventId', getEventInfo);
+app.patch('/api/events/:eventId/update/auto', updateEventFromPollAuto);
+app.patch('/api/events/:eventId/update', updateEvent);
+app.delete('/api/events/:eventId/delete', deleteEvent);
 
 // Attendance
-app.post('/events/:eventId/attendance', CreateNewAttendance);
-app.get('/events/:eventId/attendance', getAttendances);
-app.get('/events/:eventId/attendance/user', getAttendanceOfUserInEvent);
-app.get('/attendance/:attendanceId', getAttendanceInfo);
-app.patch('/attendance/:attendanceId/update', updateAttendance);
-app.delete('/attendance/:attendanceId/delete', deleteAttendance);
+app.post('/api/events/:eventId/attendance', CreateNewAttendance);
+app.get('/api/events/:eventId/attendance', getAttendances);
+app.get('/api/events/:eventId/attendance/user', getAttendanceOfUserInEvent);
+app.get('/api/attendance/:attendanceId', getAttendanceInfo);
+app.patch('/api/attendance/:attendanceId/update', updateAttendance);
+app.delete('/api/attendance/:attendanceId/delete', deleteAttendance);
 
 // Poll
-app.post('/events/:eventId/polls', CreateNewPoll);
+app.post('/api/events/:eventId/polls', CreateNewPoll);
 app.get('/api/polls', getPolls);
-app.get('/polls/:pollId', getPollInfo);
-app.patch('/polls/:pollId/close', closedPollExpire);
-app.patch('/polls/:pollId/update', updatePollInfo);
-app.delete('/polls/:pollId/delete', deletePollInfo);
+app.get('/api/polls/:pollId', getPollInfo);
+app.patch('/api/polls/:pollId/close', closedPollExpire);
+app.patch('/api/polls/:pollId/update', updatePollInfo);
+app.delete('/api/polls/:pollId/delete', deletePollInfo);
 
 // PollOption
-app.post('/polls/:pollId/pollOptions', CreateNewPollOption);
-app.get('/polls/:pollId/pollOptions', getPollOptions);
-app.get('/pollOptions/:optionId', getPollOptionInfo);
-app.patch('/pollOptions/:optionId/update', updatePollOptionInfo);
-app.patch('/polls/:pollId/winner', settingWinner);
-app.delete('/pollOptions/:optionId/delete', deletePollOptionInfo);
+app.post('/api/polls/:pollId/pollOptions', CreateNewPollOption);
+app.get('/api/polls/:pollId/pollOptions', getPollOptions);
+app.get('/api/pollOptions/:optionId', getPollOptionInfo);
+app.patch('/api/pollOptions/:optionId/update', updatePollOptionInfo);
+app.patch('/api/polls/:pollId/winner', settingWinner);
+app.delete('/api/pollOptions/:optionId/delete', deletePollOptionInfo);
 
 // PollVote
-app.post('/polls/:pollId/pollOptions/:optionId/pollvote', CreateNewPollVote);
-app.get('/pollvote', getPollVotes);
-app.get('/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
-app.get('/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
-app.delete('/pollvote/:voteId/delete', deletePollVoteInfo);
+app.post('/api/polls/:pollId/pollOptions/:optionId/pollvote', CreateNewPollVote);
+app.get('/api/pollvote', getPollVotes);
+app.get('/api/polls/:pollId/pollOptions/:optionId/pollvote/:voteId', getPollVoteInfo);
+app.get('/api/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption);
+app.delete('/api/pollvote/:voteId/delete', deletePollVoteInfo);
 
 // Job
-app.post('/event/:eventId/jobs', CreateNewJobManual);
-app.post('/event/:eventId/jobs/auto', CreateNewJobAuto);
-app.get('/event/:eventId/jobs', getJobInEvent);
-app.get('/event/:eventId/jobs/:jobId', getJobInfo);
-app.patch('/jobs/:jobId/update', updateJobInfo);
-app.delete('/jobs/:jobId/delete', deleteJobInfo);
+app.post('/api/event/:eventId/jobs', CreateNewJobManual);
+app.post('/api/event/:eventId/jobs/auto', CreateNewJobAuto);
+app.get('/api/event/:eventId/jobs', getJobInEvent);
+app.get('/api/event/:eventId/jobs/:jobId', getJobInfo);
+app.patch('/api/jobs/:jobId/update', updateJobInfo);
+app.delete('/api/jobs/:jobId/delete', deleteJobInfo);
 
 // JobAssignment
-app.post('/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
-app.get('/jobs/:jobId/assignment', getJobAssignmentInJob);
-app.get('/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
-app.patch('/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
-app.patch('/jobs/:jobId/leader', settingLeader);
-app.delete('/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
+app.post('/api/jobs/:jobId/assignment/auto', CreateNewJobAssignmentAuto);
+app.get('/api/jobs/:jobId/assignment', getJobAssignmentInJob);
+app.get('/api/jobs/:jobId/assignment/:assignmentId', getJobAssignmentInfo);
+app.patch('/api/assignments/:assignmentId/update/:jobId', updateJobAssignmentInfo);
+app.patch('/api/jobs/:jobId/leader', settingLeader);
+app.delete('/api/assignments/:assignmentId/delete', deleteJobAssignmentInfo);
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on http://localhost:${process.env.PORT}`);
 });
