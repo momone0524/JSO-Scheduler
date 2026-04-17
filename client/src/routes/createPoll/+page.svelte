@@ -31,7 +31,7 @@
   }
 </script>
 
-<h1>Register</h1>
+<h1>Create Poll</h1>
 
 <form onsubmit={handleSubmit}>
   <label>
@@ -61,5 +61,3 @@
     {submitting ? 'Creating poll...' : 'Create Poll'}
   </button>
 </form>
-
-<p>Already have an account? <a href="/login">Log in</a></p>
