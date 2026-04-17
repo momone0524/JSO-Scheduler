@@ -108,7 +108,7 @@ app.delete('/attendance/:attendanceId/delete', deleteAttendance);
 
 // Poll
 app.post('/events/:eventId/polls', CreateNewPoll);
-app.get('/polls', getPolls);
+app.get('/api/polls', getPolls);
 app.get('/polls/:pollId', getPollInfo);
 app.patch('/polls/:pollId/close', closedPollExpire);
 app.patch('/polls/:pollId/update', updatePollInfo);
