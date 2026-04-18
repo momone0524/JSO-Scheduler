@@ -84,6 +84,7 @@ const translations: Record<string, Record<string, string>> = {
     eventName: 'Event Name',
     creatingEvent: 'Creating event...',
     unauthorized: 'Unauthorized',
+    updateEvent: 'Update Event',
   },
   ja: {
     register: '登録する',
@@ -169,6 +170,8 @@ const translations: Record<string, Record<string, string>> = {
     eventName: 'イベント名',
     creatingEvent: 'イベントを作成中...',
     unauthorized: 'アクセス権がありません',
+    eventUpdated: 'イベントを更新しました',
+    updateEvent: 'イベントを更新する',
   },
 };
 
