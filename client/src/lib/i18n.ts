@@ -84,6 +84,7 @@ const translations: Record<string, Record<string, string>> = {
     eventName: 'Event Name',
     creatingEvent: 'Creating event...',
     unauthorized: 'Unauthorized',
+    eventUpdated: 'Updated Event.',
     updateEvent: 'Update Event',
     failedToLoadAttendance: 'Failed to load attendances.',
     loadingAttendance: 'Loading attendances...',
@@ -97,6 +98,9 @@ const translations: Record<string, Record<string, string>> = {
     joiningMidawy: 'Joining Midway',
     submit: 'Submit',
     creatingAttendance: 'Submitting attendance...',
+    attendanceUpdated: 'Updated Attendance',
+    updateAttendance: 'Update Attendance',
+    loadingAttendanceInfo: 'Loading attendance...',
   },
   ja: {
     register: '登録する',
@@ -196,6 +200,9 @@ const translations: Record<string, Record<string, string>> = {
     joiningMidawy: '途中参加',
     submit: '提出',
     creatingAttendance: '出席を提出中...',
+    attendanceUpdated: '出席を更新しました',
+    updateAttendance: '出席を更新する',
+    loadingAttendanceInfo: '出席情報を読み込み中...',
   },
 };
 

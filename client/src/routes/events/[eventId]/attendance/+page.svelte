@@ -72,7 +72,11 @@
         </div>
 
         {#if auth.user && auth.user.userId === attendance.user.userId}
-          <a href={`/attendance/${attendance.attendanceId}/update`} role="button" class="secondary">
+          <a
+            href={`/events/${id}/attendance/${attendance.attendanceId}/update`}
+            role="button"
+            class="secondary"
+          >
             {t(lang, 'update')}
           </a>
         {/if}

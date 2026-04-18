@@ -47,7 +47,7 @@
 
   <label>
     {t(lang, 'attendTime')}
-    <input type="time" bind:value={attendTime} required />
+    <input type="time" bind:value={attendTime} required={attend !== 'No'} />
   </label>
 
   <button type="submit" disabled={submitting}>
