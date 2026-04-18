@@ -55,6 +55,10 @@ const translations: Record<string, Record<string, string>> = {
     loadingMembers: 'Loading members...',
     noMembersFound: 'No members found.',
     failedToLoadMembers: 'Failed to load members.',
+    loadingProfile: 'Loading profile...',
+    failedToLoadProfile: 'Failed to load profile.',
+    userNotFound: 'User not found.',
+    updateMyProfile: 'Update My Profile',
   },
   ja: {
     register: '登録する',
@@ -111,6 +115,10 @@ const translations: Record<string, Record<string, string>> = {
     loadingMembers: 'メンバーを読み込み中...',
     noMembersFound: 'メンバーが見つかりません。',
     failedToLoadMembers: 'メンバーの読み込みに失敗しました。',
+    loadingProfile: 'プロフィールを読み込み中...',
+    failedToLoadProfile: 'プロフィールの読み込みに失敗しました。',
+    userNotFound: 'ユーザーが見つかりません。',
+    updateMyProfile: 'プロフィールを更新',
   },
 };
 

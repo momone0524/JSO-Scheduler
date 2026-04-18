@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
@@ -20,6 +21,8 @@
     user: UserItem;
   }
 
+  const lang = $derived(auth.user?.language ?? 'en');
+
   let user = $state<UserItem | null>(null);
   let loading = $state(true);
 
@@ -31,7 +34,7 @@
       user = result.user;
     } catch (error) {
       console.error(error);
-      toast.error('Failed to load profile.');
+      toast.error(t(lang, 'failedToLoadProfile'));
     } finally {
       loading = false;
     }
@@ -39,53 +42,53 @@
 </script>
 
 {#if loading}
-  <p aria-busy="true">Loading profile...</p>
+  <p aria-busy="true">{t(lang, 'loadingProfile')}</p>
 {:else if !user}
-  <p>User not found.</p>
+  <p>{t(lang, 'userNotFound')}</p>
 {:else}
-  <h1>My Profile</h1>
+  <h1>{t(lang, 'myProfile')}</h1>
 
   <article class="profile-card">
     <div class="profile-row">
-      <strong>Name</strong>
+      <strong>{t(lang, 'name')}</strong>
       <span>{user.name}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Email</strong>
+      <strong>{t(lang, 'email')}</strong>
       <span>{user.email}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Major</strong>
+      <strong>{t(lang, 'major')}</strong>
       <span>{user.major}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Grade Year</strong>
+      <strong>{t(lang, 'gradeYear')}</strong>
       <span>{user.gradeYear}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Birthday</strong>
+      <strong>{t(lang, 'birthday')}</strong>
       <span>{user.birthday.split('T')[0]}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Role</strong>
-      <span>{user.role}</span>
+      <strong>{t(lang, 'role')}</strong>
+      <span>{user.role === 'Board Member' ? t(lang, 'boardMember') : t(lang, 'member')}</span>
     </div>
 
     <div class="profile-row">
-      <strong>Language</strong>
-      <span>{user.language}</span>
+      <strong>{t(lang, 'language')}</strong>
+      <span>{user.language === 'ja' ? t(lang, 'japanese') : t(lang, 'english')}</span>
     </div>
   </article>
 
   {#if auth.user && auth.user.userId === user.userId}
     <p>
       <a href={`/users/${user.userId}/update`} role="button" class="secondary">
-        Update My Profile
+        {t(lang, 'updateMyProfile')}
       </a>
     </p>
   {/if}
