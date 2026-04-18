@@ -1,5 +1,7 @@
 <script lang="ts">
   import { api } from '$lib/api';
+  import { auth } from '$lib/auth.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
@@ -14,6 +16,7 @@
     language: string;
   }
 
+  const lang = $derived(auth.user?.language ?? 'en');
   let users: UserItem[] = $state([]);
   let loading = $state(true);
 
@@ -23,7 +26,7 @@
       console.log('users response:', result);
       users = result.users;
     } catch (error) {
-      toast.error('Failed to load members.');
+      toast.error(t(lang, 'failedToLoadMembers'));
       users = [];
     } finally {
       loading = false;
@@ -31,24 +34,24 @@
   });
 </script>
 
-<h1>Members</h1>
-<p>View all registered JSO members.</p>
+<h1>{t(lang, 'members')}</h1>
+<p>{t(lang, 'viewAllMembers')}</p>
 
 {#if loading}
-  <p aria-busy="true">Loading members...</p>
+  <p aria-busy="true">{t(lang, 'loadingMembers')}</p>
 {:else if users.length === 0}
-  <p>No members found.</p>
+  <p>{t(lang, 'noMembersFound')}</p>
 {:else}
   <div class="member-list">
     {#each users as user}
       <article class="member-card">
         <h2>{user.name}</h2>
-        <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Major:</strong> {user.major}</p>
-        <p><strong>Grade Year:</strong> {user.gradeYear}</p>
-        <p><strong>Birthday:</strong> {user.birthday.split('T')[0]}</p>
-        <p><strong>Role:</strong> {user.role}</p>
-        <p><strong>Language:</strong> {user.language}</p>
+        <p><strong>{t(lang, 'email')}:</strong> {user.email}</p>
+        <p><strong>{t(lang, 'major')}:</strong> {user.major}</p>
+        <p><strong>{t(lang, 'gradeYear')}:</strong> {user.gradeYear}</p>
+        <p><strong>{t(lang, 'birthday')}:</strong> {user.birthday.split('T')[0]}</p>
+        <p><strong>{t(lang, 'role')}:</strong> {user.role}</p>
+        <p><strong>{t(lang, 'language')}:</strong> {user.language}</p>
       </article>
     {/each}
   </div>

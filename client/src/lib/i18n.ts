@@ -50,6 +50,11 @@ const translations: Record<string, Record<string, string>> = {
     loggingOut: 'Logging out...',
     loggedOut: 'Logged out',
     logoutFailed: 'Failed to log out',
+    members: 'Members',
+    viewAllMembers: 'View all registered JSO members.',
+    loadingMembers: 'Loading members...',
+    noMembersFound: 'No members found.',
+    failedToLoadMembers: 'Failed to load members.',
   },
   ja: {
     register: '登録する',
@@ -101,6 +106,11 @@ const translations: Record<string, Record<string, string>> = {
     loggingOut: 'ログアウト中...',
     loggedOut: 'ログアウトしました',
     logoutFailed: 'ログアウトに失敗しました',
+    members: 'メンバー',
+    viewAllMembers: '登録されているJSOメンバーを表示します。',
+    loadingMembers: 'メンバーを読み込み中...',
+    noMembersFound: 'メンバーが見つかりません。',
+    failedToLoadMembers: 'メンバーの読み込みに失敗しました。',
   },
 };
 
