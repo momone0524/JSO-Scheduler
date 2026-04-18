@@ -77,5 +77,12 @@
         </p>
       </article>
     {/each}
+    {#if isBoardMember}
+      <p>
+        <a href={`/events/create`} role="button">
+          {t(lang, 'createEvent')}
+        </a>
+      </p>
+    {/if}
   </div>
 {/if}
