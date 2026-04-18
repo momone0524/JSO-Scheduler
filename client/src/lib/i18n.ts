@@ -59,6 +59,11 @@ const translations: Record<string, Record<string, string>> = {
     failedToLoadProfile: 'Failed to load profile.',
     userNotFound: 'User not found.',
     updateMyProfile: 'Update My Profile',
+    updateProfile: 'Update Profile',
+    updating: 'Updating...',
+    cancel: 'Cancel',
+    profileUpdated: 'Profile updated!',
+    updateFailed: 'Update failed. Please check your input.',
   },
   ja: {
     register: '登録する',
@@ -72,7 +77,7 @@ const translations: Record<string, Record<string, string>> = {
     english: '英語',
     role: '役職',
     member: 'メンバー',
-    boardMember: '役員',
+    boardMember: '幹部',
     email: 'メールアドレス',
     password: 'パスワード',
     creatingAccount: 'アカウントを作成中...',
@@ -119,6 +124,11 @@ const translations: Record<string, Record<string, string>> = {
     failedToLoadProfile: 'プロフィールの読み込みに失敗しました。',
     userNotFound: 'ユーザーが見つかりません。',
     updateMyProfile: 'プロフィールを更新',
+    updateProfile: '更新',
+    updating: '更新中...',
+    cancel: 'キャンセル',
+    profileUpdated: 'プロフィールを更新しました',
+    updateFailed: '更新に失敗しました。入力を確認してください。',
   },
 };
 

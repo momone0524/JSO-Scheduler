@@ -2,9 +2,11 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { api } from '$lib/api';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
+  import { auth } from '$lib/auth.svelte';
   interface UserItem {
     userId: string;
     name: string;
@@ -19,6 +21,8 @@
   interface GetUserResponse {
     user: UserItem;
   }
+
+  const lang = $derived(auth.user?.language ?? 'en');
 
   let loading = $state(true);
   let submitting = $state(false);
@@ -46,7 +50,7 @@
       language = user.language;
     } catch (error) {
       console.error(error);
-      toast.error('Failed to load profile.');
+      toast.error(t(lang, 'failedToLoadProfile'));
     } finally {
       loading = false;
     }
@@ -69,10 +73,10 @@
         email,
       });
 
-      toast.success('Profile Updated!');
+      toast.success(t(lang, 'profileUpdated'));
       goto(`/users/${id}`);
     } catch (error) {
-      toast.error('Update failed. Please check your input.');
+      toast.error(t(lang, 'updateFailed'));
     } finally {
       submitting = false;
     }
@@ -80,64 +84,66 @@
 </script>
 
 {#if loading}
-  <p aria-busy="true">Loading profile...</p>
+  <p aria-busy="true">{t(lang, 'loadingProfile')}</p>
 {:else}
-  <h1>Update My Profile</h1>
+  <h1>{t(lang, 'updateMyProfile')}</h1>
 
   <form onsubmit={handleSubmit}>
     <label>
-      Name
+      {t(lang, 'name')}
       <input type="text" bind:value={name} required />
     </label>
 
     <label>
-      Email
+      {t(lang, 'email')}
       <input type="email" bind:value={email} required />
     </label>
 
     <label>
-      Major
+      {t(lang, 'major')}
       <input type="text" bind:value={major} required />
     </label>
 
     <label>
-      Grade Year
+      {t(lang, 'gradeYear')}
       <select bind:value={gradeYear}>
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
         <option value={4}>4</option>
-        <option value={5}>5: Graduate Studeut</option>
+        <option value={5}>{t(lang, 'graduateStudent')}</option>
       </select>
     </label>
 
     <label>
-      Birthday
+      {t(lang, 'birthday')}
       <input type="date" bind:value={birthday} required />
     </label>
 
     <label>
-      Role
+      {t(lang, 'role')}
       <select bind:value={role}>
-        <option value="Member">Member</option>
-        <option value="Board Member">Board Member</option>
+        <option value="Member">{t(lang, 'member')}</option>
+        <option value="Board Member">{t(lang, 'boardMember')}</option>
       </select>
     </label>
 
     <label>
-      Language
+      {t(lang, 'language')}
       <select bind:value={language}>
-        <option value="en">English</option>
-        <option value="ja">Japanese</option>
+        <option value="en">{t(lang, 'english')}</option>
+        <option value="ja">{t(lang, 'japanese')}</option>
       </select>
     </label>
 
     <div class="actions">
       <button type="submit" disabled={submitting}>
-        {submitting ? 'Updating...' : 'Update Profile'}
+        {submitting ? t(lang, 'updating') : t(lang, 'updateProfile')}
       </button>
 
-      <a href={`/users/${page.params.userId}`} role="button" class="secondary"> Cancel </a>
+      <a href={`/users/${page.params.userId}`} role="button" class="secondary">
+        {t(lang, 'cancel')}
+      </a>
     </div>
   </form>
 {/if}
