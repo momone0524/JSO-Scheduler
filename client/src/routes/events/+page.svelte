@@ -56,10 +56,6 @@
               {t(lang, 'update')}
             </a>
 
-            <a href={`/events/${event.eventId}/delete`} role="button" class="secondary">
-              {t(lang, 'delete')}
-            </a>
-
             <a href={`/events/${event.eventId}/polls`} role="button" class="secondary">
               {t(lang, 'createPoll')}
             </a>
