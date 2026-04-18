@@ -43,9 +43,14 @@ const translations: Record<string, Record<string, string>> = {
     startingUp: 'Starting up...',
     dashboard: 'Dashboard',
     logout: 'Log Out',
+
+    loggingIn: 'Logging in...',
+    loginSuccess: 'Logged in successfully.',
+    loginFailed: 'Invalid email or password.',
+    noAccount: 'Don’t have an account?',
   },
   ja: {
-    register: '登録',
+    register: '登録する',
     name: '名前',
     gradeYear: '学年',
     graduateStudent: '5: 大学院生',
@@ -87,6 +92,10 @@ const translations: Record<string, Record<string, string>> = {
     startingUp: '起動中...',
     dashboard: 'ダッシュボード',
     logout: 'ログアウト',
+    loggingIn: 'ログイン中...',
+    loginSuccess: 'ログインしました。',
+    loginFailed: 'メールアドレスまたはパスワードが間違っています。',
+    noAccount: 'アカウントをお持ちでないですか？',
   },
 };
 
