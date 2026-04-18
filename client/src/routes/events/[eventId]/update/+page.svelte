@@ -2,11 +2,11 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { api } from '$lib/api';
+  import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
-  import { auth } from '$lib/auth.svelte';
   interface EventItem {
     eventName: string;
     place: string;

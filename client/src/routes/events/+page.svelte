@@ -64,7 +64,7 @@
 
         <p>
           <a href={`/events/${event.eventId}/attendance`} role="button">
-            {t(lang, 'submitAttendance')}
+            {t(lang, 'attendance')}
           </a>
 
           <a href={`/events/${event.eventId}/jobs`} role="button">
