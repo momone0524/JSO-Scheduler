@@ -66,6 +66,7 @@ async function logIn(req: Request, res: Response): Promise<void> {
       email: user.email,
       role: user.role,
       displayName: user.name,
+      language: user.language,
     };
     req.session.isLoggedIn = true;
 

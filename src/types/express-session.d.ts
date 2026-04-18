@@ -10,6 +10,7 @@ declare module 'express-session' {
       email: string;
       role: string;
       displayName: string;
+      language: string;
     };
     isLoggedIn?: boolean;
     logInAttempts?: number;

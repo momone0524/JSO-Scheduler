@@ -4,6 +4,7 @@ export interface User {
   userId: string;
   email: string;
   displayName: string;
+  language: string;
 }
 
 class AuthStore {

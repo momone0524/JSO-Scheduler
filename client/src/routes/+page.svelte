@@ -1,13 +1,22 @@
 <script lang="ts">
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
+  import { t } from '$lib/i18n';
 
   const today = new Date();
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
+  const lang = $derived(auth.user?.language ?? 'en');
 
-  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+  const weekdays = $derived([
+    t(lang, 'sun'),
+    t(lang, 'mon'),
+    t(lang, 'tue'),
+    t(lang, 'wed'),
+    t(lang, 'thu'),
+    t(lang, 'fri'),
+    t(lang, 'sat'),
+  ]);
   function getCalendarData(year: number, month: number) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -17,10 +26,12 @@
 
   const cells = getCalendarData(currentYear, currentMonth);
 
-  const monthLabel = new Date(currentYear, currentMonth, 1).toLocaleString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  });
+  const monthLabel = $derived(
+    new Date(currentYear, currentMonth, 1).toLocaleString(lang === 'ja' ? 'ja-JP' : 'en-US', {
+      month: 'long',
+      year: 'numeric',
+    }),
+  );
 
   interface EventItem {
     eventId: string;
@@ -57,14 +68,14 @@
 </script>
 
 {#if auth.loading}
-  <p aria-busy="true">Checking session…</p>
+  <p aria-busy="true">{t(lang, 'checkingSession')}</p>
 {:else if auth.user}
-  <h1>Welcome to JSO Scheduler</h1>
-  <p>Signed in as <strong>{auth.user.displayName}</strong> ({auth.user.email}).</p>
+  <h1>{t(lang, 'welcomeToScheduler')}</h1>
+  <p>{t(lang, 'signedInAs')} <strong>{auth.user.displayName}</strong> ({auth.user.email}).</p>
 
   <section>
-    <h2>Calendar</h2>
-    <p>Your upcoming events will appear here.</p>
+    <h2>{t(lang, 'calendar')}</h2>
+    <p>{t(lang, 'upcomingEventsHere')}</p>
 
     <article class="calendar-card">
       <header class="calendar-header">
@@ -94,19 +105,18 @@
   </section>
 
   <div class="actions">
-    <a href="/events" role="button">View Events</a>
-    <a href="/polls" role="button" class="secondary">View Polls</a>
-    <a href="/users" role="button">View Members</a>
-    <a href={`/users/${auth.user.userId}`} role="button" class="secondary">My Profile</a>
+    <a href="/events" role="button">{t(lang, 'viewEvents')}</a>
+    <a href="/polls" role="button" class="secondary">{t(lang, 'viewPolls')}</a>
+    <a href="/users" role="button">{t(lang, 'viewMembers')}</a>
+    <a href={`/users/${auth.user.userId}`} role="button" class="secondary">{t(lang, 'myProfile')}</a
+    >
   </div>
 {:else}
-  <h1>JSO Scheduler</h1>
-  <p>
-    Plan events, manage polls, and keep track of attendance for the Japanese Student Organization.
-  </p>
+  <h1>{t(lang, 'schedulerTitle')}</h1>
+  <p>{t(lang, 'schedulerDescription')}</p>
 
-  <a href="/register" role="button">Get Started</a>
-  <a href="/login" role="button" class="secondary">Log In</a>
+  <a href="/register" role="button">{t(lang, 'getStarted')}</a>
+  <a href="/login" role="button" class="secondary">{t(lang, 'login')}</a>
 {/if}
 
 <style>
