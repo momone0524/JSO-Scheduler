@@ -2,6 +2,7 @@
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
+  import { onMount } from 'svelte';
 
   const today = new Date();
   const currentYear = today.getFullYear();
@@ -17,6 +18,7 @@
     t(lang, 'fri'),
     t(lang, 'sat'),
   ]);
+
   function getCalendarData(year: number, month: number) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -40,20 +42,48 @@
     place: string;
   }
 
+  interface GetEventsResponse {
+    events: EventItem[];
+  }
+
   let events = $state<EventItem[]>([]);
 
   async function loadEvents() {
     try {
-      events = await api.get<EventItem[]>('/events');
+      const result = await api.get<GetEventsResponse>('/events');
+
+      console.log('raw result:', result);
+      console.log('raw result.events:', result.events);
+      console.log('first event from result:', result.events[0]);
+
+      events = result.events;
+
+      console.log('events after assign:', $state.snapshot(events));
     } catch (error) {
       console.error('Failed to load events:', error);
       events = [];
     }
   }
 
+  function parseLocalDate(dateString: string): Date | null {
+    if (!dateString) return null;
+
+    const safeDate = dateString.slice(0, 10);
+    const parts = safeDate.split('-').map(Number);
+
+    if (parts.length !== 3 || parts.some(Number.isNaN)) {
+      return null;
+    }
+
+    const [year, month, day] = parts;
+    return new Date(year, month - 1, day);
+  }
+
   function getEventsForDay(day: number) {
     return events.filter((event) => {
-      const eventDate = new Date(event.date);
+      const eventDate = parseLocalDate(event.date);
+      if (!eventDate) return false;
+
       return (
         eventDate.getFullYear() === currentYear &&
         eventDate.getMonth() === currentMonth &&
@@ -62,7 +92,7 @@
     });
   }
 
-  $effect(() => {
+  onMount(() => {
     loadEvents();
   });
 </script>
@@ -123,6 +153,7 @@
   .calendar-card {
     margin-top: 1rem;
     padding: 1rem;
+    overflow-x: auto;
   }
 
   .calendar-header {
@@ -146,7 +177,8 @@
     padding: 0.75rem 0.5rem;
     border: 1px solid #dcdfe4;
     border-radius: 0.5rem;
-    min-height: 3rem;
+    min-height: 5rem;
+    min-width: 0;
   }
 
   .weekday {
@@ -161,6 +193,7 @@
   .date-number {
     font-weight: 600;
     margin-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
   }
 
   .event-badge {
@@ -169,6 +202,10 @@
     border-radius: 0.4rem;
     background: #e8f0fe;
     font-size: 0.8rem;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .actions {
