@@ -27,6 +27,23 @@
     submitting = true;
 
     try {
+      const now = new Date();
+
+      const startDateTime = new Date(`${date}T${startTime}`);
+      const endDateTime = new Date(`${date}T${endTime}`);
+
+      if (startDateTime <= now) {
+        toast.error(t(lang, 'eventMustBeFuture'));
+        submitting = false;
+        return;
+      }
+
+      if (startDateTime >= endDateTime) {
+        toast.error(t(lang, 'invalidTimeRange'));
+        submitting = false;
+        return;
+      }
+
       await api.post('/events', {
         eventName,
         place,

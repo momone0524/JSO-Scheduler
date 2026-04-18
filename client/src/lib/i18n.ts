@@ -101,6 +101,8 @@ const translations: Record<string, Record<string, string>> = {
     attendanceUpdated: 'Updated Attendance',
     updateAttendance: 'Update Attendance',
     loadingAttendanceInfo: 'Loading attendance...',
+    eventMustBeFuture: 'Event must be future.',
+    invalidTimeRange: 'Time range is invalid.',
   },
   ja: {
     register: '登録する',
@@ -203,6 +205,8 @@ const translations: Record<string, Record<string, string>> = {
     attendanceUpdated: '出席を更新しました',
     updateAttendance: '出席を更新する',
     loadingAttendanceInfo: '出席情報を読み込み中...',
+    eventMustBeFuture: '過去のイベントは作成できません。',
+    invalidTimeRange: '正しい時間帯を設定してください。',
   },
 };
 
