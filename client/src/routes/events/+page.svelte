@@ -40,6 +40,13 @@
   <p aria-busy="true">{t(lang, 'loadingEvents')}</p>
 {:else if events.length === 0}
   <p>{t(lang, 'noEventsFound')}</p>
+  {#if isBoardMember}
+    <p>
+      <a href={`/events/create`} role="button">
+        {t(lang, 'createEvent')}
+      </a>
+    </p>
+  {/if}
 {:else}
   <div class="member-list">
     {#each events as event}

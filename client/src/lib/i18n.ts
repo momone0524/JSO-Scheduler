@@ -92,6 +92,11 @@ const translations: Record<string, Record<string, string>> = {
     attnedTime: 'Attending Time',
     goback: 'Go Back',
     submitAttendance: 'Submit Attendance',
+    attendanceCreated: 'Attendance Submitted.',
+    attendanceCreateFailed: 'Attendance submittion failed. Please check your input.',
+    joiningMidawy: 'Joining Midway',
+    submit: 'Submit',
+    creatingAttendance: 'Submitting attendance...',
   },
   ja: {
     register: '登録する',
@@ -186,6 +191,11 @@ const translations: Record<string, Record<string, string>> = {
     attnedTime: '参加時間',
     goback: '戻る',
     submitAttendance: '出席を提出する',
+    attendanceCreated: '出席を提出しました。',
+    attendanceCreateFailed: '提出に失敗しました。入力内容を確認してください。',
+    joiningMidawy: '途中参加',
+    submit: '提出',
+    creatingAttendance: '出席を提出中...',
   },
 };
 

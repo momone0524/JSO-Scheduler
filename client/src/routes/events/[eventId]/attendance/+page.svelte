@@ -43,6 +43,13 @@
   <p aria-busy="true">{t(lang, 'loadingAttendance')}</p>
 {:else if attendanceList.length === 0}
   <p>{t(lang, 'attendanceNotFound')}</p>
+
+  <a href={`/events`} role="button" class="secondary">
+    {t(lang, 'goback')}
+  </a>
+  <a href={`/events/${id}/attendance/submit`} role="button">
+    {t(lang, 'submitAttendance')}
+  </a>
 {:else}
   <h1>{t(lang, 'attendance')}</h1>
 
