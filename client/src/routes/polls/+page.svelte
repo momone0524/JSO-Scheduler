@@ -52,7 +52,7 @@
           </p>
           <p>
             <a href={`/polls/:pollId/pollOptions/create`} role="button">
-              {t(lang, 'createPoll')}
+              {t(lang, 'createPollOption')}
             </a>
           </p>
           <p>

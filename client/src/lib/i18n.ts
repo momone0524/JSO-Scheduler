@@ -107,7 +107,8 @@ const translations: Record<string, Record<string, string>> = {
     loadingPoll: 'Loading poll',
     poll: 'Poll',
     noPollFound: 'Poll does not find',
-    viewPollOption: 'Vote this poll',
+    takeVote: 'Vote this poll',
+    createPollOption: 'Create Poll Option',
   },
   ja: {
     register: '登録する',
@@ -216,7 +217,8 @@ const translations: Record<string, Record<string, string>> = {
     loadingPoll: '投票情報を読み込み中...',
     poll: '投票',
     noPollFound: '投票が見つかりませんでした。',
-    viewPollOption: '投票してください。',
+    takeVote: '投票する。',
+    createPollOption: '投票のオプションを作成',
   },
 };
 
