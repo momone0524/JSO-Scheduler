@@ -11,7 +11,7 @@ import {
   updatePollScheduleOption,
 } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../types/utils/db-utils.js';
+import { parseDatabaseError } from '../utils/db-utils.js';
 import {
   CreatePollOptionInput,
   CreatePollOptionSchema,

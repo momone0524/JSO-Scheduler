@@ -11,7 +11,7 @@ import {
 import { getPollById } from '../models/PollModel.js';
 import { getAllPollOptions } from '../models/PollOptionModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../types/utils/db-utils.js';
+import { parseDatabaseError } from '../utils/db-utils.js';
 import { CreateJobInput, CreateJobSchema, UpdateJobSchema } from '../validators/JobValidator.js';
 
 async function CreateNewJobManual(req: Request, res: Response): Promise<void> {

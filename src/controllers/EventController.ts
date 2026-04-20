@@ -8,7 +8,7 @@ import {
 } from '../models/EventModel.js';
 import { getPollById, updateEventFromPoll } from '../models/PollModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../types/utils/db-utils.js';
+import { parseDatabaseError } from '../utils/db-utils.js';
 import {
   CreateEventInput,
   CreateEventSchema,
