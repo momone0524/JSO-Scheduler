@@ -34,13 +34,6 @@
   <p aria-busy="true">{t(lang, 'loadingPoll')}</p>
 {:else if polls.length === 0}
   <p>{t(lang, 'noPollFound')}</p>
-  {#if isBoardMember}
-    <p>
-      <a href={`/polls/:pollId/pollOptions/create`} role="button">
-        {t(lang, 'createPoll')}
-      </a>
-    </p>
-  {/if}
 {:else}
   <div class="member-list">
     {#each polls as poll}
@@ -55,15 +48,18 @@
               {t(lang, 'update')}
             </a>
           </p>
+          <p>
+            <a href={`/polls/:pollId/pollOptions/create`} role="button">
+              {t(lang, 'createPoll')}
+            </a>
+          </p>
+          <p>
+            <a href={`/polls/:pollId/pollOptions`} role="button">
+              {t(lang, 'takeVote')}
+            </a>
+          </p>
         {/if}
       </article>
     {/each}
-    {#if isBoardMember}
-      <p>
-        <a href={`/polls/create`} role="button">
-          {t(lang, 'createPoll')}
-        </a>
-      </p>
-    {/if}
   </div>
 {/if}
