@@ -103,7 +103,7 @@ const translations: Record<string, Record<string, string>> = {
     loadingAttendanceInfo: 'Loading attendance...',
     eventMustBeFuture: 'Event must be future.',
     invalidTimeRange: 'Time range is invalid.',
-    failPoll: 'Failed to lead poll',
+    failleadPoll: 'Failed to lead poll',
   },
   ja: {
     register: '登録する',
@@ -208,7 +208,7 @@ const translations: Record<string, Record<string, string>> = {
     loadingAttendanceInfo: '出席情報を読み込み中...',
     eventMustBeFuture: '過去のイベントは作成できません。',
     invalidTimeRange: '正しい時間帯を設定してください。',
-    failPoll: '投票が見つかりませんでした。',
+    failleadPoll: '投票の取得に失敗しました',
   },
 };
 

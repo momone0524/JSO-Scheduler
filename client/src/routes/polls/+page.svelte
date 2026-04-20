@@ -1,6 +1,8 @@
 <script lang="ts">
   import { api } from '$lib/api';
+  import { auth } from '$lib/auth.svelte';
   import Loading from '$lib/components/Loading.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
@@ -11,14 +13,15 @@
     pollType: string;
   }
 
+  const lang = $derived(auth.user?.language ?? 'en');
   let polls: Poll[] = $state([]);
   let loading = $state(true);
 
   onMount(async () => {
     try {
-      polls = await api.get<Poll[]>('/api/polls');
+      polls = await api.get<Poll[]>('/polls');
     } catch (error) {
-      toast.error('Failed to load polls.');
+      toast.error(t(lang, 'failleadPoll'));
     } finally {
       loading = false;
     }
@@ -44,6 +47,3 @@
     {/each}
   </ul>
 {/if}
-
-<a href="/login">Log In</a>
-<a href="/register">Register</a>
