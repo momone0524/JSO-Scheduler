@@ -11,7 +11,7 @@ import {
   getPollVoteByPollAndUser,
 } from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../utils/db-utils.js';
+import { parseDatabaseError } from '../types/utils/db-utils.js';
 
 async function CreateNewPollVote(req: Request, res: Response): Promise<void> {
   const { pollId, optionId } = req.params;

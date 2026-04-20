@@ -13,7 +13,7 @@ import { getPollById } from '../models/PollModel.js';
 import { getPollOptionById } from '../models/PollOptionModel.js';
 import { getAllPollVoteByOption } from '../models/PollVoteModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../utils/db-utils.js';
+import { parseDatabaseError } from '../types/utils/db-utils.js';
 
 // 自動生成！！！！
 async function CreateNewJobAssignmentAuto(req: Request, res: Response): Promise<void> {

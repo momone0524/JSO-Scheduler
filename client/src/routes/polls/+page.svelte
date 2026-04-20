@@ -1,7 +1,6 @@
 <script lang="ts">
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
-  import Loading from '$lib/components/Loading.svelte';
   import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
@@ -13,6 +12,7 @@
     pollType: string;
   }
 
+  const isBoardMember = $derived(auth.user?.role === 'Board Member');
   const lang = $derived(auth.user?.language ?? 'en');
   let polls: Poll[] = $state([]);
   let loading = $state(true);
@@ -28,22 +28,42 @@
   });
 </script>
 
-<h1>Polls</h1>
+<h1>{t(lang, 'poll')}</h1>
 
 {#if loading}
-  <Loading />
+  <p aria-busy="true">{t(lang, 'loadingPoll')}</p>
 {:else if polls.length === 0}
-  <p>There are not polls yet.</p>
+  <p>{t(lang, 'noPollFound')}</p>
+  {#if isBoardMember}
+    <p>
+      <a href={`/polls/:pollId/pollOptions/create`} role="button">
+        {t(lang, 'createPoll')}
+      </a>
+    </p>
+  {/if}
 {:else}
-  <ul>
-    {#each polls as poll (poll.pollId)}
-      <li>
-        <a href="/polls/{poll.pollId}">{poll.title}</a>
-        <strong>{poll.title}</strong><br />
-        Close Date: {poll.closeDate}<br />
-        Poll Type: {poll.pollType}<br />
-        <a href="/polls/{poll.pollId}" role="button">Detail</a>
-      </li>
+  <div class="member-list">
+    {#each polls as poll}
+      <article class="member-card">
+        <h2>{poll.title}</h2>
+        <p><strong>{t(lang, 'closeDate')}:</strong> {poll.closeDate}</p>
+        <p><strong>{t(lang, 'pollType')}:</strong> {poll.pollType}</p>
+
+        {#if isBoardMember}
+          <p>
+            <a href={`/polls/${poll.pollId}/update`} role="button" class="secondary">
+              {t(lang, 'update')}
+            </a>
+          </p>
+        {/if}
+      </article>
     {/each}
-  </ul>
+    {#if isBoardMember}
+      <p>
+        <a href={`/polls/create`} role="button">
+          {t(lang, 'createPoll')}
+        </a>
+      </p>
+    {/if}
+  </div>
 {/if}

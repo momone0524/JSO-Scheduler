@@ -16,12 +16,12 @@
 
   const isBoardMember = $derived(auth.user?.role === 'Board Member');
   const lang = $derived(auth.user?.language ?? 'en');
-  let events: EventItem[] = $state([]);
+  let events: PollItem[] = $state([]);
   let loading = $state(true);
 
   onMount(async () => {
     try {
-      const result = await api.get<{ events: EventItem[] }>('/events');
+      const result = await api.get<{ events: PollItem[] }>('/events');
       console.log('users response:', result);
       events = result.events;
     } catch (error) {

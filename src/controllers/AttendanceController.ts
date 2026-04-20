@@ -9,7 +9,7 @@ import {
 } from '../models/AttendanceModel.js';
 import { getEventById } from '../models/EventModel.js';
 import { getUserById } from '../models/UserModel.js';
-import { parseDatabaseError } from '../utils/db-utils.js';
+import { parseDatabaseError } from '../types/utils/db-utils.js';
 import {
   CreateAttendanceInput,
   CreateAttendanceSchema,
