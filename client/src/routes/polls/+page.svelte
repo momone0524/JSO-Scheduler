@@ -8,8 +8,10 @@
   interface Poll {
     pollId: string;
     title: string;
-    closeDate: string;
+    closeAt: string;
     pollType: string;
+    description: string;
+    isClose: boolean;
   }
 
   const isBoardMember = $derived(auth.user?.role === 'Board Member');
@@ -41,8 +43,13 @@
     {#each polls as poll}
       <article class="member-card">
         <h2>{poll.title}</h2>
-        <p><strong>{t(lang, 'closeDate')}:</strong> {poll.closeDate}</p>
+        <p><strong>{t(lang, 'closeDate')}:</strong> {poll.closeAt}</p>
         <p><strong>{t(lang, 'pollType')}:</strong> {poll.pollType}</p>
+        <p><strong>{t(lang, 'description')}:</strong> {poll.description}</p>
+        <p>
+          <strong>{t(lang, 'isClose')}:</strong>
+          <span>{poll.isClose === true ? t(lang, 'Close') : t(lang, 'Open')}</span>
+        </p>
 
         {#if isBoardMember}
           <p>
