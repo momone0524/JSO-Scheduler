@@ -113,6 +113,8 @@ const translations: Record<string, Record<string, string>> = {
     pollType: 'Poll Type',
     description: 'Description',
     isClose: 'Status',
+    Open: 'Open',
+    Close: 'Close',
   },
   ja: {
     register: '登録する',
@@ -227,6 +229,8 @@ const translations: Record<string, Record<string, string>> = {
     pollType: '投票の種類',
     description: '詳細',
     isClose: '受付状況',
+    Open: '受付中',
+    Close: '終了',
   },
 };
 
