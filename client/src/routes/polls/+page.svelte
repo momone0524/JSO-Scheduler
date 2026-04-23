@@ -58,12 +58,12 @@
             </a>
           </p>
           <p>
-            <a href={`/polls/:pollId/pollOptions/create`} role="button">
+            <a href={`/polls/${poll.pollId}/pollOptions/create`} role="button">
               {t(lang, 'createPollOption')}
             </a>
           </p>
           <p>
-            <a href={`/polls/:pollId/pollOptions`} role="button">
+            <a href={`/polls/${poll.pollId}/pollOptions`} role="button">
               {t(lang, 'takeVote')}
             </a>
           </p>

@@ -1,10 +1,13 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
+
+  const pollId = $derived(page.params.pollId);
 
   let jobOption = $state('');
   let submitting = $state(false);
@@ -18,12 +21,11 @@
     }
   });
 
-  async function handleSubmit(event: Event): Promise<void> {
-    event.preventDefault();
+  async function handleSubmit(): Promise<void> {
     submitting = true;
 
     try {
-      await api.post(`/polls/${poll.pollId}`, {
+      await api.post(`/api/polls/${pollId}/pollOptions`, {
         jobOption,
       });
 
@@ -39,7 +41,7 @@
 
 <h1>{t(lang, 'createPollOption')}</h1>
 
-<form onsubmit={handleSubmit}>
+<form on:submit|preventDefault={handleSubmit}>
   <label>
     {t(lang, 'jobOption')}
     <input type="text" bind:value={jobOption} required />
