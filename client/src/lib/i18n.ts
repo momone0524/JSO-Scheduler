@@ -115,6 +115,8 @@ const translations: Record<string, Record<string, string>> = {
     isClose: 'Status',
     Open: 'Open',
     Close: 'Close',
+    pollOptionCreateFailed: 'Failed to Create Poll Option',
+    jobOption: 'Job Option',
   },
   ja: {
     register: '登録する',
@@ -231,6 +233,9 @@ const translations: Record<string, Record<string, string>> = {
     isClose: '受付状況',
     Open: '受付中',
     Close: '終了',
+    pollOptionCreateFailed: '投票オプションの作成に失敗しました。',
+    pollOptionCreated: '投票',
+    jobOption: '仕事オプション',
   },
 };
 
