@@ -10,6 +10,7 @@
   const pollId = $derived(page.params.pollId);
   let jobOption = $state('');
   let submitting = $state(false);
+  let optionDate = $state('');
 
   const lang = $derived(auth.user?.language ?? 'en');
 
@@ -27,6 +28,7 @@
     try {
       await api.post(`/polls/${pollId}`, {
         jobOption,
+        optionDate,
       });
 
       toast.success(t(lang, 'pollOptionCreated'));
@@ -42,6 +44,10 @@
 <h1>{t(lang, 'createPollOption')}</h1>
 
 <form onsubmit={handleSubmit}>
+  <label>
+    <input type="date" bind:value={optionDate} required />
+  </label>
+
   <label>
     {t(lang, 'jobOption')}
     <input type="text" bind:value={jobOption} required />

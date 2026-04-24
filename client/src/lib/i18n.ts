@@ -117,6 +117,8 @@ const translations: Record<string, Record<string, string>> = {
     Close: 'Close',
     pollOptionCreateFailed: 'Failed to Create Poll Option',
     jobOption: 'Job Option',
+    failToLoadPoll: 'Failed to load Poll',
+    pollList: 'Poll List',
   },
   ja: {
     register: '登録する',
@@ -236,6 +238,8 @@ const translations: Record<string, Record<string, string>> = {
     pollOptionCreateFailed: '投票オプションの作成に失敗しました。',
     pollOptionCreated: '投票',
     jobOption: '仕事オプション',
+    failToLoadPoll: '投票の読み込みに失敗しました。',
+    pollList: '投票リスト',
   },
 };
 
