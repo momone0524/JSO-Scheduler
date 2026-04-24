@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
@@ -13,6 +14,7 @@
   }
 
   const lang = $derived(auth.user?.language ?? 'en');
+  const pollId = page.params.pollId;
   let pollOptions: PollOption[] = $state([]);
   let loading = $state(true);
 
@@ -29,4 +31,8 @@
   });
 </script>
 
-<h1>{t(lang, 'pollOption')}</h1>
+<h1>{t(lang, 'pollOptions')}</h1>
+
+<a href={`/polls/${pollId}/pollOptions/create`} role="botton">
+  {t(lang, `createPollOption`)}
+</a>
