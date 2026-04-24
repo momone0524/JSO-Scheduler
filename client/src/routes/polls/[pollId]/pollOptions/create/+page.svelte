@@ -7,12 +7,12 @@
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
-  const pollId = $derived(page.params.pollId);
-  let jobOption = $state('');
+  let joboption = $state('');
   let submitting = $state(false);
-  let optionDate = $state('');
+  let scheduleoption = $state('');
 
   const lang = $derived(auth.user?.language ?? 'en');
+  const pollId = page.params.pollId;
 
   onMount(() => {
     if (auth.user?.role !== 'Board Member') {
@@ -26,9 +26,9 @@
     submitting = true;
 
     try {
-      await api.post(`/polls/${pollId}`, {
-        jobOption,
-        optionDate,
+      await api.post(`/polls/${pollId}/pollOptions`, {
+        joboption,
+        scheduleoption,
       });
 
       toast.success(t(lang, 'pollOptionCreated'));
@@ -45,12 +45,12 @@
 
 <form onsubmit={handleSubmit}>
   <label>
-    <input type="date" bind:value={optionDate} required />
+    <input type="date" bind:value={scheduleoption} />
   </label>
 
   <label>
     {t(lang, 'jobOption')}
-    <input type="text" bind:value={jobOption} required />
+    <input type="text" bind:value={joboption} />
   </label>
 
   <button type="submit" disabled={submitting}>
