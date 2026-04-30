@@ -34,8 +34,3 @@
   </main>
   <Toast />
 {/if}
-
-<main class="container">
-  {@render children()}
-</main>
-<Toast />
