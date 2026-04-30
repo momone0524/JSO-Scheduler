@@ -1,9 +1,11 @@
 import { api } from './api';
 
 export interface User {
-  id: string;
+  userId: string;
   email: string;
+  role: string;
   displayName: string;
+  language: string;
 }
 
 class AuthStore {
