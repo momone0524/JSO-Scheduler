@@ -1,11 +1,9 @@
 import { api } from './api';
 
 export interface User {
-  userId: string;
+  id: string;
   email: string;
-  role: string;
   displayName: string;
-  language: string;
 }
 
 class AuthStore {
@@ -15,7 +13,8 @@ class AuthStore {
   async refresh(): Promise<void> {
     this.loading = true;
     try {
-      this.user = await api.get<User>('/me');
+      const res = await api.get<User>('/me');
+      this.user = res.data;
     } catch {
       this.user = null;
     } finally {
