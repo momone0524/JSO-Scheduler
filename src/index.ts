@@ -77,6 +77,7 @@ app.use(express.urlencoded({ extended: false })); // Setup urlencoded (HTML Form
 // This allows the client to access any file inside the `public` directory
 // Only put file that you actually want to be publicly accessibly in the `public` folder
 app.use(express.static('public', { extensions: ['html'] }));
+app.use(express.static('frondend/build'));
 
 // -- Routes --------------------------------------------------
 // Register your routes below this line
