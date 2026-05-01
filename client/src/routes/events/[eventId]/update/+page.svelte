@@ -34,7 +34,7 @@
     try {
       const id = page.params.eventId;
       const result = await api.get<GetEventResponse>(`/events/${id}`);
-      const event = result.event;
+      const event = result.data.event;
 
       eventName = event.eventName;
       place = event.place;

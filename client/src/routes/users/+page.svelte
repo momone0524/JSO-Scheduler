@@ -24,7 +24,7 @@
     try {
       const result = await api.get<{ users: UserItem[] }>('/users');
       console.log('users response:', result);
-      users = result.users;
+      users = result.data.users;
     } catch (error) {
       toast.error(t(lang, 'failedToLoadMembers'));
       users = [];

@@ -28,7 +28,7 @@
     try {
       const id = page.params.attendanceId;
       const result = await api.get<GetAttendanceResponse>(`/attendance/${id}`);
-      const attendance = result.attendance;
+      const attendance = result.data.attendance;
 
       attend = attendance.attend;
       attendTime = attendance.attendTime ? attendance.attendTime.slice(0, 5) : '';

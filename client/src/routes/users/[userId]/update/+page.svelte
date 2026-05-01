@@ -39,7 +39,7 @@
     try {
       const id = page.params.userId;
       const result = await api.get<GetUserResponse>(`/users/${id}`);
-      const user = result.user;
+      const user = result.data.user;
 
       name = user.name;
       email = user.email;

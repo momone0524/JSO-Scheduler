@@ -23,7 +23,7 @@
     try {
       const result = await api.get<{ events: EventItem[] }>('/events');
       console.log('users response:', result);
-      events = result.events;
+      events = result.data.events;
     } catch (error) {
       toast.error(t(lang, 'failedToLoadEvents'));
       events = [];
