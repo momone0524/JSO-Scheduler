@@ -33,6 +33,6 @@
 
 <h1>{t(lang, 'pollOptions')}</h1>
 
-<a href={`/polls/${pollId}/pollOptions/create`} role="botton">
-  {t(lang, `createPollOption`)}
+<a href={`/polls/${pollId}/pollOptions/create`} role="button">
+  {t(lang, `createPollOption`)};
 </a>
