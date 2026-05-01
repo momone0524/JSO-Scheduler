@@ -31,7 +31,7 @@
       const id = page.params.userId;
 
       const result = await api.get<GetUserResponse>(`/users/${id}`);
-      user = result.user;
+      user = result.data.user;
     } catch (error) {
       console.error(error);
       toast.error(t(lang, 'failedToLoadProfile'));

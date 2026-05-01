@@ -29,7 +29,7 @@
   onMount(async () => {
     try {
       const result = await api.get<GetAttendResponse>(`/events/${id}/attendance`);
-      attendanceList = result.attendances;
+      attendanceList = result.data.attendances;
     } catch (error) {
       console.error(error);
       toast.error(t(lang, 'failedToLoadAttendance'));

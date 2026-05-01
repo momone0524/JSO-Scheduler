@@ -53,10 +53,10 @@
       const result = await api.get<GetEventsResponse>('/events');
 
       console.log('raw result:', result);
-      console.log('raw result.events:', result.events);
-      console.log('first event from result:', result.events[0]);
+      console.log('raw result.events:', result.data.events);
+      console.log('first event from result:', result.data.events[0]);
 
-      events = result.events;
+      events = result.data.events;
 
       console.log('events after assign:', $state.snapshot(events));
     } catch (error) {

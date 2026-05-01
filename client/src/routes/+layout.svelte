@@ -5,6 +5,7 @@
   import '../app.css';
 
   let { children } = $props();
+
   const loaded = $derived(!auth.loading);
   const user = $derived(auth.user);
   const lang = $derived(auth.user?.language ?? 'en');
