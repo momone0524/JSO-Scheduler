@@ -26,7 +26,7 @@
     submitting = true;
 
     try {
-      await api.post(`/polls/${pollId}/pollOptions`, {
+      await api.post('/polls/${pollId}/pollOptions', {
         joboption,
         scheduleoption,
       });
@@ -45,6 +45,7 @@
 
 <form onsubmit={handleSubmit}>
   <label>
+    {t(lang, 'scheduleOption')}
     <input type="date" bind:value={scheduleoption} />
   </label>
 
