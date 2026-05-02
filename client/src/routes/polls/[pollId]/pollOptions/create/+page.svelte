@@ -17,7 +17,7 @@
   onMount(() => {
     if (auth.user?.role !== 'Board Member') {
       toast.error(t(lang, 'unauthorized'));
-      goto('/events');
+      goto('/polls');
     }
   });
 
@@ -57,7 +57,7 @@
     {submitting ? t(lang, 'creatingPollOption') : t(lang, 'createPollOption')}
   </button>
 
-  <a href="/polls" role="button" class="secondary">
+  <a href={`/polls`} role="button" class="secondary">
     {t(lang, 'cancel')}
   </a>
 </form>
