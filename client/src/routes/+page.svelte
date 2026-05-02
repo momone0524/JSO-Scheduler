@@ -137,6 +137,7 @@
   <div class="actions">
     <a href="/events" role="button">{t(lang, 'viewEvents')}</a>
     <a href="/users" role="button">{t(lang, 'viewMembers')}</a>
+    <a href="/polls" role="button" class="secondary">{t(lang, 'viewPolls')}</a>
     <a href={`/users/${auth.user.userId}`} role="button" class="secondary">{t(lang, 'myProfile')}</a
     >
   </div>
