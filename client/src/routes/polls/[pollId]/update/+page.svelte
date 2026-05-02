@@ -9,12 +9,6 @@
 
   const lang = $derived(auth.user?.language ?? 'en');
 
-  let title = $state('');
-  let description = $state('');
-  let loading = $state(true);
-  let submitting = $state(false);
-  let closeAt = $state('');
-
   interface PollItem {
     pollId: string;
     title: string;
@@ -25,6 +19,12 @@
   interface GetPollResponse {
     poll: PollItem;
   }
+
+  let title = $state('');
+  let description = $state('');
+  let loading = $state(true);
+  let submitting = $state(false);
+  let closeAt = $state('');
 
   onMount(async () => {
     if (auth.user?.role !== 'Board Member') {
@@ -54,7 +54,7 @@
 
     try {
       const pollId = page.params.pollId;
-      await api.patch(`/polls/${pollId}`, {
+      await api.patch(`/polls/${pollId}/update`, {
         title,
         description,
         closeAt,
