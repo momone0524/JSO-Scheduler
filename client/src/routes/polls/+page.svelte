@@ -22,7 +22,7 @@
   onMount(async () => {
     try {
       const result = await api.get<{ polls: Poll[] }>('/polls');
-      polls = result.polls;
+      polls = result.data.polls;
     } catch (error) {
       toast.error(t(lang, 'failleadPoll'));
       polls = [];
