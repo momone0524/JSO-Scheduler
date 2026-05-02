@@ -10,21 +10,22 @@
   const lang = $derived(auth.user?.language ?? 'en');
   const pollId = page.params.pollId;
   let loading = $state(true);
-  let pollOption: PollOption[] = $state([]);
+  let pollOption = $state<PollOption[]>([]);
   let submitting = $state(false);
 
   interface PollOption {
     optionId: string;
-    jobOptions: string;
+    joboption: string;
     scheduleoption: string;
   }
 
   onMount(async () => {
+    console.log('pollId:', pollId);
     try {
       const result = await api.get<{ pollOptions: PollOption[] }>(`/polls/${pollId}/pollOptions`);
-
-      pollOption = result.data.pollOptions;
+      pollOption = result.data.pollOptions ?? [];
     } catch (error) {
+      console.error(error);
       toast.error(t(lang, 'pollOptionLoadFailed'));
       pollOption = [];
     } finally {
@@ -32,16 +33,14 @@
     }
   });
 
-  async function handleSubmit(event: Event): Promise<void> {
-    event.preventDefault();
+  async function handleSubmit(optionId: string): Promise<void> {
     submitting = true;
 
     try {
-      const optionId = page.params.optionId;
-      await api.post(`/poll/${pollId}/pollOptions/${optionId}/pollvote`, {});
+      await api.post(`/polls/${pollId}/pollOptions/${optionId}/pollvote`, {});
 
       toast.success('PollVotecreated!');
-      goto(`/polls`);
+      goto(`/polls/${pollId}/pollOptions`);
     } catch (error) {
       toast.error('pollvotecreatefailed');
     } finally {
@@ -60,13 +59,15 @@
   <div class="member-list">
     {#each pollOption as option}
       <article class="member-card">
-        <p>{t(lang, 'jobOption')}{option.jobOptions}</p>
-        <p>{t(lang, 'scheduleOption')}{option.scheduleoption}</p>
-        <form onsubmit={handleSubmit}>
-          <button type="submit" disabled={submitting}>
-            {submitting ? 'Creating poll vote...' : 'Create Pollvote'}
-          </button>
-        </form>
+        {#if option.joboption}
+          <p>{t(lang, 'jobOption')}:{option.joboption}</p>
+        {/if}
+        {#if option.scheduleoption}
+          <p>{t(lang, 'scheduleOption')}:{option.scheduleoption}</p>
+        {/if}
+        <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
+          {submitting ? 'Creating poll vote...' : 'Create Pollvote'}
+        </button>
       </article>
     {/each}
   </div>

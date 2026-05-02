@@ -26,7 +26,7 @@
     submitting = true;
 
     try {
-      await api.post('/polls/${pollId}/pollOptions', {
+      await api.post(`/polls/${pollId}/pollOptions`, {
         joboption,
         scheduleoption,
       });
