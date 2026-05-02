@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
@@ -21,7 +22,8 @@
 
   onMount(async () => {
     try {
-      const result = await api.get<GetJobResponse>('/jobs');
+      const eventId = page.params.eventId;
+      const result = await api.get<GetJobResponse>(`/event/${eventId}/jobs`);
       jobs = result.data.jobs;
     } catch (error) {
       console.error(error);
