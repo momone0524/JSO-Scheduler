@@ -51,6 +51,7 @@
 </script>
 
 <h1>{t(lang, 'createPollOption')}</h1>
+<p>{pollType}</p>
 
 <form onsubmit={handleSubmit}>
   {#if pollType === 'job'}
