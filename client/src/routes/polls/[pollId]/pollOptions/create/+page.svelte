@@ -10,11 +10,15 @@
   let joboption = $state('');
   let submitting = $state(false);
   let scheduleoption = $state('');
+  let pollType = $state('');
 
   const lang = $derived(auth.user?.language ?? 'en');
   const pollId = page.params.pollId;
 
-  onMount(() => {
+  onMount(async () => {
+    const result = await api.get<{ poll: { pollType: string } }>(`/polls/${pollId}`);
+    pollType = result.data.poll.pollType;
+
     if (auth.user?.role !== 'Board Member') {
       toast.error(t(lang, 'unauthorized'));
       goto('/polls');
@@ -26,13 +30,18 @@
     submitting = true;
 
     try {
-      await api.post(`/polls/${pollId}/pollOptions`, {
-        joboption,
-        scheduleoption,
-      });
+      if (pollType === 'job') {
+        await api.post(`/polls/${pollId}/pollOptions`, {
+          joboption,
+        });
+      } else {
+        await api.post(`/polls/${pollId}/pollOptions`, {
+          scheduleoption,
+        });
+      }
 
       toast.success(t(lang, 'pollOptionCreated'));
-      goto('/polls');
+      goto(`/polls/${pollId}/pollOptions`);
     } catch (error) {
       toast.error(t(lang, 'pollOptionCreateFailed'));
     } finally {
@@ -44,15 +53,17 @@
 <h1>{t(lang, 'createPollOption')}</h1>
 
 <form onsubmit={handleSubmit}>
-  <label>
-    {t(lang, 'scheduleOption')}
-    <input type="date" bind:value={scheduleoption} />
-  </label>
-
-  <label>
-    {t(lang, 'jobOption')}
-    <input type="text" bind:value={joboption} />
-  </label>
+  {#if pollType === 'job'}
+    <label>
+      {t(lang, 'jobOption')}
+      <input type="text" bind:value={joboption} required />
+    </label>
+  {:else}
+    <label>
+      {t(lang, 'scheduleOption')}
+      <input type="date" bind:value={scheduleoption} required />
+    </label>
+  {/if}
 
   <button type="submit" disabled={submitting}>
     {submitting ? t(lang, 'creatingPollOption') : t(lang, 'createPollOption')}
