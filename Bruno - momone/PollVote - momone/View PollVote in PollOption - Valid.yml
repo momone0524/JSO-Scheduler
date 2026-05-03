@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://localhost:1000/polls/:pollId/pollOptions/:optionId/pollvote
+  url: http://localhost:1000/api/polls/:pollId/pollOptions/:optionId/pollvote
   params:
     - name: pollId
       value: 019d9331-0f13-71aa-b58b-137e9bfc250e
