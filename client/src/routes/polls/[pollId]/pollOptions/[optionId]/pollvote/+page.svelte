@@ -65,12 +65,12 @@
     {#each pollVotes as vote}
       <article class="member-card">
         <p>{vote.user.name}</p>
+        <form onsubmit={handleSubmit}>
+          <button type="submit" disabled={submitting}>
+            {submitting ? t(lang, 'deleting') : t(lang, 'delete')}
+          </button>
+        </form>
       </article>
-      <form onsubmit={handleSubmit}>
-        <button type="submit" disabled={submitting}>
-          {submitting ? t(lang, 'deleting') : t(lang, 'delete')}
-        </button>
-      </form>
     {/each}
 
     <a href={`/polls/${pollId}/pollOptions`} role="button" class="secondary">
