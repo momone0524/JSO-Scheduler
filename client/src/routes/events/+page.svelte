@@ -66,10 +66,6 @@
             <a href={`/events/${event.eventId}/polls/create`} role="button" class="secondary">
               {t(lang, 'createPoll')}
             </a>
-
-            <a href={`/events/${event.eventId}/polls`} role="button" class="secondary">
-              {t(lang, 'poll')}
-            </a>
           </p>
         {/if}
 
