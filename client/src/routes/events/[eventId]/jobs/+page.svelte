@@ -30,8 +30,6 @@
 
 <h1>Jobs</h1>
 
-<a href={`/events/${eventId}/jobs/create`} role="button" class="secondary"> Create Job </a>
-
 {#if loading}
   <Loading />
 {:else if jobs.length === 0}
@@ -41,7 +39,15 @@
     <article>
       <h2>{job.jobName}</h2>
 
-      <a href={`/events/${eventId}/jobs/${job.jobId}`} role="button" class="secondary"> view </a>
+      <a href={`/events/${eventId}/jobs/${job.jobId}/assignment`} role="button" class="secondary">
+        member
+      </a>
+
+      <a href={`/events/${eventId}/jobs/${job.jobId}/update`} role="button" class="secondary">
+        update
+      </a>
     </article>
   {/each}
 {/if}
+
+<a href={`/events/${eventId}/jobs/create`} role="button" class="secondary"> Create Job </a>
