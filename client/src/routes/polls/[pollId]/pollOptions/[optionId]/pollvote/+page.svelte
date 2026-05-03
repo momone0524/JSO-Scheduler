@@ -46,5 +46,8 @@
         <p>{vote.user.name}</p>
       </article>
     {/each}
+    <a href={`/polls/${pollId}/pollOptions`} role="button" class="secondary">
+      {t(lang, 'goBack')}
+    </a>
   </div>
 {/if}
