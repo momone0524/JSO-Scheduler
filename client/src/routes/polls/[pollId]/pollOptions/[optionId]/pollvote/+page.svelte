@@ -15,6 +15,7 @@
   let submitting = $state(false);
 
   interface PollVote {
+    voteId: string;
     user: {
       name: string;
       userId: string;
@@ -36,12 +37,11 @@
     }
   });
 
-  async function handleSubmit(event: Event): Promise<void> {
-    event.preventDefault();
+  async function handleSubmit(event: Event, voteId: string): Promise<void> {
     submitting = true;
 
     try {
-      await api.del(`/polls/${pollId}/pollOptions/${optionId}/pollvote`);
+      await api.del(`/pollvote/${voteId}/delete`);
 
       toast.success(t(lang, 'pollvoteDeleted'));
       goto(`/polls/${pollId}/pollOptions/`);
@@ -67,7 +67,7 @@
       <article class="member-card">
         <p>{vote.user.name}</p>
         {#if auth.user && auth.user.userId === vote.user.userId}
-          <form onsubmit={handleSubmit}>
+          <form onsubmit={(event) => handleSubmit(event, vote.voteId)}>
             <button type="submit" disabled={submitting}>
               {submitting ? t(lang, 'deleting') : t(lang, 'delete')}
             </button>
