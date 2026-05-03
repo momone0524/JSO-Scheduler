@@ -131,10 +131,10 @@ app.get('/api/polls/:pollId/pollOptions/:optionId/pollvote', getPollVoteInOption
 app.delete('/api/pollvote/:voteId/delete', deletePollVoteInfo);
 
 // Job
-app.post('/api/event/:eventId/jobs', CreateNewJobManual);
-app.post('/api/event/:eventId/jobs/auto', CreateNewJobAuto);
-app.get('/api/event/:eventId/jobs', getJobInEvent);
-app.get('/api/event/:eventId/jobs/:jobId', getJobInfo);
+app.post('/api/events/:eventId/jobs', CreateNewJobManual);
+app.post('/api/events/:eventId/jobs/auto', CreateNewJobAuto);
+app.get('/api/events/:eventId/jobs', getJobInEvent);
+app.get('/api/events/:eventId/jobs/:jobId', getJobInfo);
 app.patch('/api/jobs/:jobId/update', updateJobInfo);
 app.delete('/api/jobs/:jobId/delete', deleteJobInfo);
 
