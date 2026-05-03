@@ -22,7 +22,16 @@
   onMount(async () => {
     try {
       const result = await api.get<{ polls: Poll[] }>('/polls');
-      polls = result.data.polls;
+      const now = new Date();
+      await Promise.all(
+        result.data.polls.map(async (poll) => {
+          if (new Date(poll.closeAt) < now && !poll.isClosed) {
+            await api.patch(`/polls/${poll.pollId}/close`, {});
+          }
+        }),
+      );
+      const refreshed = await api.get<{ polls: Poll[] }>('/polls');
+      polls = refreshed.data.polls;
     } catch (error) {
       toast.error(t(lang, 'failleadPoll'));
       polls = [];
