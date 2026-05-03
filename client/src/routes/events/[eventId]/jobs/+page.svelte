@@ -19,10 +19,10 @@
   const lang = $derived(auth.user?.language ?? 'en');
   let jobs = $state<JobItem[]>([]);
   let loading = $state(true);
+  const eventId = page.params.eventId;
 
   onMount(async () => {
     try {
-      const eventId = page.params.eventId;
       const result = await api.get<GetJobResponse>(`/event/${eventId}/jobs`);
       jobs = result.data.jobs;
     } catch (error) {
@@ -45,13 +45,19 @@
     {#each jobs as job}
       <article class="member-card">
         <h2>{job.jobName}</h2>
-
-        {#if isBoardMember}
-          <p>
-            <a href={`/jobs/${job.jobId}`} role="button">{t(lang, 'detail')}</a>
-          </p>
-        {/if}
+        <a href={`/events/${eventId}/jobs/${job.jobId}`} role="button">
+          {t(lang, 'checkAssignment')}
+        </a>
       </article>
     {/each}
+    <a href={`/events`} role="button" class="secondary">
+      {t(lang, 'goback')}
+    </a>
+
+    {#if isBoardMember}
+      <a href={`/events/${eventId}/jobs/create`} role="button" class="secondary">
+        {t(lang, 'createJob')}
+      </a>
+    {/if}
   </div>
 {/if}
