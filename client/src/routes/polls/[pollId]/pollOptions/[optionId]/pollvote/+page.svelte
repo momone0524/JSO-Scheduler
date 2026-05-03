@@ -20,10 +20,10 @@
 
   onMount(async () => {
     try {
-      const result = await api.get<{ pollvote: PollVote[] }>(
+      const result = await api.get<{ pollVote: PollVote[] }>(
         `/polls/${pollId}/pollOptions/${optionId}/pollvote`,
       );
-      pollVotes = result.data.pollvote ?? [];
+      pollVotes = result.data.pollVote ?? [];
     } catch (error) {
       console.error(error);
       toast.error(t(lang, 'pollOptionLoadFailed'));
@@ -43,7 +43,7 @@
   <div class="member-list">
     {#each pollVotes as vote}
       <article class="member-card">
-        <p>{vote.user.name ?? 'Unknown'}</p>
+        <p>{vote.user.name}</p>
       </article>
     {/each}
   </div>
