@@ -40,7 +40,7 @@
       await api.post(`/polls/${pollId}/pollOptions/${optionId}/pollvote`, {});
 
       toast.success('PollVotecreated!');
-      goto(`/polls/${pollId}/pollOptions`);
+      goto(`/polls`);
     } catch (error) {
       toast.error('pollvotecreatefailed');
     } finally {
@@ -66,8 +66,16 @@
           <p>{t(lang, 'scheduleOption')}:{option.scheduleoption}</p>
         {/if}
         <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
-          {submitting ? 'Creating poll vote...' : 'Create Pollvote'}
+          {submitting ? 'Creating poll vote...' : 'Vote'}
         </button>
+
+        <a
+          href={`/polls/${pollId}/pollOptions/${option.optionId}/pollvote`}
+          role="button"
+          class="secondary"
+        >
+          {t(lang, 'view')}
+        </a>
       </article>
     {/each}
   </div>
