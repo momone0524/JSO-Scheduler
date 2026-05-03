@@ -40,7 +40,7 @@
 
       title = poll.title;
       description = poll.description;
-      closeAt = poll.closeAt.slice(0, 16);
+      closeAt = poll.closeAt.split('T')[0];
     } catch (error) {
       toast.error(t(lang, 'pollLoadFailed'));
     } finally {
@@ -88,7 +88,7 @@
 
     <label>
       {t(lang, 'closeAt')}
-      <input type="datetime-local" bind:value={closeAt} required />
+      <input type="date" bind:value={closeAt} required />
     </label>
 
     <button type="submit" disabled={submitting}>
