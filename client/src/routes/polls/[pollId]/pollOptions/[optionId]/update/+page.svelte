@@ -24,7 +24,6 @@
     if (auth.user?.role !== 'Board Member') {
       toast.error(t(lang, 'unauthorized'));
       goto('/polls');
-      return;
     }
 
     try {
