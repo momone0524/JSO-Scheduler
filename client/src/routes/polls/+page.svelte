@@ -48,7 +48,7 @@
         <p><strong>{t(lang, 'description')}:</strong> {poll.description}</p>
         <p>
           <strong>{t(lang, 'isClose')}:</strong>
-          {#if poll.isClose}
+          {#if poll.isClose === true}
             {t(lang, 'Close')}
           {:else}
             {t(lang, 'Open')}
