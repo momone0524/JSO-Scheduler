@@ -11,8 +11,6 @@
   const eventId = page.params.eventId;
 
   let jobName = $state('');
-  let startTime = $state('');
-  let endTime = $state('');
   let description = $state('');
   let submitting = $state(false);
 
@@ -31,8 +29,6 @@
       await api.post(`/events/${eventId}/jobs`, {
         jobName,
         description,
-        startTime,
-        endTime,
       });
 
       toast.success(t(lang, 'jobCreated'));
@@ -55,17 +51,7 @@
 
   <label>
     {t(lang, 'description')}
-    <input type="text" bind:value={description} required />
-  </label>
-
-  <label>
-    {t(lang, 'startTime')}
-    <input type="time" bind:value={startTime} required />
-  </label>
-
-  <label>
-    {t(lang, 'endTime')}
-    <input type="time" bind:value={endTime} required />
+    <input type="text" bind:value={description} />
   </label>
 
   <button type="submit" disabled={submitting}>
@@ -73,6 +59,6 @@
   </button>
 
   <a href={`/events/${eventId}/jobs`} role="button" class="secondary">
-    {t(lang, 'cancel')}
+    {t(lang, 'goJob')}
   </a>
 </form>

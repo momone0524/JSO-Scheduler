@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { api } from '$lib/api';
+  import { auth } from '$lib/auth.svelte';
   import { toast } from '$lib/toast.svelte';
 
   let title = $state('');
@@ -8,6 +9,7 @@
   let description = $state('');
   let closeDate = $state('');
   let pollType = $state('');
+  const lang = $derived(auth.user?.language ?? 'en');
 
   async function handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
