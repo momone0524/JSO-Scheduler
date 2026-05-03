@@ -20,10 +20,10 @@
 
   onMount(async () => {
     try {
-      const result = await api.get<{ pollVote: PollVote[] }>(
+      const result = await api.get<{ votes: PollVote[] }>(
         `/polls/${pollId}/pollOptions/${optionId}/pollvote`,
       );
-      pollVotes = result.data.pollVote ?? [];
+      pollVotes = result.data.votes ?? [];
     } catch (error) {
       console.error(error);
       toast.error(t(lang, 'pollOptionLoadFailed'));
