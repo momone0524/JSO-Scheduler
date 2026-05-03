@@ -1,48 +1,67 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { api } from '$lib/api';
-  import Loading from '$lib/components/Loading.svelte';
+  import { auth } from '$lib/auth.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
-  const eventId = page.params.eventId;
-  const jobId = page.params.jobId;
-
-  interface Job {
+  interface JobItem {
     jobId: string;
     jobName: string;
-    description: string;
-    startTime: string;
-    endTime: string;
   }
 
-  let job: Job | null = $state(null);
+  interface GetJobResponse {
+    jobs: JobItem[];
+  }
+
+  const isBoardMember = $derived(auth.user?.role === 'Board Member');
+  const lang = $derived(auth.user?.language ?? 'en');
+  let jobs = $state<JobItem[]>([]);
   let loading = $state(true);
+  const eventId = page.params.eventId;
 
   onMount(async () => {
     try {
-      const result = await api.get<Job>(`/events/${eventId}/jobs/${jobId}`);
-      job = result.data;
+      const result = await api.get<GetJobResponse>(`/events/${eventId}/jobs`);
+      jobs = result.data.jobs;
     } catch (error) {
-      toast.error('Failed to load job');
+      console.error(error);
+      toast.error(t(lang, 'jobLoadFailed'));
     } finally {
       loading = false;
     }
   });
 </script>
 
+<h1>{t(lang, 'jobs')}</h1>
+
 {#if loading}
-  <Loading />
-{:else if !job}
-  <p>Job not found</p>
+  <p aria-busy="true">{t(lang, 'loadingJobs')}</p>
+{:else if jobs.length === 0}
+  <p>{t(lang, 'noJobFound')}</p>
 {:else}
-  <h1>{job.jobName}</h1>
+  <div class="member-list">
+    {#each jobs as job}
+      <article class="member-card">
+        <h2>{job.jobName}</h2>
+        <a href={`/events/${eventId}/jobs/${job.jobId}`} role="button">
+          {t(lang, 'checkAssignment')}
+        </a>
+      </article>
+    {/each}
+    <a href={`/events`} role="button" class="secondary">
+      {t(lang, 'goback')}
+    </a>
 
-  <p>{job.description}</p>
-
-  <p>
-    {job.startTime} - {job.endTime}
-  </p>
-
-  <a href={`/events/${eventId}/jobs`} role="button" class="secondary"> Back to Jobs </a>
+    {#if isBoardMember}
+      <a href={`/events/${eventId}/jobs/create`} role="button" class="secondary">
+        {t(lang, 'createJob')}
+      </a>
+    {/if}
+  </div>
 {/if}
+
+<a href={`/events/${eventId}/jobs`} role="button">
+  {t(lang, 'goJob')}
+</a>
