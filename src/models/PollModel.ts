@@ -164,8 +164,8 @@ async function closedPollByTime(pollId: string): Promise<Poll | null> {
 
 async function updatePoll(data: UpdatePollInput, pollId: string): Promise<Poll | null> {
   const poll = await PollRepository.findOne({
-    where: { pollId },
     relations: ['user', 'event'],
+    where: { pollId },
     select: {
       pollId: true,
       title: true,
