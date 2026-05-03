@@ -67,6 +67,11 @@
             </a>
           </p>
         {/if}
+        <p>
+          <a href={`/polls/${poll.pollId}/pollOptions`} role="button">
+            {t(lang, 'viewPollOption')}
+          </a>
+        </p>
       </article>
     {/each}
   </div>
