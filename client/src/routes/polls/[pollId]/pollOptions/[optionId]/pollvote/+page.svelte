@@ -1,33 +1,50 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
+  import { onMount } from 'svelte';
 
   const lang = $derived(auth.user?.language ?? 'en');
   const optionId = page.params.optionId;
   const pollId = page.params.pollId;
-  let submitting = $state(false);
+  let pollVotes = $state<PollVote[]>([]);
+  let loading = $state(true);
 
-  async function handleSubmit(): Promise<void> {
-    submitting = true;
-
-    try {
-      await api.post(`/polls/${pollId}/pollOptions/${optionId}/pollvote`, {});
-
-      toast.success('PollVotecreated!');
-      goto(`/polls`);
-    } catch (error) {
-      toast.error('pollvotecreatefailed');
-    } finally {
-      submitting = false;
-    }
+  interface PollVote {
+    user: {
+      name: string;
+    };
   }
+
+  onMount(async () => {
+    try {
+      const result = await api.get<{ pollvote: PollVote[] }>(
+        `/polls/${pollId}/pollOptions/${optionId}/pollvote`,
+      );
+      pollVotes = result.data.pollvote ?? [];
+    } catch (error) {
+      console.error(error);
+      toast.error(t(lang, 'pollOptionLoadFailed'));
+      pollVotes = [];
+    } finally {
+      loading = false;
+    }
+  });
 </script>
 
 <h1>{t(lang, 'pollVote')}</h1>
-<button type="button" onclick={handleSubmit} disabled={submitting}>
-  {submitting ? 'Creating poll vote...' : 'Vote'}
-</button>
+{#if loading}
+  <p aria-busy="true">{t(lang, 'loadingPollVote')}</p>
+{:else if pollVotes.length === 0}
+  <p>{t(lang, 'noPollVoteFound')}</p>
+{:else}
+  <div class="member-list">
+    {#each pollVotes as vote}
+      <article class="member-card">
+        <p>{vote.user.name ?? 'Unknown'}</p>
+      </article>
+    {/each}
+  </div>
+{/if}
