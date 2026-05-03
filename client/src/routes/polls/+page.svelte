@@ -48,7 +48,11 @@
         <p><strong>{t(lang, 'description')}:</strong> {poll.description}</p>
         <p>
           <strong>{t(lang, 'isClose')}:</strong>
-          <span>{poll.isClose === true ? t(lang, 'Close') : t(lang, 'Open')}</span>
+          {#if poll.isClose}
+            {t(lang, 'Close')}
+          {:else}
+            {t(lang, 'Open')}
+          {/if}
         </p>
 
         {#if isBoardMember}
