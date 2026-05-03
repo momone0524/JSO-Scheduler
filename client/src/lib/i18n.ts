@@ -119,6 +119,12 @@ const translations: Record<string, Record<string, string>> = {
     jobOption: 'Job Option',
     failToLoadPoll: 'Failed to load Poll',
     pollList: 'Poll List',
+    votecomplete: 'Vote Completed!',
+    votefailed: 'Vote Failed',
+    noPollVoteFound: 'No PollVote found',
+    scheduleOption: 'Schedule Option',
+    view: 'View',
+    pollvote: 'Vote',
   },
   ja: {
     register: '登録する',
@@ -240,6 +246,12 @@ const translations: Record<string, Record<string, string>> = {
     jobOption: '仕事オプション',
     failToLoadPoll: '投票の読み込みに失敗しました。',
     pollList: '投票リスト',
+    votecomplete: '投票しました',
+    votefailed: '投票に失敗しました',
+    noPollVoteFound: '投票が見つかりませんでした。',
+    scheduleOption: 'スケジュールオプション',
+    view: '投票状況',
+    pollvote: '投票',
   },
 };
 

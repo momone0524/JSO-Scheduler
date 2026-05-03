@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
   import { toast } from '$lib/toast.svelte';
@@ -7,19 +8,20 @@
   let title = $state('');
   let submitting = $state(false);
   let description = $state('');
-  let closeDate = $state('');
+  let closeAt = $state('');
   let pollType = $state('');
   const lang = $derived(auth.user?.language ?? 'en');
+  const eventId = page.params.eventId;
 
   async function handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
     submitting = true;
 
     try {
-      await api.post('/polls', {
+      await api.post(`/events/${eventId}/polls`, {
         title,
         description,
-        closeDate,
+        closeAt,
         pollType,
       });
 
@@ -47,8 +49,8 @@
   </label>
 
   <label>
-    Close Date
-    <input type="date" bind:value={closeDate} required />
+    Close
+    <input type="date" bind:value={closeAt} required />
   </label>
 
   <label>

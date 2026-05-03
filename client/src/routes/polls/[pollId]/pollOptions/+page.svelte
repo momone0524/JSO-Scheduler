@@ -39,10 +39,10 @@
     try {
       await api.post(`/polls/${pollId}/pollOptions/${optionId}/pollvote`, {});
 
-      toast.success('PollVotecreated!');
+      toast.success('votecomplete');
       goto(`/polls`);
     } catch (error) {
-      toast.error('pollvotecreatefailed');
+      toast.error('votefailed');
     } finally {
       submitting = false;
     }
