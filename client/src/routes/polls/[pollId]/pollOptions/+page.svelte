@@ -17,6 +17,7 @@
     optionId: string;
     joboption: string;
     scheduleoption: string;
+    isWinner: boolean;
   }
 
   onMount(async () => {
@@ -71,6 +72,9 @@
         {/if}
         {#if option.scheduleoption}
           <p>{t(lang, 'scheduleOption')}:{option.scheduleoption}</p>
+          {#if option.isWinner}
+            <p>{t(lang, 'winnerDate')}</p>
+          {/if}
         {/if}
         <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
           {submitting ? 'Creating poll vote...' : 'Vote'}

@@ -18,7 +18,13 @@
   onMount(async () => {
     try {
       const result = await api.get<{ jobs: Job[] }>(`/events/${eventId}/jobs`);
-      console.log(result.data);
+      let loadedJobs = result.data.jobs;
+      if (loadedJobs.length === 0) {
+        await api.post(`/events/${eventId}/jobs/auto`, {});
+
+        const refreshed = await api.get<{ jobs: Job[] }>(`/events/${eventId}/jobs`);
+        loadedJobs = refreshed.data.jobs ?? [];
+      }
       jobs = result.data.jobs;
     } catch (error) {
       toast.error('Failed to load job');
