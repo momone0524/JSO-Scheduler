@@ -78,5 +78,8 @@
         </a>
       </article>
     {/each}
+    <a href={`/polls`} role="button" class="secondary">
+      {t(lang, 'cancel')}
+    </a>
   </div>
 {/if}
