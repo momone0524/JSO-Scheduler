@@ -39,6 +39,9 @@
   <p aria-busy="true">{t(lang, 'loadingPollVote')}</p>
 {:else if pollVotes.length === 0}
   <p>{t(lang, 'noPollVoteFound')}</p>
+  <a href={`/polls/${pollId}/pollOptions`} role="button" class="secondary">
+    {t(lang, 'goBack')}
+  </a>
 {:else}
   <div class="member-list">
     {#each pollVotes as vote}
