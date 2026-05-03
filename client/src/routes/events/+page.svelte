@@ -21,6 +21,9 @@
 
   onMount(async () => {
     try {
+      for (const event of events) {
+        await api.patch(`/events/${event.eventId}/update/auto`);
+      }
       const result = await api.get<{ events: EventItem[] }>('/events');
       console.log('users response:', result);
       events = result.data.events;
