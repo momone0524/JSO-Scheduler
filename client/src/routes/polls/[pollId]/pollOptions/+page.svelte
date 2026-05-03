@@ -37,12 +37,19 @@
     submitting = true;
 
     try {
-      await api.post(`/polls/${pollId}/pollOptions/${optionId}/pollvote`, {});
+      const res = await api.post<{ error?: string }>(
+        `/polls/${pollId}/pollOptions/${optionId}/pollvote`,
+        {},
+      );
 
+      if (!res.ok) {
+        toast.error(res.data?.error ?? 'Vote failed');
+        return;
+      }
       toast.success('votecomplete');
       goto(`/polls`);
-    } catch (error) {
-      toast.error('votefailed');
+    } catch (error: any) {
+      toast.error(error?.message ?? 'votefailed');
     } finally {
       submitting = false;
     }
