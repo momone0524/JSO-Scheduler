@@ -5,19 +5,19 @@ info:
 
 http:
   method: PATCH
-  url: http://localhost:1000/polls/:pollId/update/:userId
+  url: http://localhost:1000/api/polls/:pollId/update/:userId
   params:
     - name: userId
-      value: 019d0dd7-8836-7491-86bf-29c4d5306403
+      value: 019d98c4-0784-76d9-8a15-ab9c17cf7ace
       type: path
     - name: pollId
-      value: 019d9247-b669-7079-9d68-757d5c97bd8f
+      value: 019d1195-c738-72a9-98b8-0f761eb23b08
       type: path
   body:
     type: json
     data: |-
       {
-        "title": "New Year Schedule",
+        "title": "New Year Job 123",
         "description": "schedule for new year event",
         "closeAt": "2020-04-28"
       }
