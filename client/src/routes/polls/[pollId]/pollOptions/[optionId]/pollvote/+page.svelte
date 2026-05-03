@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
@@ -11,6 +12,7 @@
   const pollId = page.params.pollId;
   let pollVotes = $state<PollVote[]>([]);
   let loading = $state(true);
+  let submitting = $state(false);
 
   interface PollVote {
     user: {
@@ -32,6 +34,22 @@
       loading = false;
     }
   });
+
+  async function handleSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    submitting = true;
+
+    try {
+      await api.del(`/polls/${pollId}/pollOptions/${optionId}/pollvote`);
+
+      toast.success(t(lang, 'pollvoteDeleted'));
+      goto(`/polls/${pollId}/pollOptions/`);
+    } catch (error) {
+      toast.error(t(lang, 'deleteFailed'));
+    } finally {
+      submitting = false;
+    }
+  }
 </script>
 
 <h1>{t(lang, 'pollVote')}</h1>
@@ -49,6 +67,11 @@
         <p>{vote.user.name}</p>
       </article>
     {/each}
+    <form onsubmit={handleSubmit}>
+      <button type="submit" disabled={submitting}>
+        {submitting ? t(lang, 'deleting') : t(lang, 'delete')}
+      </button>
+    </form>
     <a href={`/polls/${pollId}/pollOptions`} role="button" class="secondary">
       {t(lang, 'goBack')}
     </a>
