@@ -67,9 +67,11 @@
       <article class="member-card">
         <p>{vote.user.name}</p>
         {#if auth.user && auth.user.userId === vote.user.userId}
-          <p>
-            {t(lang, 'delete')}
-          </p>
+          <form onsubmit={handleSubmit}>
+            <button type="submit" disabled={submitting}>
+              {submitting ? t(lang, 'deleting') : t(lang, 'delete')}
+            </button>
+          </form>
         {/if}
       </article>
     {/each}
