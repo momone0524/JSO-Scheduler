@@ -1,11 +1,14 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { api } from '$lib/api';
+  import { auth } from '$lib/auth.svelte';
   import Loading from '$lib/components/Loading.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
   import { onMount } from 'svelte';
 
   const eventId = page.params.eventId;
+  const lang = $derived(auth.user?.language ?? 'en');
 
   interface Job {
     jobId: string;
@@ -34,23 +37,23 @@
   });
 </script>
 
-<h1>Jobs</h1>
+<h1>{t(lang, 'job')}</h1>
 
 {#if loading}
   <Loading />
 {:else if jobs.length === 0}
-  <p>Job not found</p>
+  <p>{t(lang, 'nojobfound')}</p>
 {:else}
   {#each jobs as job}
     <article>
-      <h2>{job.jobName}</h2>
+      <h2>{t(lang, 'jobName')}: {job.jobName}</h2>
 
       <a href={`/events/${eventId}/jobs/${job.jobId}/assignment`} role="button" class="secondary">
-        member
+        {t(lang, 'member')}
       </a>
 
       <a href={`/events/${eventId}/jobs/${job.jobId}/update`} role="button" class="secondary">
-        update
+        {t(lang, 'update')}
       </a>
     </article>
   {/each}

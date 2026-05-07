@@ -44,7 +44,7 @@
       );
 
       if (!res.ok) {
-        toast.error(res.data?.error ?? 'Vote failed');
+        toast.error(res.data?.error ?? t(lang, 'votefailed'));
         return;
       }
       toast.success('votecomplete');
@@ -77,7 +77,7 @@
           {/if}
         {/if}
         <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
-          {submitting ? 'Creating poll vote...' : 'Vote'}
+          {submitting ? t(lang, 'creatingpollvote') : t(lang, 'pollvote')}
         </button>
 
         <a

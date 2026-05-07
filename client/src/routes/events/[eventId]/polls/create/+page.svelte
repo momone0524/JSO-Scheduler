@@ -3,6 +3,7 @@
   import { page } from '$app/state';
   import { api } from '$lib/api';
   import { auth } from '$lib/auth.svelte';
+  import { t } from '$lib/i18n';
   import { toast } from '$lib/toast.svelte';
 
   let title = $state('');
@@ -25,36 +26,36 @@
         pollType,
       });
 
-      toast.success('Poll created!');
+      toast.success(t(lang, 'pollcreated'));
       goto('/events');
     } catch (error) {
-      toast.error('Poll Creation failed. Please check your input.');
+      toast.error(t(lang, 'Pollcreatefail'));
     } finally {
       submitting = false;
     }
   }
 </script>
 
-<h1>Create Poll</h1>
+<h1>(t(lang, 'createPoll'))</h1>
 
 <form onsubmit={handleSubmit}>
   <label>
-    Title
+    {t(lang, 'titile')}
     <input type="text" bind:value={title} required />
   </label>
 
   <label>
-    Description
+    {t(lang, 'description')}
     <input type="text" bind:value={description} required />
   </label>
 
   <label>
-    Close
+    {t(lang, 'closeDate')}
     <input type="date" bind:value={closeAt} required />
   </label>
 
   <label>
-    Poll Type
+    {t(lang, 'pollType')}
     <select bind:value={pollType} required>
       <option value="job">job</option>
       <option value="schedule">schedule</option>
@@ -62,6 +63,6 @@
   </label>
 
   <button type="submit" disabled={submitting}>
-    {submitting ? 'Creating poll...' : 'Create Poll'}
+    {submitting ? t(lang, 'creatingpoll') : t(lang, 'pollcreated')}
   </button>
 </form>
