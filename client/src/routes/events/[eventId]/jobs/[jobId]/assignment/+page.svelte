@@ -25,7 +25,7 @@
   onMount(async () => {
     try {
       const result = await api.get<GetJobAssignment>(`/jobs/${jobId}/assignment`);
-      let assignmentAuto = result.data.assignments;
+      let assignmentAuto = result.data.assignments ?? [];
       if (assignmentAuto.length === 0) {
         await api.post(`/jobs/${jobId}/assignment/auto`, {});
         const refreshed = await api.get<GetJobAssignment>(`/jobs/${jobId}/assignment`);

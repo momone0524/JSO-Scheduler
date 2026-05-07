@@ -23,6 +23,7 @@
   onMount(async () => {
     console.log('pollId:', pollId);
     try {
+      await api.post(`/polls/${pollId}/winner`, {});
       const result = await api.get<{ pollOptions: PollOption[] }>(`/polls/${pollId}/pollOptions`);
       pollOption = result.data.pollOptions ?? [];
     } catch (error) {
@@ -74,6 +75,14 @@
           <p>{t(lang, 'scheduleOption')}:{option.scheduleoption}</p>
           {#if option.isWinner}
             <p>{t(lang, 'winnerDate')}</p>
+          {:else}
+            <button
+              type="button"
+              onclick={() => handleSubmit(option.optionId)}
+              disabled={submitting}
+            >
+              {submitting ? t(lang, 'creatingpollvote') : t(lang, 'pollvote')}
+            </button>
           {/if}
         {/if}
         <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
