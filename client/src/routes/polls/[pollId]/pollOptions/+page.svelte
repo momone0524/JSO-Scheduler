@@ -48,17 +48,17 @@
         toast.error(res.data?.error ?? t(lang, 'votefailed'));
         return;
       }
-      toast.success('votecomplete');
+      toast.success(t(lang, 'votecomplete'));
       goto(`/polls`);
     } catch (error: any) {
-      toast.error(error?.message ?? 'votefailed');
+      toast.error(error?.message ?? t(lang, 'votecomplete'));
     } finally {
       submitting = false;
     }
   }
 </script>
 
-<h1>{t(lang, 'pollVote')}</h1>
+<h1>{t(lang, 'pollvote')}</h1>
 
 {#if loading}
   <p aria-busy="true">{t(lang, 'loadingPollVote')}</p>
@@ -85,9 +85,6 @@
             </button>
           {/if}
         {/if}
-        <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
-          {submitting ? t(lang, 'creatingpollvote') : t(lang, 'pollvote')}
-        </button>
 
         <a
           href={`/polls/${pollId}/pollOptions/${option.optionId}/pollvote`}

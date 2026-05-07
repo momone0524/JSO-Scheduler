@@ -54,7 +54,7 @@
 <p>{pollType}</p>
 
 <form onsubmit={handleSubmit}>
-  {#if pollType === 'job'}
+  {#if pollType === t(lang, 'job')}
     <label>
       {t(lang, 'jobOption')}
       <input type="text" bind:value={joboption} required />
