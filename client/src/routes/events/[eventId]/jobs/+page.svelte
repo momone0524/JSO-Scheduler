@@ -59,4 +59,6 @@
   {/each}
 {/if}
 
-<a href={`/events/${eventId}/jobs/create`} role="button" class="secondary"> Create Job </a>
+<a href={`/events/${eventId}/jobs/create`} role="button" class="secondary">
+  {t(lang, 'createJob')}
+</a>
