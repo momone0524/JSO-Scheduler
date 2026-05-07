@@ -160,6 +160,7 @@ const translations: Record<string, Record<string, string>> = {
     updatePoll: 'Poll update',
     closeAt: 'Close at',
     viewPollOption: 'View poll option',
+    title: 'Title',
   },
   ja: {
     register: '登録する',

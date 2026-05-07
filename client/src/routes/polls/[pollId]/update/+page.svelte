@@ -77,7 +77,7 @@
 
   <form onsubmit={handleSubmit}>
     <label>
-      {t(lang, 'title')}
+      {t(lang, 'titile')}
       <input type="text" bind:value={title} required />
     </label>
 

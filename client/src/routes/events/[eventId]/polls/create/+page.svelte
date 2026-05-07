@@ -36,7 +36,7 @@
   }
 </script>
 
-<h1>(t(lang, 'createPoll'))</h1>
+<h1>{t(lang, 'createPoll')}</h1>
 
 <form onsubmit={handleSubmit}>
   <label>
@@ -63,6 +63,6 @@
   </label>
 
   <button type="submit" disabled={submitting}>
-    {submitting ? t(lang, 'creatingpoll') : t(lang, 'pollcreated')}
+    {submitting ? t(lang, 'creatingpoll') : t(lang, 'createPoll')}
   </button>
 </form>
