@@ -71,19 +71,17 @@
         {#if option.joboption}
           <p>{t(lang, 'jobOption')}:{option.joboption}</p>
         {/if}
+
         {#if option.scheduleoption}
           <p>{t(lang, 'scheduleOption')}:{option.scheduleoption}</p>
-          {#if option.isWinner}
-            <p>{t(lang, 'winnerDate')}</p>
-          {:else}
-            <button
-              type="button"
-              onclick={() => handleSubmit(option.optionId)}
-              disabled={submitting}
-            >
-              {submitting ? t(lang, 'creatingpollvote') : t(lang, 'pollvote')}
-            </button>
-          {/if}
+        {/if}
+
+        {#if option.isWinner}
+          <p>{t(lang, 'winnerDate')}</p>
+        {:else}
+          <button type="button" onclick={() => handleSubmit(option.optionId)} disabled={submitting}>
+            {submitting ? t(lang, 'creatingpollvote') : t(lang, 'pollvote')}
+          </button>
         {/if}
 
         <a
